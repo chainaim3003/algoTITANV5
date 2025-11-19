@@ -1,0 +1,393 @@
+/**
+ * Trade Instrument Registry Contract V3
+ *
+ * Manages the creation, ownership, and lifecycle of trade instruments (eBLs, LCs, etc.)
+ * Supports delegated creation pattern where carriers create instruments for exporters
+ */
+import {
+  Account,
+  Contract,
+  abimethod,
+  arc4,
+  BoxMap,
+  Global,
+  GlobalState,
+  Txn,
+  itxn,
+  Asset,
+  assert,
+  type uint64,
+  Bytes,
+} from '@algorandfoundation/algorand-typescript'
+
+/**
+ * Core trade instrument data structure
+ */
+class TradeInstrument extends arc4.Struct<{
+  // Instrument Identity
+  instrumentNumber: arc4.Str
+  instrumentType: arc4.UintN64  // 1=eBL, 2=LC, 3=Invoice, etc.
+  instrumentAssetId: arc4.UintN64
+  issueDate: arc4.UintN64
+  maturityDate: arc4.UintN64
+  
+  // Commercial Details
+  faceValue: arc4.UintN64
+  currentMarketValue: arc4.UintN64
+  currencyCode: arc4.Str  // "USD", "EUR", etc.
+  paymentTerms: arc4.Str
+  
+  // Parties
+  issuerAddress: arc4.Address     // Carrier who created
+  currentHolder: arc4.Address     // Current legal holder
+  exporterAddress: arc4.Address   // Goods owner
+  importerAddress: arc4.Address   // Goods receiver
+  
+  // Cargo Details (for eBLs)
+  cargoDescription: arc4.Str
+  cargoValue: arc4.UintN64
+  weight: arc4.UintN64
+  originPort: arc4.Str
+  destinationPort: arc4.Str
+  vesselName: arc4.Str
+  voyageNumber: arc4.Str
+  
+  // Risk & Status
+  riskScore: arc4.UintN64         // 0-1000 scale
+  instrumentStatus: arc4.UintN64  // 1=Active, 2=Listed, 3=Pledged, 4=Settled
+  
+  // Metadata
+  createdAt: arc4.UintN64
+  lastUpdated: arc4.UintN64
+  endorsementHistory: arc4.DynamicArray<arc4.Address>
+}> {}
+
+/**
+ * Carrier authorization for delegated creation
+ */
+class CarrierAuthorization extends arc4.Struct<{
+  carrierAddress: arc4.Address
+  exporterAddress: arc4.Address
+  maxCargoValue: arc4.UintN64
+  validUntil: arc4.UintN64
+  isActive: arc4.Bool
+  createdAt: arc4.UintN64
+}> {}
+
+/**
+ * Enriched eBL data from carrier systems
+ */
+class EnrichedBLData extends arc4.Struct<{
+  blNumber: arc4.Str
+  cargoManifest: arc4.Str
+  loadingDate: arc4.UintN64
+  estimatedArrival: arc4.UintN64
+  shippingRoute: arc4.Str
+  containerNumbers: arc4.Str
+  sealNumbers: arc4.Str
+  specialInstructions: arc4.Str
+  insurancePolicy: arc4.Str
+  customsDeclaration: arc4.Str
+}> {}
+
+export default class TradeInstrumentRegistry extends Contract {
+  /**
+   * Storage maps
+   */
+  public instruments = BoxMap<uint64, TradeInstrument>({ keyPrefix: 'instruments' })
+  public carrierAuthorizations = BoxMap<uint64, CarrierAuthorization>({ keyPrefix: 'auth' })
+  public exporterInstruments = BoxMap<arc4.Address, arc4.DynamicArray<arc4.UintN64>>({ keyPrefix: 'exp_inst' })
+  
+  /**
+   * Global state
+   */
+  public nextInstrumentId = GlobalState<uint64>()
+  public nextAuthId = GlobalState<uint64>()
+  public totalInstruments = GlobalState<uint64>()
+
+  /**
+   * PHASE 1: EXPORTER AUTHORIZES CARRIER
+   * Exporter pre-authorizes carrier to create eBLs on their behalf
+   */
+  @abimethod()
+  public authorizeCarrier(
+    carrierAddress: Account,
+    maxCargoValue: uint64,
+    validityPeriod: uint64
+  ): uint64 {
+    // Initialize if needed
+    if (this.nextAuthId.value === 0) {
+      this.nextInstrumentId.value = 1
+      this.nextAuthId.value = 1
+      this.totalInstruments.value = 0
+    }
+    
+    const authId = this.nextAuthId.value
+    
+    const authorization = new CarrierAuthorization({
+      carrierAddress: new arc4.Address(carrierAddress),
+      exporterAddress: new arc4.Address(Txn.sender),
+      maxCargoValue: new arc4.UintN64(maxCargoValue),
+      validUntil: new arc4.UintN64(Global.latestTimestamp + validityPeriod),
+      isActive: new arc4.Bool(true),
+      createdAt: new arc4.UintN64(Global.latestTimestamp)
+    })
+    
+    this.carrierAuthorizations(authId).value = authorization
+    this.nextAuthId.value = authId + 1
+    
+    return authId
+  }
+
+  /**
+   * PHASE 2: CARRIER CREATES eBL WITH IMMEDIATE EXPORTER OWNERSHIP
+   * Carrier creates eBL asset but ownership immediately goes to exporter
+   */
+  @abimethod()
+  public createeBLInstrument(
+    authorizationId: uint64,
+    exporterAddress: string,
+    importerAddress: string,
+    enrichedData: EnrichedBLData,
+    cargoValue: uint64
+  ): uint64 {
+    // Validate authorization
+    assert(this.carrierAuthorizations(authorizationId).exists, 'Authorization not found')
+    const auth = this.carrierAuthorizations(authorizationId).value
+    
+    assert(auth.isActive.native === true, 'Authorization inactive')
+    assert(auth.carrierAddress.bytes === Txn.sender.bytes, 'Unauthorized carrier')
+    assert(auth.exporterAddress.bytes === (new arc4.Address(exporterAddress)).bytes, 'Wrong exporter')
+    assert(auth.validUntil.native > Global.latestTimestamp, 'Authorization expired')
+    assert(cargoValue <= auth.maxCargoValue.native, 'Cargo value exceeds limit')
+    
+    const instrumentId = this.nextInstrumentId.value
+    
+    // Create ASA for the eBL
+    const assetId = this.createInstrumentAsset(enrichedData.blNumber.native, cargoValue, exporterAddress)
+    
+    // Calculate initial risk score
+    const riskScore = this.calculateInitialRiskScore(enrichedData, cargoValue)
+    
+    // Create instrument with exporter as immediate owner
+    const instrument = new TradeInstrument({
+      instrumentNumber: enrichedData.blNumber,
+      instrumentType: new arc4.UintN64(1), // eBL type
+      instrumentAssetId: new arc4.UintN64(assetId),
+      issueDate: new arc4.UintN64(Global.latestTimestamp),
+      maturityDate: new arc4.UintN64(enrichedData.estimatedArrival.native + 2592000), // +30 days
+      
+      faceValue: new arc4.UintN64(cargoValue),
+      currentMarketValue: new arc4.UintN64(cargoValue),
+      currencyCode: new arc4.Str('USD'),
+      paymentTerms: new arc4.Str('NET30'),
+      
+      issuerAddress: new arc4.Address(Txn.sender), // Carrier
+      currentHolder: new arc4.Address(exporterAddress), // Exporter owns immediately
+      exporterAddress: new arc4.Address(exporterAddress),
+      importerAddress: new arc4.Address(importerAddress),
+      
+      cargoDescription: enrichedData.cargoManifest,
+      cargoValue: new arc4.UintN64(cargoValue),
+      weight: new arc4.UintN64(0), // To be updated
+      originPort: new arc4.Str(enrichedData.shippingRoute.native.split('-')[0] || ''),
+      destinationPort: new arc4.Str(enrichedData.shippingRoute.native.split('-')[1] || ''),
+      vesselName: new arc4.Str(''),
+      voyageNumber: new arc4.Str(''),
+      
+      riskScore: new arc4.UintN64(riskScore),
+      instrumentStatus: new arc4.UintN64(1), // Active
+      
+      createdAt: new arc4.UintN64(Global.latestTimestamp),
+      lastUpdated: new arc4.UintN64(Global.latestTimestamp),
+      endorsementHistory: new arc4.DynamicArray<arc4.Address>()
+    })
+    
+    // Store instrument
+    this.instruments(instrumentId).value = instrument
+    
+    // Add to exporter's instrument list
+    this.addInstrumentToExporter(exporterAddress, instrumentId)
+    
+    // Update counters
+    this.nextInstrumentId.value = instrumentId + 1
+    this.totalInstruments.value = this.totalInstruments.value + 1
+    
+    return instrumentId
+  }
+
+  /**
+   * Create ASA for the trade instrument with immediate exporter ownership
+   */
+  private createInstrumentAsset(blNumber: string, cargoValue: uint64, exporterAddress: string): uint64 {
+    // Carrier creates the asset but exporter gets immediate control
+    const exporterAccount = new arc4.Address(exporterAddress)
+    const txnResult = itxn
+      .assetConfig({
+        assetName: Bytes('eBL-' + blNumber).slice(0, 32).toString(),
+        unitName: 'eBL',
+        total: 1, // Single instrument, not fractionalized
+        decimals: 0,
+        manager: exporterAccount.bytes, // Exporter has full management control
+        reserve: exporterAccount.bytes, // Exporter controls supply
+        freeze: exporterAccount.bytes,   // Exporter can freeze if needed
+        clawback: exporterAccount.bytes, // Exporter has clawback rights
+        fee: 0,
+      })
+      .submit()
+    
+    // Immediately transfer the created asset to exporter
+    itxn
+      .assetTransfer({
+        xferAsset: txnResult.createdAsset,
+        assetReceiver: exporterAccount.bytes,
+        assetAmount: 1,
+        fee: 0,
+      })
+      .submit()
+    
+    return txnResult.createdAsset.id
+  }
+
+  /**
+   * Calculate initial risk score based on cargo and route
+   */
+  private calculateInitialRiskScore(data: EnrichedBLData, cargoValue: uint64): uint64 {
+    let score = 500 // Base score
+    
+    // Route risk (simplified)
+    const route = data.shippingRoute.native.toLowerCase()
+    if (route.includes('suez') || route.includes('panama')) {
+      score += 50 // Major shipping routes are safer
+    }
+    if (route.includes('somali') || route.includes('gulf')) {
+      score -= 100 // Higher piracy risk
+    }
+    
+    // Cargo value risk
+    if (cargoValue > 1000000) {
+      score -= 25 // Higher value = higher risk
+    }
+    
+    // Timeline risk
+    const transitTime = data.estimatedArrival.native - data.loadingDate.native
+    if (transitTime > 2592000) { // > 30 days
+      score -= 25 // Longer transit = higher risk
+    }
+    
+    return Math.max(100, Math.min(900, score))
+  }
+
+  /**
+   * Add instrument to exporter's portfolio
+   */
+  private addInstrumentToExporter(exporterAddress: string, instrumentId: uint64) {
+    const exporterAddr = new arc4.Address(exporterAddress)
+    
+    if (this.exporterInstruments(exporterAddr).exists) {
+      const instruments = this.exporterInstruments(exporterAddr).value
+      instruments.push(new arc4.UintN64(instrumentId))
+      this.exporterInstruments(exporterAddr).value = instruments
+    } else {
+      const newArray = new arc4.DynamicArray<arc4.UintN64>()
+      newArray.push(new arc4.UintN64(instrumentId))
+      this.exporterInstruments(exporterAddr).value = newArray
+    }
+  }
+
+  /**
+   * Endorse (transfer) instrument to new holder
+   */
+  @abimethod()
+  public endorseInstrument(instrumentId: uint64, newHolderAddress: string): boolean {
+    assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    
+    const instrument = this.instruments(instrumentId).value.copy()
+    
+    // Only current holder can endorse
+    assert(instrument.currentHolder.bytes === Txn.sender.bytes, 'Only holder can endorse')
+    
+    // Update endorsement history
+    instrument.endorsementHistory.push(new arc4.Address(Txn.sender))
+    instrument.currentHolder = new arc4.Address(newHolderAddress)
+    instrument.lastUpdated = new arc4.UintN64(Global.latestTimestamp)
+    
+    this.instruments(instrumentId).value = instrument
+    
+    // Transfer ASA to new holder
+    const asset = Asset(instrument.instrumentAssetId.native)
+    itxn
+      .assetTransfer({
+        xferAsset: asset,
+        assetReceiver: (new arc4.Address(newHolderAddress)).bytes,
+        assetAmount: 1,
+        fee: 0,
+      })
+      .submit()
+    
+    return true
+  }
+
+  /**
+   * Update instrument status
+   */
+  @abimethod()
+  public updateInstrumentStatus(instrumentId: uint64, newStatus: uint64): boolean {
+    assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    
+    const instrument = this.instruments(instrumentId).value.copy()
+    
+    // Only current holder can update status
+    assert(instrument.currentHolder.bytes === Txn.sender.bytes, 'Only holder can update status')
+    
+    instrument.instrumentStatus = new arc4.UintN64(newStatus)
+    instrument.lastUpdated = new arc4.UintN64(Global.latestTimestamp)
+    
+    this.instruments(instrumentId).value = instrument
+    
+    return true
+  }
+
+  /**
+   * Get instrument details
+   */
+  @abimethod({ readonly: true })
+  public getInstrument(instrumentId: uint64): TradeInstrument {
+    assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    return this.instruments(instrumentId).value
+  }
+
+  /**
+   * Get exporter's instruments
+   */
+  @abimethod({ readonly: true })
+  public getExporterInstruments(exporterAddress: string): arc4.DynamicArray<arc4.UintN64> {
+    const addr = new arc4.Address(exporterAddress)
+    
+    if (this.exporterInstruments(addr).exists) {
+      return this.exporterInstruments(addr).value
+    }
+    
+    return new arc4.DynamicArray<arc4.UintN64>()
+  }
+
+  /**
+   * Update instrument market value (for price discovery)
+   */
+  @abimethod()
+  public updateMarketValue(instrumentId: uint64, newValue: uint64): boolean {
+    assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    
+    const instrument = this.instruments(instrumentId).value.copy()
+    
+    // Only current holder can update market value
+    assert(instrument.currentHolder.bytes === Txn.sender.bytes, 'Only holder can update value')
+    
+    instrument.currentMarketValue = new arc4.UintN64(newValue)
+    instrument.lastUpdated = new arc4.UintN64(Global.latestTimestamp)
+    
+    this.instruments(instrumentId).value = instrument
+    
+    return true
+  }
+}

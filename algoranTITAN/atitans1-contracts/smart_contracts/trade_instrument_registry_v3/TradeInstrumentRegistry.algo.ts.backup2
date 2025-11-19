@@ -1,0 +1,234 @@
+/**
+ * Trade Instrument Registry V3 - Simplified Version
+ *
+ * Basic registry for trade instruments with minimal complexity
+ */
+import {
+  Contract,
+  abimethod,
+  arc4,
+  BoxMap,
+  Global,
+  GlobalState,
+  Txn,
+  itxn,
+  Asset,
+  assert,
+  type uint64,
+} from '@algorandfoundation/algorand-typescript'
+
+/**
+ * Simple trade instrument structure
+ */
+class TradeInstrument extends arc4.Struct<{
+  instrumentNumber: arc4.Str
+  instrumentAssetId: arc4.UintN64
+  issueDate: arc4.UintN64
+  maturityDate: arc4.UintN64
+  faceValue: arc4.UintN64
+  currentHolder: arc4.Address
+  exporterAddress: arc4.Address
+  importerAddress: arc4.Address
+  cargoDescription: arc4.Str
+  cargoValue: arc4.UintN64
+  originPort: arc4.Str
+  destinationPort: arc4.Str
+  riskScore: arc4.UintN64
+  instrumentStatus: arc4.UintN64
+  createdAt: arc4.UintN64
+  lastUpdated: arc4.UintN64
+}> {}
+
+export default class TradeInstrumentRegistryV3 extends Contract {
+  /**
+   * Storage maps
+   */
+  public instruments = BoxMap<uint64, TradeInstrument>({ keyPrefix: 'instruments' })
+  public exporterInstruments = BoxMap<arc4.Address, arc4.DynamicArray<arc4.UintN64>>({ keyPrefix: 'exp_inst' })
+  
+  /**
+   * Global state
+   */
+  public nextInstrumentId = GlobalState<uint64>()
+  public totalInstruments = GlobalState<uint64>()
+
+  /**
+   * Initialize contract
+   */
+  @abimethod()
+  public initialize(): boolean {
+    assert(Txn.sender === Global.creatorAddress, 'Only creator can initialize')
+    
+    this.nextInstrumentId.value = 1
+    this.totalInstruments.value = 0
+    
+    return true
+  }
+
+  /**
+   * Create eBL instrument (simplified)
+   */
+  @abimethod()
+  public createInstrument(
+    instrumentNumber: string,
+    exporterAddress: arc4.Address,
+    importerAddress: arc4.Address,
+    cargoDescription: string,
+    cargoValue: uint64,
+    originPort: string,
+    destinationPort: string
+  ): uint64 {
+    // Initialize if needed
+    if (this.nextInstrumentId.value === 0) {
+      this.nextInstrumentId.value = 1
+      this.totalInstruments.value = 0
+    }
+    
+    const instrumentId = this.nextInstrumentId.value
+    
+    // Create ASA for the eBL
+    const assetResult = itxn
+      .assetConfig({
+        assetName: 'eBL',
+        unitName: 'eBL',
+        total: 1,
+        decimals: 0,
+        manager: exporterAddress.bytes,
+        reserve: exporterAddress.bytes,
+        freeze: exporterAddress.bytes,
+        clawback: exporterAddress.bytes,
+        fee: 0,
+      })
+      .submit()
+    
+    // Transfer asset to exporter
+    itxn
+      .assetTransfer({
+        xferAsset: assetResult.createdAsset,
+        assetReceiver: exporterAddress.bytes,
+        assetAmount: 1,
+        fee: 0,
+      })
+      .submit()
+    
+    // Create instrument record
+    const instrument = new TradeInstrument({
+      instrumentNumber: new arc4.Str(instrumentNumber),
+      instrumentAssetId: new arc4.UintN64(assetResult.createdAsset.id),
+      issueDate: new arc4.UintN64(Global.latestTimestamp),
+      maturityDate: new arc4.UintN64(Global.latestTimestamp + 2592000), // +30 days
+      faceValue: new arc4.UintN64(cargoValue),
+      currentHolder: exporterAddress,
+      exporterAddress: exporterAddress,
+      importerAddress: importerAddress,
+      cargoDescription: new arc4.Str(cargoDescription),
+      cargoValue: new arc4.UintN64(cargoValue),
+      originPort: new arc4.Str(originPort),
+      destinationPort: new arc4.Str(destinationPort),
+      riskScore: new arc4.UintN64(500), // Default score
+      instrumentStatus: new arc4.UintN64(1), // Active
+      createdAt: new arc4.UintN64(Global.latestTimestamp),
+      lastUpdated: new arc4.UintN64(Global.latestTimestamp)
+    })
+    
+    // Store instrument
+    this.instruments(instrumentId).value = instrument.copy().copy()
+    
+    // Add to exporter's list
+    this.addInstrumentToExporter(exporterAddress, instrumentId)
+    
+    // Update counters
+    this.nextInstrumentId.value = instrumentId + 1
+    this.totalInstruments.value = this.totalInstruments.value + 1
+    
+    return instrumentId
+  }
+
+  /**
+   * Add instrument to exporter's portfolio
+   */
+  private addInstrumentToExporter(exporterAddress: arc4.Address, instrumentId: uint64) {
+    if (this.exporterInstruments(exporterAddress).exists) {
+      const instruments = this.exporterInstruments(exporterAddress).value.copy()
+      instruments.push(new arc4.UintN64(instrumentId))
+      this.exporterInstruments(exporterAddress).value = instruments.copy()
+    } else {
+      const newArray = new arc4.DynamicArray<arc4.UintN64>()
+      newArray.push(new arc4.UintN64(instrumentId))
+      this.exporterInstruments(exporterAddress).value = newArray.copy()
+    }
+  }
+
+  /**
+   * Endorse (transfer) instrument to new holder
+   */
+  @abimethod()
+  public endorseInstrument(instrumentId: uint64, newHolderAddress: arc4.Address): boolean {
+    assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    
+    const instrument = this.instruments(instrumentId).value.copy()
+    
+    // Only current holder can endorse
+    assert(instrument.currentHolder.bytes === Txn.sender.bytes, 'Only holder can endorse')
+    
+    // Update instrument record
+    instrument.currentHolder = newHolderAddress
+    instrument.lastUpdated = new arc4.UintN64(Global.latestTimestamp)
+    
+    this.instruments(instrumentId).value = instrument
+    
+    // Transfer ASA to new holder
+    const asset = Asset(instrument.instrumentAssetId.native)
+    itxn
+      .assetTransfer({
+        xferAsset: asset,
+        assetReceiver: newHolderAddress.bytes,
+        assetAmount: 1,
+        fee: 0,
+      })
+      .submit()
+    
+    return true
+  }
+
+  /**
+   * Get instrument details
+   */
+  @abimethod({ readonly: true })
+  public getInstrument(instrumentId: uint64): TradeInstrument {
+    assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    return this.instruments(instrumentId).value
+  }
+
+  /**
+   * Get exporter's instruments
+   */
+  @abimethod({ readonly: true })
+  public getExporterInstruments(exporterAddress: arc4.Address): arc4.DynamicArray<arc4.UintN64> {
+    if (this.exporterInstruments(exporterAddress).exists) {
+      return this.exporterInstruments(exporterAddress).value
+    }
+    
+    return new arc4.DynamicArray<arc4.UintN64>()
+  }
+
+  /**
+   * Update instrument status
+   */
+  @abimethod()
+  public updateInstrumentStatus(instrumentId: uint64, newStatus: uint64): boolean {
+    assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    
+    const instrument = this.instruments(instrumentId).value.copy()
+    
+    // Only current holder can update status
+    assert(instrument.currentHolder.bytes === Txn.sender.bytes, 'Only holder can update status')
+    
+    instrument.instrumentStatus = new arc4.UintN64(newStatus)
+    instrument.lastUpdated = new arc4.UintN64(Global.latestTimestamp)
+    
+    this.instruments(instrumentId).value = instrument
+    
+    return true
+  }
+}

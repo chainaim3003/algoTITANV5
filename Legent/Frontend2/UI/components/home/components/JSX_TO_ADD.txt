@@ -1,0 +1,98 @@
+{/* Add this JSX section BEFORE the Portfolio Summary section in the return statement */}
+
+{/* Escrowed Trades - Ready for Execution */}
+{escrowedTrades.length > 0 && (
+  <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+    <div className="flex items-center justify-between mb-6">
+      <div>
+        <h2 className="text-2xl font-bold text-gray-900">
+          💰 Funded Trades - Ready to Execute
+        </h2>
+        <p className="text-gray-600 mt-1">
+          Trades that have been funded and are awaiting your execution
+        </p>
+      </div>
+      <div className="bg-green-100 text-green-800 px-4 py-2 rounded-lg font-semibold">
+        {escrowedTrades.length} Ready
+      </div>
+    </div>
+
+    <div className="grid gap-4">
+      {escrowedTrades.map((trade) => (
+        <div 
+          key={trade.tradeId} 
+          className="border border-green-200 rounded-lg p-6 bg-gradient-to-r from-green-50 to-emerald-50 hover:shadow-md transition-shadow"
+        >
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-3">
+                <h3 className="text-xl font-bold text-gray-900">
+                  Trade #{trade.tradeId}
+                </h3>
+                <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold border border-green-300">
+                  ✓ ESCROWED - Funded
+                </span>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <div className="text-gray-600 mb-1">Product</div>
+                  <div className="font-semibold text-gray-900">{trade.productType}</div>
+                </div>
+                
+                <div>
+                  <div className="text-gray-600 mb-1">Trade Amount</div>
+                  <div className="font-semibold text-gray-900">
+                    {(Number(trade.amount) / 1_000_000).toFixed(2)} ALGO
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="text-gray-600 mb-1">Buyer</div>
+                  <div className="font-mono text-xs text-gray-700">
+                    {trade.buyer.slice(0, 8)}...{trade.buyer.slice(-8)}
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="text-gray-600 mb-1">Funded By</div>
+                  <div className="font-mono text-xs text-gray-700">
+                    {trade.escrowProvider.slice(0, 8)}...{trade.escrowProvider.slice(-8)}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-3 p-3 bg-white rounded border border-green-200">
+                <div className="text-xs text-gray-600">Description</div>
+                <div className="text-sm text-gray-800 mt-1">{trade.description}</div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => handleExecuteTrade(trade.tradeId)}
+              className="ml-6 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+            >
+              <span>🚀</span>
+              <span>Execute Trade</span>
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+      <div className="flex items-start gap-2">
+        <span className="text-blue-600 text-lg">ℹ️</span>
+        <div className="text-sm text-blue-800">
+          <div className="font-semibold mb-1">What happens when you execute?</div>
+          <ul className="list-disc list-inside space-y-1 text-blue-700">
+            <li>Transfer the instrument NFT to the buyer</li>
+            <li>Pay the regulator tax from your wallet</li>
+            <li>Receive the trade amount in your wallet</li>
+            <li>Marketplace receives their fee automatically</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+)}

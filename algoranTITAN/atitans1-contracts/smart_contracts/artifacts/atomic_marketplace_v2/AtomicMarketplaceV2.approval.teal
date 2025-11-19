@@ -1,0 +1,887 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 0 1 100
+    bytecblock "emergencyPause" "listingCounter" "settlementCounter" 0x151f7c75 "totalListings" "totalVolume" "totalFeesCollected" "marketplaceFeeRate" "blContractId" "usdcAssetId" "usdtAssetId"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:3
+    // export class AtomicMarketplaceV2 extends Contract {
+    txn NumAppArgs
+    bz main_bare_routing@18
+    pushbytess 0xe9c0b141 0xfb85f994 0x3f382f67 0x74076a02 0xc13b4577 0x5126eed0 0x76c39ba4 0x22e12b7c 0xb579946d 0x4f56808d 0x8a19cdbd 0x3b95c48c 0xd42fd39f // method "initializeMarketplace(string,uint64,uint64,uint64,uint64)string", method "createListing(uint64,uint64,uint64,uint64,uint64,uint64)uint64", method "atomicPurchase(uint64,uint64,uint64,uint64)uint64", method "atomicCrossBorderPurchase(uint64,uint64,uint64,uint64,uint64,uint64)uint64", method "getListingInfo(uint64)string", method "getSettlementInfo(uint64)string", method "getMarketplaceStats()string", method "getUserStats(string)string", method "cancelListing(uint64)string", method "updateListing(uint64,uint64,uint64,uint64)string", method "emergencyPauseMarketplace()string", method "resumeMarketplace()string", method "withdrawMarketplaceFees(uint64,uint64)string"
+    txna ApplicationArgs 0
+    match main_initializeMarketplace_route@3 main_createListing_route@4 main_atomicPurchase_route@5 main_atomicCrossBorderPurchase_route@6 main_getListingInfo_route@7 main_getSettlementInfo_route@8 main_getMarketplaceStats_route@9 main_getUserStats_route@10 main_cancelListing_route@11 main_updateListing_route@12 main_emergencyPauseMarketplace_route@13 main_resumeMarketplace_route@14 main_withdrawMarketplaceFees_route@15
+
+main_after_if_else@22:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:3
+    // export class AtomicMarketplaceV2 extends Contract {
+    intc_0 // 0
+    return
+
+main_withdrawMarketplaceFees_route@15:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:234
+    // withdrawMarketplaceFees(amount: uint64, paymentMethod: uint64): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    pushbytes 0x151f7c7500274d61726b6574706c61636520666565732077697468647261776e207375636365737366756c6c79
+    log
+    intc_1 // 1
+    return
+
+main_resumeMarketplace_route@14:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:223
+    // resumeMarketplace(): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub resumeMarketplace
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    bytec_3 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_emergencyPauseMarketplace_route@13:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:212
+    // emergencyPauseMarketplace(): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub emergencyPauseMarketplace
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    bytec_3 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_updateListing_route@12:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:200-205
+    // updateListing(
+    //   listingId: uint64,
+    //   newPricePerShare: uint64,
+    //   newMinPurchase: uint64,
+    //   newMaxPurchase: uint64
+    // ): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    pushbytes 0x151f7c7500344c697374696e6720757064617465642077697468206e65772070726963696e6720616e64207075726368617365206c696d697473
+    log
+    intc_1 // 1
+    return
+
+main_cancelListing_route@11:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:193
+    // cancelListing(listingId: uint64): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    pushbytes 0x151f7c75001e4c697374696e672063616e63656c6c6564207375636365737366756c6c79
+    log
+    intc_1 // 1
+    return
+
+main_getUserStats_route@10:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:186
+    // getUserStats(userAddress: string): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    pushbytes 0x151f7c750031557365722053746174733a2054726164696e67207374617469737469637320617661696c61626c6520666f722075736572
+    log
+    intc_1 // 1
+    return
+
+main_getMarketplaceStats_route@9:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:179
+    // getMarketplaceStats(): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    pushbytes 0x151f7c7500384d61726b6574706c6163652053746174733a2054726164696e6720766f6c756d6520616e6420666565206461746120617661696c61626c65
+    log
+    intc_1 // 1
+    return
+
+main_getSettlementInfo_route@8:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:172
+    // getSettlementInfo(settlementId: uint64): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    pushbytes 0x151f7c750034536574746c656d656e743a2041746f6d696320736574746c656d656e7420636f6d706c65746564207375636365737366756c6c79
+    log
+    intc_1 // 1
+    return
+
+main_getListingInfo_route@7:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:165
+    // getListingInfo(listingId: uint64): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    pushbytes 0x151f7c75003f4c697374696e673a20416374697665206d61726b6574706c616365206c697374696e6720776974682066756c6c2064657461696c7320617661696c61626c65
+    log
+    intc_1 // 1
+    return
+
+main_atomicCrossBorderPurchase_route@6:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:150-157
+    // atomicCrossBorderPurchase(
+    //   listingId: uint64,
+    //   sharesPurchased: uint64,
+    //   fromCurrency: uint64,
+    //   toCurrency: uint64,
+    //   exchangeRate: uint64,
+    //   maxSlippage: uint64
+    // ): uint64 {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:3
+    // export class AtomicMarketplaceV2 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    btoi
+    txna ApplicationArgs 5
+    btoi
+    txna ApplicationArgs 6
+    btoi
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:150-157
+    // atomicCrossBorderPurchase(
+    //   listingId: uint64,
+    //   sharesPurchased: uint64,
+    //   fromCurrency: uint64,
+    //   toCurrency: uint64,
+    //   exchangeRate: uint64,
+    //   maxSlippage: uint64
+    // ): uint64 {
+    callsub atomicCrossBorderPurchase
+    itob
+    bytec_3 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_atomicPurchase_route@5:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:108-113
+    // atomicPurchase(
+    //   listingId: uint64,
+    //   sharesPurchased: uint64,
+    //   paymentMethod: uint64,
+    //   maxSlippage: uint64
+    // ): uint64 {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:3
+    // export class AtomicMarketplaceV2 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    btoi
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:108-113
+    // atomicPurchase(
+    //   listingId: uint64,
+    //   sharesPurchased: uint64,
+    //   paymentMethod: uint64,
+    //   maxSlippage: uint64
+    // ): uint64 {
+    callsub atomicPurchase
+    itob
+    bytec_3 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_createListing_route@4:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:77-84
+    // createListing(
+    //   blId: uint64,
+    //   pricePerShare: uint64,
+    //   totalShares: uint64,
+    //   minPurchase: uint64,
+    //   maxPurchase: uint64,
+    //   paymentMethods: uint64
+    // ): uint64 {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:3
+    // export class AtomicMarketplaceV2 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    btoi
+    txna ApplicationArgs 5
+    btoi
+    txna ApplicationArgs 6
+    btoi
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:77-84
+    // createListing(
+    //   blId: uint64,
+    //   pricePerShare: uint64,
+    //   totalShares: uint64,
+    //   minPurchase: uint64,
+    //   maxPurchase: uint64,
+    //   paymentMethods: uint64
+    // ): uint64 {
+    callsub createListing
+    itob
+    bytec_3 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_initializeMarketplace_route@3:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:23-29
+    // initializeMarketplace(
+    //   adminAddress: string,
+    //   blContractId: uint64,
+    //   marketplaceFeeRate: uint64,
+    //   usdcAssetId: uint64,
+    //   usdtAssetId: uint64
+    // ): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:3
+    // export class AtomicMarketplaceV2 extends Contract {
+    txna ApplicationArgs 1
+    extract 2 0
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    btoi
+    txna ApplicationArgs 5
+    btoi
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:23-29
+    // initializeMarketplace(
+    //   adminAddress: string,
+    //   blContractId: uint64,
+    //   marketplaceFeeRate: uint64,
+    //   usdcAssetId: uint64,
+    //   usdtAssetId: uint64
+    // ): string {
+    callsub initializeMarketplace
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    bytec_3 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_bare_routing@18:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:3
+    // export class AtomicMarketplaceV2 extends Contract {
+    txn OnCompletion
+    bnz main_after_if_else@22
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    intc_1 // 1
+    return
+
+
+// smart_contracts/atomic_marketplace_v2/contract.algo.ts::AtomicMarketplaceV2.initializeMarketplace(adminAddress: bytes, blContractId: uint64, marketplaceFeeRate: uint64, usdcAssetId: uint64, usdtAssetId: uint64) -> bytes:
+initializeMarketplace:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:23-29
+    // initializeMarketplace(
+    //   adminAddress: string,
+    //   blContractId: uint64,
+    //   marketplaceFeeRate: uint64,
+    //   usdcAssetId: uint64,
+    //   usdtAssetId: uint64
+    // ): string {
+    proto 5 1
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:5
+    // listingCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_1 // "listingCounter"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:31
+    // if (!this.listingCounter.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz initializeMarketplace_after_if_else@2
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:5
+    // listingCounter = GlobalState<uint64>()
+    bytec_1 // "listingCounter"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:32
+    // this.listingCounter.value = 0
+    intc_0 // 0
+    app_global_put
+
+initializeMarketplace_after_if_else@2:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:6
+    // settlementCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_2 // "settlementCounter"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:35
+    // if (!this.settlementCounter.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz initializeMarketplace_after_if_else@4
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:6
+    // settlementCounter = GlobalState<uint64>()
+    bytec_2 // "settlementCounter"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:36
+    // this.settlementCounter.value = 0
+    intc_0 // 0
+    app_global_put
+
+initializeMarketplace_after_if_else@4:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:7
+    // totalListings = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 4 // "totalListings"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:39
+    // if (!this.totalListings.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz initializeMarketplace_after_if_else@6
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:7
+    // totalListings = GlobalState<uint64>()
+    bytec 4 // "totalListings"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:40
+    // this.totalListings.value = 0
+    intc_0 // 0
+    app_global_put
+
+initializeMarketplace_after_if_else@6:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:8
+    // totalVolume = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 5 // "totalVolume"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:43
+    // if (!this.totalVolume.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz initializeMarketplace_after_if_else@8
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:8
+    // totalVolume = GlobalState<uint64>()
+    bytec 5 // "totalVolume"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:44
+    // this.totalVolume.value = 0
+    intc_0 // 0
+    app_global_put
+
+initializeMarketplace_after_if_else@8:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:9
+    // totalFeesCollected = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 6 // "totalFeesCollected"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:47
+    // if (!this.totalFeesCollected.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz initializeMarketplace_after_if_else@10
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:9
+    // totalFeesCollected = GlobalState<uint64>()
+    bytec 6 // "totalFeesCollected"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:48
+    // this.totalFeesCollected.value = 0
+    intc_0 // 0
+    app_global_put
+
+initializeMarketplace_after_if_else@10:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:10
+    // marketplaceFeeRate = GlobalState<uint64>() // Basis points (100 = 1%)
+    intc_0 // 0
+    bytec 7 // "marketplaceFeeRate"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:51
+    // if (!this.marketplaceFeeRate.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz initializeMarketplace_after_if_else@12
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:10
+    // marketplaceFeeRate = GlobalState<uint64>() // Basis points (100 = 1%)
+    bytec 7 // "marketplaceFeeRate"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:52
+    // this.marketplaceFeeRate.value = marketplaceFeeRate
+    frame_dig -3
+    app_global_put
+
+initializeMarketplace_after_if_else@12:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:13
+    // blContractId = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 8 // "blContractId"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:55
+    // if (!this.blContractId.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz initializeMarketplace_after_if_else@14
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:13
+    // blContractId = GlobalState<uint64>()
+    bytec 8 // "blContractId"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:56
+    // this.blContractId.value = blContractId
+    frame_dig -4
+    app_global_put
+
+initializeMarketplace_after_if_else@14:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:17
+    // usdcAssetId = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 9 // "usdcAssetId"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:59
+    // if (!this.usdcAssetId.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz initializeMarketplace_after_if_else@16
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:17
+    // usdcAssetId = GlobalState<uint64>()
+    bytec 9 // "usdcAssetId"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:60
+    // this.usdcAssetId.value = usdcAssetId
+    frame_dig -2
+    app_global_put
+
+initializeMarketplace_after_if_else@16:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:18
+    // usdtAssetId = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 10 // "usdtAssetId"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:63
+    // if (!this.usdtAssetId.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz initializeMarketplace_after_if_else@18
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:18
+    // usdtAssetId = GlobalState<uint64>()
+    bytec 10 // "usdtAssetId"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:64
+    // this.usdtAssetId.value = usdtAssetId
+    frame_dig -1
+    app_global_put
+
+initializeMarketplace_after_if_else@18:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:14
+    // emergencyPause = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_0 // "emergencyPause"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:67
+    // if (!this.emergencyPause.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz initializeMarketplace_after_if_else@20
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:14
+    // emergencyPause = GlobalState<uint64>()
+    bytec_0 // "emergencyPause"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:68
+    // this.emergencyPause.value = 0
+    intc_0 // 0
+    app_global_put
+
+initializeMarketplace_after_if_else@20:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:71
+    // return `Atomic Marketplace V2 initialized with admin and fee configuration`
+    pushbytes "Atomic Marketplace V2 initialized with admin and fee configuration"
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v2/contract.algo.ts::AtomicMarketplaceV2.createListing(blId: uint64, pricePerShare: uint64, totalShares: uint64, minPurchase: uint64, maxPurchase: uint64, paymentMethods: uint64) -> uint64:
+createListing:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:77-84
+    // createListing(
+    //   blId: uint64,
+    //   pricePerShare: uint64,
+    //   totalShares: uint64,
+    //   minPurchase: uint64,
+    //   maxPurchase: uint64,
+    //   paymentMethods: uint64
+    // ): uint64 {
+    proto 6 1
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:5
+    // listingCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_1 // "listingCounter"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:86
+    // if (!this.listingCounter.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz createListing_after_if_else@2
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:5
+    // listingCounter = GlobalState<uint64>()
+    bytec_1 // "listingCounter"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:87
+    // this.listingCounter.value = 0
+    intc_0 // 0
+    app_global_put
+
+createListing_after_if_else@2:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:7
+    // totalListings = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 4 // "totalListings"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:90
+    // if (!this.totalListings.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz createListing_after_if_else@4
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:7
+    // totalListings = GlobalState<uint64>()
+    bytec 4 // "totalListings"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:91
+    // this.totalListings.value = 0
+    intc_0 // 0
+    app_global_put
+
+createListing_after_if_else@4:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:5
+    // listingCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_1 // "listingCounter"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:95
+    // this.listingCounter.value = this.listingCounter.value + 1
+    intc_1 // 1
+    +
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:5
+    // listingCounter = GlobalState<uint64>()
+    bytec_1 // "listingCounter"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:95
+    // this.listingCounter.value = this.listingCounter.value + 1
+    swap
+    app_global_put
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:5
+    // listingCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_1 // "listingCounter"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:7
+    // totalListings = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 4 // "totalListings"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:99
+    // this.totalListings.value = this.totalListings.value + 1
+    intc_1 // 1
+    +
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:7
+    // totalListings = GlobalState<uint64>()
+    bytec 4 // "totalListings"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:99
+    // this.totalListings.value = this.totalListings.value + 1
+    swap
+    app_global_put
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:101
+    // return newListingId
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v2/contract.algo.ts::AtomicMarketplaceV2.atomicPurchase(listingId: uint64, sharesPurchased: uint64, paymentMethod: uint64, maxSlippage: uint64) -> uint64:
+atomicPurchase:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:108-113
+    // atomicPurchase(
+    //   listingId: uint64,
+    //   sharesPurchased: uint64,
+    //   paymentMethod: uint64,
+    //   maxSlippage: uint64
+    // ): uint64 {
+    proto 4 1
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:6
+    // settlementCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_2 // "settlementCounter"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:115
+    // if (!this.settlementCounter.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz atomicPurchase_after_if_else@2
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:6
+    // settlementCounter = GlobalState<uint64>()
+    bytec_2 // "settlementCounter"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:116
+    // this.settlementCounter.value = 0
+    intc_0 // 0
+    app_global_put
+
+atomicPurchase_after_if_else@2:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:8
+    // totalVolume = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 5 // "totalVolume"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:119
+    // if (!this.totalVolume.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz atomicPurchase_after_if_else@4
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:8
+    // totalVolume = GlobalState<uint64>()
+    bytec 5 // "totalVolume"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:120
+    // this.totalVolume.value = 0
+    intc_0 // 0
+    app_global_put
+
+atomicPurchase_after_if_else@4:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:9
+    // totalFeesCollected = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 6 // "totalFeesCollected"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:123
+    // if (!this.totalFeesCollected.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz atomicPurchase_after_if_else@6
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:9
+    // totalFeesCollected = GlobalState<uint64>()
+    bytec 6 // "totalFeesCollected"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:124
+    // this.totalFeesCollected.value = 0
+    intc_0 // 0
+    app_global_put
+
+atomicPurchase_after_if_else@6:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:10
+    // marketplaceFeeRate = GlobalState<uint64>() // Basis points (100 = 1%)
+    intc_0 // 0
+    bytec 7 // "marketplaceFeeRate"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:127
+    // if (!this.marketplaceFeeRate.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz atomicPurchase_after_if_else@8
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:10
+    // marketplaceFeeRate = GlobalState<uint64>() // Basis points (100 = 1%)
+    bytec 7 // "marketplaceFeeRate"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:128
+    // this.marketplaceFeeRate.value = 100 // Default 1%
+    intc_2 // 100
+    app_global_put
+
+atomicPurchase_after_if_else@8:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:6
+    // settlementCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_2 // "settlementCounter"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:132
+    // this.settlementCounter.value = this.settlementCounter.value + 1
+    intc_1 // 1
+    +
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:6
+    // settlementCounter = GlobalState<uint64>()
+    bytec_2 // "settlementCounter"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:132
+    // this.settlementCounter.value = this.settlementCounter.value + 1
+    swap
+    app_global_put
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:6
+    // settlementCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_2 // "settlementCounter"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:137
+    // const totalPrice: uint64 = sharesPurchased * pricePerShare
+    frame_dig -3
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:136
+    // const pricePerShare: uint64 = 2000000 // 2 ALGO per share
+    pushint 2000000 // 2000000
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:137
+    // const totalPrice: uint64 = sharesPurchased * pricePerShare
+    *
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:138
+    // const feeAmount: uint64 = totalPrice / 100 // Simple 1% fee calculation
+    dup
+    intc_2 // 100
+    /
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:8
+    // totalVolume = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 5 // "totalVolume"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:141
+    // this.totalVolume.value = this.totalVolume.value + totalPrice
+    uncover 2
+    +
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:8
+    // totalVolume = GlobalState<uint64>()
+    bytec 5 // "totalVolume"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:141
+    // this.totalVolume.value = this.totalVolume.value + totalPrice
+    swap
+    app_global_put
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:9
+    // totalFeesCollected = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 6 // "totalFeesCollected"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:142
+    // this.totalFeesCollected.value = this.totalFeesCollected.value + feeAmount
+    +
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:9
+    // totalFeesCollected = GlobalState<uint64>()
+    bytec 6 // "totalFeesCollected"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:142
+    // this.totalFeesCollected.value = this.totalFeesCollected.value + feeAmount
+    swap
+    app_global_put
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:144
+    // return settlementId
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v2/contract.algo.ts::AtomicMarketplaceV2.atomicCrossBorderPurchase(listingId: uint64, sharesPurchased: uint64, fromCurrency: uint64, toCurrency: uint64, exchangeRate: uint64, maxSlippage: uint64) -> uint64:
+atomicCrossBorderPurchase:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:150-157
+    // atomicCrossBorderPurchase(
+    //   listingId: uint64,
+    //   sharesPurchased: uint64,
+    //   fromCurrency: uint64,
+    //   toCurrency: uint64,
+    //   exchangeRate: uint64,
+    //   maxSlippage: uint64
+    // ): uint64 {
+    proto 6 1
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:159
+    // return this.atomicPurchase(listingId, sharesPurchased, 2, maxSlippage)
+    frame_dig -6
+    frame_dig -5
+    pushint 2 // 2
+    frame_dig -1
+    callsub atomicPurchase
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v2/contract.algo.ts::AtomicMarketplaceV2.emergencyPauseMarketplace() -> bytes:
+emergencyPauseMarketplace:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:14
+    // emergencyPause = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_0 // "emergencyPause"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:213
+    // if (!this.emergencyPause.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz emergencyPauseMarketplace_after_if_else@2
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:14
+    // emergencyPause = GlobalState<uint64>()
+    bytec_0 // "emergencyPause"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:214
+    // this.emergencyPause.value = 0
+    intc_0 // 0
+    app_global_put
+
+emergencyPauseMarketplace_after_if_else@2:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:14
+    // emergencyPause = GlobalState<uint64>()
+    bytec_0 // "emergencyPause"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:216
+    // this.emergencyPause.value = 1
+    intc_1 // 1
+    app_global_put
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:217
+    // return `Marketplace paused for emergency`
+    pushbytes "Marketplace paused for emergency"
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v2/contract.algo.ts::AtomicMarketplaceV2.resumeMarketplace() -> bytes:
+resumeMarketplace:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:14
+    // emergencyPause = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_0 // "emergencyPause"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:224
+    // if (!this.emergencyPause.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz resumeMarketplace_after_if_else@2
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:14
+    // emergencyPause = GlobalState<uint64>()
+    bytec_0 // "emergencyPause"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:225
+    // this.emergencyPause.value = 0
+    intc_0 // 0
+    app_global_put
+
+resumeMarketplace_after_if_else@2:
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:14
+    // emergencyPause = GlobalState<uint64>()
+    bytec_0 // "emergencyPause"
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:227
+    // this.emergencyPause.value = 0
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/atomic_marketplace_v2/contract.algo.ts:228
+    // return `Marketplace operations resumed`
+    pushbytes "Marketplace operations resumed"
+    retsub

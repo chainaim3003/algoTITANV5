@@ -1,0 +1,433 @@
+[
+  {
+    "transportDocumentReference": "ALGO-BL-2025-001",
+    "shippingInstructionsReference": "f123abcd-8901-2345-6789-abcdef123456",
+    "transportDocumentStatus": "ISSUED",
+    "transportDocumentTypeCode": "BOL",
+    "isShippedOnBoardType": true,
+    "freightPaymentTermCode": "PRE",
+    "isElectronic": true,
+    "isToOrder": true,
+    "blType": "OPEN",
+    "shippedOnBoardDate": "2025-01-15",
+    "termsAndConditions": "Negotiable Bill of Lading for trade finance. Exporter holds title.",
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY", 
+    "cargoMovementTypeAtOrigin": "FCL",
+    "cargoMovementTypeAtDestination": "FCL",
+    "serviceContractReference": "SCR-COTTON-2025",
+    "declaredValue": {
+      "amount": 150000,
+      "currency": "USD"
+    },
+    "shipmentTerms": "CIF",
+    "estimatedArrival": "2025-02-05",
+    "carrierCode": "MAEU",
+    "carrierCodeListProvider": "SMDG",
+    "issuedBy": "CARRIER",
+    "titleHolder": "EXPORTER",
+    "canBeFinanced": true,
+    "transports": {
+      "plannedDepartureDate": "2025-01-16",
+      "plannedArrivalDate": "2025-02-05",
+      "portOfLoading": {
+        "UNLocationCode": "INMAA",
+        "portName": "Chennai Port"
+      },
+      "portOfDischarge": {
+        "UNLocationCode": "DEHAM",
+        "portName": "Hamburg Port"
+      },
+      "vesselVoyages": [
+        {
+          "vesselName": "Maersk Tirupur Express",
+          "carrierExportVoyageNumber": "2025A"
+        }
+      ]
+    },
+    "documentParties": {
+      "issuingParty": {
+        "partyName": "Maersk Line",
+        "role": "CARRIER",
+        "address": {
+          "street": "Esplanaden",
+          "streetNumber": "50",
+          "city": "Copenhagen",
+          "countryCode": "DK"
+        },
+        "identifyingCodes": [
+          {
+            "codeListProvider": "GLEIF",
+            "codeListName": "LEI",
+            "partyCode": "5493001KJTIIGC8Y1R12"
+          }
+        ]
+      },
+      "shipper": {
+        "partyName": "Tirupur Textiles Ltd",
+        "role": "EXPORTER",
+        "titleHolder": true,
+        "displayedAddress": [
+          "Industrial Estate, Block A",
+          "Tirupur, Tamil Nadu 641604, India"
+        ],
+        "partyContactDetails": [
+          {
+            "name": "Raj Kumar",
+            "email": "raj.kumar@tirupur-textiles.com",
+            "phone": "+91-421-2234567"
+          }
+        ]
+      },
+      "consignee": {
+        "partyName": "Fashion House GmbH",
+        "role": "END_BUYER", 
+        "creditRating": "A+",
+        "displayedAddress": [
+          "Große Elbstraße 68",
+          "Hamburg 22767, Germany"
+        ],
+        "partyContactDetails": [
+          {
+            "name": "Hans Mueller",
+            "email": "procurement@fashionhouse.de"
+          }
+        ]
+      }
+    },
+    "consignmentItems": [
+      {
+        "carrierBookingReference": "CBR_2025_COTTON",
+        "descriptionOfGoods": ["Premium Organic Cotton Textiles"],
+        "HSCodes": ["520512"],
+        "cargoItems": [
+          {
+            "equipmentReference": "MAEU2025001",
+            "cargoGrossWeight": {
+              "value": 18500,
+              "unit": "KGM"
+            },
+            "outerPackaging": {
+              "numberOfPackages": 240,
+              "packageCode": "BAL",
+              "description": "Cotton Bales"
+            }
+          }
+        ]
+      }
+    ],
+    "ipfsData": {
+      "metadataHash": "QmTirupurCotton2025abc123def456ghi789",
+      "imageHash": "QmCottonBales240Premiumjkl012mno345pqr678",
+      "documentHash": "QmBLDocument2025Signedstu901vwx234yz567",
+      "encryptionKey": "AES256-encrypted-key-here"
+    },
+    "rwaTokenization": {
+      "canTokenize": true,
+      "minInvestment": 50,
+      "totalShares": 3000,
+      "sharePrice": 50,
+      "expectedYield": 12.5,
+      "paymentTerms": 60,
+      "riskRating": "B+",
+      "marketplaceEligible": true
+    },
+    "charges": [
+      {
+        "chargeName": "BL Fee",
+        "currencyAmount": 75,
+        "currencyCode": "USD",
+        "paymentTermCode": "PRE",
+        "calculationBasis": "Per transport document",
+        "unitPrice": 75,
+        "quantity": 1
+      }
+    ],
+    "invoicePayableAt": {
+      "UNLocationCode": "DEHAM"
+    }
+  },
+  {
+    "transportDocumentReference": "ALGO-BL-2025-002",
+    "shippingInstructionsReference": "g456efgh-1234-5678-9012-cdefgh456789",
+    "transportDocumentStatus": "ISSUED",
+    "transportDocumentTypeCode": "BOL",
+    "isShippedOnBoardType": true,
+    "freightPaymentTermCode": "PRE",
+    "isElectronic": true,
+    "isToOrder": true,
+    "blType": "OPEN",
+    "shippedOnBoardDate": "2025-01-18",
+    "termsAndConditions": "Negotiable Bill of Lading for trade finance. Exporter holds title.",
+    "receiptTypeAtOrigin": "CFS",
+    "deliveryTypeAtDestination": "CY",
+    "cargoMovementTypeAtOrigin": "LCL",
+    "cargoMovementTypeAtDestination": "FCL",
+    "serviceContractReference": "SCR-SPICE-2025",
+    "declaredValue": {
+      "amount": 75000,
+      "currency": "USD"
+    },
+    "shipmentTerms": "FOB",
+    "estimatedArrival": "2025-01-25",
+    "carrierCode": "MSCU",
+    "carrierCodeListProvider": "SMDG",
+    "issuedBy": "CARRIER",
+    "titleHolder": "EXPORTER",
+    "canBeFinanced": true,
+    "transports": {
+      "plannedDepartureDate": "2025-01-19",
+      "plannedArrivalDate": "2025-01-25",
+      "portOfLoading": {
+        "UNLocationCode": "INCOK",
+        "portName": "Kochi Port"
+      },
+      "portOfDischarge": {
+        "UNLocationCode": "AEDXB",
+        "portName": "Dubai Port"
+      },
+      "vesselVoyages": [
+        {
+          "vesselName": "MSC Kerala Express",
+          "carrierExportVoyageNumber": "2025B"
+        }
+      ]
+    },
+    "documentParties": {
+      "issuingParty": {
+        "partyName": "MSC Mediterranean Shipping Company",
+        "role": "CARRIER",
+        "address": {
+          "street": "Terminal Road",
+          "streetNumber": "12",
+          "city": "Geneva",
+          "countryCode": "CH"
+        }
+      },
+      "shipper": {
+        "partyName": "Kerala Spice Traders",
+        "role": "EXPORTER",
+        "titleHolder": true,
+        "displayedAddress": [
+          "Spice Market Complex",
+          "Kochi, Kerala 682001, India"
+        ],
+        "partyContactDetails": [
+          {
+            "name": "Priya Nair",
+            "email": "priya@keralaspices.com",
+            "phone": "+91-484-2345678"
+          }
+        ]
+      },
+      "consignee": {
+        "partyName": "Al-Arabiya Trading LLC",
+        "role": "END_BUYER",
+        "creditRating": "A-",
+        "displayedAddress": [
+          "Dubai World Trade Centre",
+          "Dubai, UAE"
+        ],
+        "partyContactDetails": [
+          {
+            "name": "Ahmed Al-Mansouri",
+            "email": "ahmed@alarabiya-trading.ae"
+          }
+        ]
+      }
+    },
+    "consignmentItems": [
+      {
+        "carrierBookingReference": "CBR_2025_SPICE",
+        "descriptionOfGoods": ["Premium Cardamom & Black Pepper"],
+        "HSCodes": ["090831", "090411"],
+        "cargoItems": [
+          {
+            "equipmentReference": "MSCU2025002",
+            "cargoGrossWeight": {
+              "value": 8500,
+              "unit": "KGM"
+            },
+            "outerPackaging": {
+              "numberOfPackages": 170,
+              "packageCode": "BAG",
+              "description": "Jute Bags"
+            }
+          }
+        ]
+      }
+    ],
+    "ipfsData": {
+      "metadataHash": "QmKeralaSpice2025hij789klm012nop345",
+      "imageHash": "QmSpiceBags170Premiumqrs678tuv901wxy234",
+      "documentHash": "QmBLSpiceDocument2025zab345cde678fgh901",
+      "encryptionKey": "AES256-encrypted-spice-key"
+    },
+    "rwaTokenization": {
+      "canTokenize": true,
+      "minInvestment": 50,
+      "totalShares": 1500,
+      "sharePrice": 50,
+      "expectedYield": 14.2,
+      "paymentTerms": 45,
+      "riskRating": "B",
+      "marketplaceEligible": true
+    },
+    "charges": [
+      {
+        "chargeName": "Documentation Fee",
+        "currencyAmount": 45,
+        "currencyCode": "USD",
+        "paymentTermCode": "PRE",
+        "calculationBasis": "Per transport document",
+        "unitPrice": 45,
+        "quantity": 1
+      }
+    ],
+    "invoicePayableAt": {
+      "UNLocationCode": "AEDXB"
+    }
+  },
+  {
+    "transportDocumentReference": "ALGO-BL-2025-003",
+    "shippingInstructionsReference": "h789ijkl-5678-9012-3456-efghij789012",
+    "transportDocumentStatus": "ISSUED",
+    "transportDocumentTypeCode": "BOL",
+    "isShippedOnBoardType": false,
+    "freightPaymentTermCode": "COL",
+    "isElectronic": true,
+    "isToOrder": false,
+    "blType": "STRAIGHT",
+    "shippedOnBoardDate": "2025-01-20",
+    "termsAndConditions": "Non-negotiable Bill of Lading. Direct delivery to named consignee only.",
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CFS",
+    "cargoMovementTypeAtOrigin": "FCL",
+    "cargoMovementTypeAtDestination": "LCL",
+    "serviceContractReference": "SCR-ELECTRONICS-2025",
+    "declaredValue": {
+      "amount": 95000,
+      "currency": "USD"
+    },
+    "shipmentTerms": "EXW",
+    "estimatedArrival": "2025-02-15",
+    "carrierCode": "COSCO",
+    "carrierCodeListProvider": "SMDG",
+    "issuedBy": "CARRIER",
+    "titleHolder": "CONSIGNEE",
+    "canBeFinanced": false,
+    "transports": {
+      "plannedDepartureDate": "2025-01-22",
+      "plannedArrivalDate": "2025-02-15",
+      "portOfLoading": {
+        "UNLocationCode": "CNSHA",
+        "portName": "Shanghai Port"
+      },
+      "portOfDischarge": {
+        "UNLocationCode": "USLAX",
+        "portName": "Los Angeles Port"
+      },
+      "vesselVoyages": [
+        {
+          "vesselName": "COSCO Shanghai Express",
+          "carrierExportVoyageNumber": "2025C"
+        }
+      ]
+    },
+    "documentParties": {
+      "issuingParty": {
+        "partyName": "COSCO Shipping Lines",
+        "role": "CARRIER",
+        "address": {
+          "street": "COSCO Plaza",
+          "streetNumber": "1",
+          "city": "Shanghai",
+          "countryCode": "CN"
+        }
+      },
+      "shipper": {
+        "partyName": "Shanghai Electronics Ltd",
+        "role": "EXPORTER",
+        "titleHolder": false,
+        "displayedAddress": [
+          "Tech Park, Building 5",
+          "Shanghai 200000, China"
+        ],
+        "partyContactDetails": [
+          {
+            "name": "Li Wei",
+            "email": "li.wei@shanghai-electronics.cn",
+            "phone": "+86-21-12345678"
+          }
+        ]
+      },
+      "consignee": {
+        "partyName": "US Electronics Distributors Inc",
+        "role": "NAMED_CONSIGNEE",
+        "note": "Goods prepaid - direct delivery only",
+        "displayedAddress": [
+          "Distribution Center 4",
+          "Los Angeles, CA 90012, USA"
+        ],
+        "partyContactDetails": [
+          {
+            "name": "John Smith",
+            "email": "john.smith@uselectronics.com"
+          }
+        ]
+      }
+    },
+    "consignmentItems": [
+      {
+        "carrierBookingReference": "CBR_2025_ELECTRONICS",
+        "descriptionOfGoods": ["Consumer Electronics & Components"],
+        "HSCodes": ["847130", "854232"],
+        "cargoItems": [
+          {
+            "equipmentReference": "COSCO2025003",
+            "cargoGrossWeight": {
+              "value": 12000,
+              "unit": "KGM"
+            },
+            "outerPackaging": {
+              "numberOfPackages": 300,
+              "packageCode": "CTN",
+              "description": "Cartons"
+            }
+          }
+        ]
+      }
+    ],
+    "ipfsData": {
+      "metadataHash": "QmShanghaiElectronics2025abc123def456",
+      "imageHash": "QmElectronicsCartons300ghi789jkl012mno345",
+      "documentHash": "QmBLElectronicsDocument2025pqr678stu901",
+      "encryptionKey": "AES256-encrypted-electronics-key"
+    },
+    "rwaTokenization": {
+      "canTokenize": false,
+      "reason": "Straight BL cannot be used for financing or marketplace trading",
+      "minInvestment": 0,
+      "totalShares": 0,
+      "sharePrice": 0,
+      "expectedYield": 0,
+      "paymentTerms": 0,
+      "riskRating": "N/A",
+      "marketplaceEligible": false
+    },
+    "charges": [
+      {
+        "chargeName": "Handling Fee",
+        "currencyAmount": 120,
+        "currencyCode": "USD",
+        "paymentTermCode": "COL",
+        "calculationBasis": "Per transport document",
+        "unitPrice": 120,
+        "quantity": 1
+      }
+    ],
+    "invoicePayableAt": {
+      "UNLocationCode": "CNSHA"
+    }
+  }
+]

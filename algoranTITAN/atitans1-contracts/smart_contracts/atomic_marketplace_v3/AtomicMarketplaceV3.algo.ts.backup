@@ -1,0 +1,475 @@
+/**
+ * Atomic Marketplace V3 Contract
+ *
+ * Handles trading of trade instruments with atomic settlement
+ * Supports ALGO and USDC payments with 1% marketplace fee
+ */
+import {
+  Account,
+  Contract,
+  abimethod,
+  arc4,
+  BoxMap,
+  Global,
+  GlobalState,
+  Txn,
+  itxn,
+  Asset,
+  assert,
+  type uint64,
+  gtxn,
+  type bytes,
+} from '@algorandfoundation/algorand-typescript'
+
+/**
+ * Marketplace listing structure
+ */
+class InstrumentListing extends arc4.Struct<{
+  listingId: arc4.UintN64
+  instrumentId: arc4.UintN64
+  seller: arc4.Address
+  askPriceAlgo: arc4.UintN64      // Price in microAlgos (0 if not accepting ALGO)
+  askPriceUSDC: arc4.UintN64      // Price in USDC base units (0 if not accepting USDC)
+  listingTime: arc4.UintN64
+  validUntil: arc4.UintN64
+  isActive: arc4.Bool
+  listingType: arc4.UintN64       // 1=Fixed Price, 2=Auction, 3=Discount Bid
+  reservePrice: arc4.UintN64      // Minimum acceptable price
+  marketplaceFee: arc4.UintN64    // Fee percentage (100 = 1%)
+}> {}
+
+/**
+ * Sale record for tracking completed transactions
+ */
+class InstrumentSale extends arc4.Struct<{
+  saleId: arc4.UintN64
+  instrumentId: arc4.UintN64
+  seller: arc4.Address
+  buyer: arc4.Address
+  salePrice: arc4.UintN64
+  currency: arc4.UintN64          // 1=ALGO, 2=USDC
+  marketplaceFee: arc4.UintN64
+  saleTime: arc4.UintN64
+  txnHash: arc4.Str
+}> {}
+
+/**
+ * Discount bid for below-face-value purchasing
+ */
+class DiscountBid extends arc4.Struct<{
+  bidId: arc4.UintN64
+  instrumentId: arc4.UintN64
+  bidder: arc4.Address
+  bidAmount: arc4.UintN64
+  discountRate: arc4.UintN64      // Percentage below face value
+  currency: arc4.UintN64
+  validUntil: arc4.UintN64
+  isActive: arc4.Bool
+  financingTerms: arc4.Str
+}> {}
+
+export default class AtomicMarketplaceV3 extends Contract {
+  /**
+   * Storage maps
+   */
+  public listings = BoxMap<uint64, InstrumentListing>({ keyPrefix: 'listings' })
+  public sales = BoxMap<uint64, InstrumentSale>({ keyPrefix: 'sales' })
+  public discountBids = BoxMap<uint64, DiscountBid>({ keyPrefix: 'bids' })
+  public activeListings = BoxMap<uint64, arc4.Bool>({ keyPrefix: 'active' })
+  
+  /**
+   * Global state
+   */
+  public nextListingId = GlobalState<uint64>()
+  public nextSaleId = GlobalState<uint64>()
+  public nextBidId = GlobalState<uint64>()
+  public totalVolume = GlobalState<uint64>()
+  public totalFees = GlobalState<uint64>()
+  public marketplaceFeeRate = GlobalState<uint64>()
+  public usdcAssetId = GlobalState<uint64>()
+  public registryAppId = GlobalState<uint64>()
+
+  /**
+   * Initialize marketplace with registry contract
+   */
+  @abimethod()
+  public initialize(registryAppId: uint64, usdcAssetId: uint64): boolean {
+    // Only allow initialization once
+    assert(this.registryAppId.value === 0, 'Already initialized')
+    assert(Txn.sender === Global.creatorAddress, 'Only creator can initialize')
+    
+    this.nextListingId.value = 1
+    this.nextSaleId.value = 1
+    this.nextBidId.value = 1
+    this.totalVolume.value = 0
+    this.totalFees.value = 0
+    this.marketplaceFeeRate.value = 100 // 1%
+    this.registryAppId.value = registryAppId
+    this.usdcAssetId.value = usdcAssetId
+    
+    return true
+  }
+
+  /**
+   * List instrument for sale with dual currency support
+   */
+  @abimethod()
+  public listInstrument(
+    instrumentId: uint64,
+    askPriceAlgo: uint64,
+    askPriceUSDC: uint64,
+    validityPeriod: uint64,
+    listingType: uint64
+  ): uint64 {
+    // Must accept at least one currency
+    assert(askPriceAlgo > 0 || askPriceUSDC > 0, 'Must set price in at least one currency')
+    
+    const listingId = this.nextListingId.value
+    
+    // TODO: Verify instrument ownership via cross-contract call to registry
+    // For now, assume verification is done off-chain
+    
+    const listing = new InstrumentListing({
+      listingId: new arc4.UintN64(listingId),
+      instrumentId: new arc4.UintN64(instrumentId),
+      seller: new arc4.Address(Txn.sender),
+      askPriceAlgo: new arc4.UintN64(askPriceAlgo),
+      askPriceUSDC: new arc4.UintN64(askPriceUSDC),
+      listingTime: new arc4.UintN64(Global.latestTimestamp),
+      validUntil: new arc4.UintN64(Global.latestTimestamp + validityPeriod),
+      isActive: new arc4.Bool(true),
+      listingType: new arc4.UintN64(listingType),
+      reservePrice: new arc4.UintN64(Math.min(askPriceAlgo, askPriceUSDC)),
+      marketplaceFee: new arc4.UintN64(this.marketplaceFeeRate.value)
+    })
+    
+    this.listings(listingId).value = listing
+    this.activeListings(listingId).value = new arc4.Bool(true)
+    this.nextListingId.value = listingId + 1
+    
+    return listingId
+  }
+
+  /**
+   * Purchase instrument with ALGO payment
+   */
+  @abimethod()
+  public purchaseWithAlgo(
+    listingId: uint64,
+    payment: gtxn.PaymentTxn
+  ): boolean {
+    assert(this.listings(listingId).exists, 'Listing not found')
+    const listing = this.listings(listingId).value
+    
+    // Validate listing
+    assert(listing.isActive.native === true, 'Listing inactive')
+    assert(listing.validUntil.native > Global.latestTimestamp, 'Listing expired')
+    assert(listing.askPriceAlgo.native > 0, 'ALGO not accepted for this listing')
+    
+    // Validate payment
+    assert(payment.amount === listing.askPriceAlgo.native, 'Incorrect payment amount')
+    assert(payment.receiver === Global.currentApplicationAddress, 'Payment to wrong address')
+    assert(payment.sender === Txn.sender, 'Payment sender mismatch')
+    
+    // Execute atomic settlement
+    this.executeAtomicSettlement(
+      listing,
+      Txn.sender.bytes,
+      payment.amount,
+      1 // ALGO currency
+    )
+    
+    return true
+  }
+
+  /**
+   * Purchase instrument with USDC payment
+   */
+  @abimethod()
+  public purchaseWithUSDC(
+    listingId: uint64,
+    usdcTransfer: gtxn.AssetTransferTxn
+  ): boolean {
+    assert(this.listings(listingId).exists, 'Listing not found')
+    const listing = this.listings(listingId).value
+    
+    // Validate listing
+    assert(listing.isActive.native === true, 'Listing inactive')
+    assert(listing.validUntil.native > Global.latestTimestamp, 'Listing expired')
+    assert(listing.askPriceUSDC.native > 0, 'USDC not accepted for this listing')
+    
+    // Validate USDC transfer
+    assert(usdcTransfer.xferAsset.id === this.usdcAssetId.value, 'Wrong asset')
+    assert(usdcTransfer.assetAmount === listing.askPriceUSDC.native, 'Incorrect USDC amount')
+    assert(usdcTransfer.assetReceiver === Global.currentApplicationAddress, 'USDC to wrong address')
+    assert(usdcTransfer.sender === Txn.sender, 'USDC sender mismatch')
+    
+    // Execute atomic settlement
+    this.executeAtomicSettlement(
+      listing,
+      Txn.sender.bytes,
+      usdcTransfer.assetAmount,
+      2 // USDC currency
+    )
+    
+    return true
+  }
+
+  /**
+   * Execute atomic settlement (payment distribution + asset transfer)
+   */
+  private executeAtomicSettlement(
+    listing: InstrumentListing,
+    buyer: bytes,
+    totalAmount: uint64,
+    currency: uint64
+  ) {
+    // Calculate fees
+    const marketplaceFee = (totalAmount * listing.marketplaceFee.native) / 10000
+    const sellerAmount = totalAmount - marketplaceFee
+    
+    if (currency === 1) { // ALGO
+      // Pay seller
+      itxn
+        .payment({
+          amount: sellerAmount,
+          receiver: listing.seller.bytes,
+          fee: 0,
+        })
+        .submit()
+      
+      // Keep marketplace fee (stays in contract)
+      
+    } else { // USDC
+      // Pay seller in USDC
+      itxn
+        .assetTransfer({
+          xferAsset: Asset(this.usdcAssetId.value),
+          assetReceiver: listing.seller.bytes,
+          assetAmount: sellerAmount,
+          fee: 0,
+        })
+        .submit()
+      
+      // Keep marketplace fee in USDC (stays in contract)
+    }
+    
+    // Transfer instrument from marketplace escrow to buyer
+    itxn
+      .assetTransfer({
+        xferAsset: Asset(listing.instrumentId.native),
+        assetReceiver: buyer,
+        assetAmount: 1,
+        fee: 0,
+      })
+      .submit()
+    
+    // Record sale
+    this.recordSale(listing, buyer, totalAmount, currency, marketplaceFee)
+    
+    // Deactivate listing
+    this.listings(listing.listingId.native).value = new InstrumentListing({
+      ...listing,
+      isActive: new arc4.Bool(false)
+    })
+    this.activeListings(listing.listingId.native).value = new arc4.Bool(false)
+    
+    // Update metrics
+    this.totalVolume.value = this.totalVolume.value + totalAmount
+    this.totalFees.value = this.totalFees.value + marketplaceFee
+  }
+
+  /**
+   * Record completed sale
+   */
+  private recordSale(
+    listing: InstrumentListing,
+    buyer: bytes,
+    salePrice: uint64,
+    currency: uint64,
+    fee: uint64
+  ) {
+    const saleId = this.nextSaleId.value
+    
+    const sale = new InstrumentSale({
+      saleId: new arc4.UintN64(saleId),
+      instrumentId: listing.instrumentId,
+      seller: listing.seller,
+      buyer: new arc4.Address(buyer),
+      salePrice: new arc4.UintN64(salePrice),
+      currency: new arc4.UintN64(currency),
+      marketplaceFee: new arc4.UintN64(fee),
+      saleTime: new arc4.UintN64(Global.latestTimestamp),
+      txnHash: new arc4.Str('') // Could be populated with transaction ID
+    })
+    
+    this.sales(saleId).value = sale
+    this.nextSaleId.value = saleId + 1
+  }
+
+  /**
+   * Submit discount bid (for below-face-value purchases)
+   */
+  @abimethod()
+  public submitDiscountBid(
+    instrumentId: uint64,
+    bidAmount: uint64,
+    discountRate: uint64,
+    currency: uint64,
+    validityPeriod: uint64,
+    financingTerms: string
+  ): uint64 {
+    const bidId = this.nextBidId.value
+    
+    const bid = new DiscountBid({
+      bidId: new arc4.UintN64(bidId),
+      instrumentId: new arc4.UintN64(instrumentId),
+      bidder: new arc4.Address(Txn.sender),
+      bidAmount: new arc4.UintN64(bidAmount),
+      discountRate: new arc4.UintN64(discountRate),
+      currency: new arc4.UintN64(currency),
+      validUntil: new arc4.UintN64(Global.latestTimestamp + validityPeriod),
+      isActive: new arc4.Bool(true),
+      financingTerms: new arc4.Str(financingTerms)
+    })
+    
+    this.discountBids(bidId).value = bid
+    this.nextBidId.value = bidId + 1
+    
+    return bidId
+  }
+
+  /**
+   * Accept discount bid (by instrument holder)
+   */
+  @abimethod()
+  public acceptDiscountBid(
+    bidId: uint64,
+    payment: gtxn.PaymentTxn
+  ): boolean {
+    assert(this.discountBids(bidId).exists, 'Bid not found')
+    const bid = this.discountBids(bidId).value
+    
+    assert(bid.isActive.native === true, 'Bid inactive')
+    assert(bid.validUntil.native > Global.latestTimestamp, 'Bid expired')
+    
+    // Validate payment matches bid
+    if (bid.currency.native === 1) { // ALGO
+      assert(payment.amount === bid.bidAmount.native, 'Payment amount mismatch')
+      assert(payment.receiver === Global.currentApplicationAddress, 'Wrong payment receiver')
+    }
+    
+    // Create temporary listing for settlement
+    const tempListing = new InstrumentListing({
+      listingId: new arc4.UintN64(0),
+      instrumentId: bid.instrumentId,
+      seller: new arc4.Address(Txn.sender),
+      askPriceAlgo: bid.currency.native === 1 ? bid.bidAmount : new arc4.UintN64(0),
+      askPriceUSDC: bid.currency.native === 2 ? bid.bidAmount : new arc4.UintN64(0),
+      listingTime: new arc4.UintN64(Global.latestTimestamp),
+      validUntil: new arc4.UintN64(Global.latestTimestamp + 3600),
+      isActive: new arc4.Bool(true),
+      listingType: new arc4.UintN64(3), // Discount bid type
+      reservePrice: bid.bidAmount,
+      marketplaceFee: new arc4.UintN64(this.marketplaceFeeRate.value)
+    })
+    
+    // Execute settlement  
+    this.executeAtomicSettlement(
+      tempListing,
+      bid.bidder.bytes,
+      bid.bidAmount.native,
+      bid.currency.native
+    )
+    
+    // Deactivate bid
+    this.discountBids(bidId).value = new DiscountBid({
+      ...bid,
+      isActive: new arc4.Bool(false)
+    })
+    
+    return true
+  }
+
+  /**
+   * Cancel listing
+   */
+  @abimethod()
+  public cancelListing(listingId: uint64): boolean {
+    assert(this.listings(listingId).exists, 'Listing not found')
+    const listing = this.listings(listingId).value
+    
+    // Only seller can cancel
+    assert(listing.seller.bytes === Txn.sender.bytes, 'Only seller can cancel')
+    assert(listing.isActive.native === true, 'Listing already inactive')
+    
+    // Deactivate listing
+    this.listings(listingId).value = new InstrumentListing({
+      ...listing,
+      isActive: new arc4.Bool(false)
+    })
+    this.activeListings(listingId).value = new arc4.Bool(false)
+    
+    return true
+  }
+
+  /**
+   * Get listing details
+   */
+  @abimethod({ readonly: true })
+  public getListing(listingId: uint64): InstrumentListing {
+    assert(this.listings(listingId).exists, 'Listing not found')
+    return this.listings(listingId).value
+  }
+
+  /**
+   * Get sale details
+   */
+  @abimethod({ readonly: true })
+  public getSale(saleId: uint64): InstrumentSale {
+    assert(this.sales(saleId).exists, 'Sale not found')
+    return this.sales(saleId).value
+  }
+
+  /**
+   * Get marketplace statistics
+   */
+  @abimethod({ readonly: true })
+  public getMarketplaceStats(): [arc4.UintN64, arc4.UintN64, arc4.UintN64, arc4.UintN64] {
+    return [
+      new arc4.UintN64(this.totalVolume.value),
+      new arc4.UintN64(this.totalFees.value),
+      new arc4.UintN64(this.nextListingId.value - 1),
+      new arc4.UintN64(this.nextSaleId.value - 1)
+    ]
+  }
+
+  /**
+   * Withdraw marketplace fees (admin only)
+   */
+  @abimethod()
+  public withdrawFees(amount: uint64, currency: uint64): boolean {
+    assert(Txn.sender === Global.creatorAddress, 'Only admin can withdraw fees')
+    
+    if (currency === 1) { // ALGO
+      itxn
+        .payment({
+          amount,
+          receiver: Txn.sender,
+          fee: 0,
+        })
+        .submit()
+    } else { // USDC
+      itxn
+        .assetTransfer({
+          xferAsset: Asset(this.usdcAssetId.value),
+          assetReceiver: Txn.sender,
+          assetAmount: amount,
+          fee: 0,
+        })
+        .submit()
+    }
+    
+    return true
+  }
+}

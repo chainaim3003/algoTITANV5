@@ -1,0 +1,320 @@
+{
+  "exporters": [
+    {
+      "id": "itc_limited",
+      "name": "ITC Limited",
+      "lei": "335800WLOU3OFWFTMP43",
+      "address": "37 Jawaharlal Nehru Road, Virginia House, Kolkata-700071",
+      "algorandAddress": "EWYZFEJLQOZV25XLSMU5TSNPU3LY4U36IWDPSRQXOKWYBOLFZEXEB6UNWE",
+      "industry": "Agricultural Products & FMCG",
+      "location": "West Bengal",
+      "verified": true,
+      "status": "Active",
+      "established": "1910",
+      "gst": "19AAACI1681G1ZN"
+    },
+    {
+      "id": "sree_palani_agros",
+      "name": "SREE PALANI ANDAVAR AGROS PRIVATE LIMITED",
+      "lei": "894500Q32QG6KKGMMI95",
+      "algorandAddress": "EWYZFEJLQOZV25XLSMU5TSNPU3LY4U36IWDPSRQXOKWYBOLFZEXEB6UNWE",
+      "industry": "Agricultural Export",
+      "location": "Tamil Nadu",
+      "verified": true,
+      "status": "Active",
+      "specialization": "Spices & Agricultural Products"
+    },
+    {
+      "id": "jupiter_knitting",
+      "name": "Jupiter Knitting Company",
+      "lei": "3358004DXAMRWRUIYJ05",
+      "address": "Jupiter Avenue, Tiruppur, Tamil Nadu",
+      "algorandAddress": "EWYZFEJLQOZV25XLSMU5TSNPU3LY4U36IWDPSRQXOKWYBOLFZEXEB6UNWE",
+      "industry": "Textile Export",
+      "location": "Tamil Nadu",
+      "verified": true,
+      "status": "Active",
+      "established": "1957",
+      "gst": "33AACFJ3024D1Z4",
+      "specialization": "Knitwear & Ready-made Garments"
+    },
+    {
+      "id": "tantea_corp",
+      "name": "The Tamil Nadu Tea Plantation Corporation Limited",
+      "lei": "335800K3V6YZVQXZRX36",
+      "address": "TANTEA Complex, Orange Grove Road, Coonoor-643101",
+      "algorandAddress": "EWYZFEJLQOZV25XLSMU5TSNPU3LY4U36IWDPSRQXOKWYBOLFZEXEB6UNWE",
+      "industry": "Tea Export",
+      "location": "Tamil Nadu",
+      "verified": true,
+      "status": "Active",
+      "specialization": "Premium Tea & Tea Products"
+    },
+    {
+      "id": "vijayalakshmi_textiles",
+      "name": "ARUPPUKOTTAI SHRI VIJAYALAKSHMI TEXTILE MILLS PVT LTD",
+      "lei": "335800Z3SWK76KRXML64",
+      "address": "NO. 34, VEERAPPAN NAICKER STREET, ARUPPUKOTTAI, TAMIL NADU",
+      "algorandAddress": "EWYZFEJLQOZV25XLSMU5TSNPU3LY4U36IWDPSRQXOKWYBOLFZEXEB6UNWE",
+      "industry": "Textile Manufacturing",
+      "location": "Tamil Nadu",
+      "verified": true,
+      "status": "Active",
+      "specialization": "Cotton Yarn & Fabrics"
+    },
+    {
+      "id": "tamil_nadu_fibrenet",
+      "name": "TAMIL NADU FIBRENET CORPORATION LIMITED",
+      "lei": "9845009DE9EC03DE1538",
+      "address": "NO. 34 (OLD NO. 31), VEERAPPAN NAICKER STREET, ARUPPUKOTTAI, TAMIL NADU",
+      "algorandAddress": "EWYZFEJLQOZV25XLSMU5TSNPU3LY4U36IWDPSRQXOKWYBOLFZEXEB6UNWE",
+      "industry": "Fiber Manufacturing",
+      "location": "Tamil Nadu",
+      "verified": true,
+      "status": "Active",
+      "leiIssueDate": "2025-05-14",
+      "lastUpdated": "2025-07-05",
+      "specialization": "Synthetic Fibers & Textiles"
+    },
+    {
+      "id": "tata_electronics",
+      "name": "TATA ELECTRONICS PRIVATE LIMITED",
+      "lei": "335800SA8CH6QBP7YZ41",
+      "address": "NO. 10, JIGANI INDUSTRIAL AREA, JIGANI, BANGALORE, 560105",
+      "algorandAddress": "EWYZFEJLQOZV25XLSMU5TSNPU3LY4U36IWDPSRQXOKWYBOLFZEXEB6UNWE",
+      "industry": "Electronics Export",
+      "location": "Karnataka",
+      "verified": true,
+      "status": "Active",
+      "established": "2020",
+      "cin": "U31100KA2020PTC133739",
+      "leiIssueDate": "2020-11-18",
+      "leiRenewalDate": "2025-11-17",
+      "specialization": "Electronic Components & Consumer Electronics"
+    }
+  ],
+  "ports": {
+    "loading": [
+      {
+        "code": "INMAA",
+        "name": "Chennai Port",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "coordinates": {
+          "lat": 13.1067,
+          "lng": 80.3019
+        },
+        "type": "Major Port",
+        "facilities": ["Container Terminal", "Bulk Cargo", "RoRo Terminal"]
+      },
+      {
+        "code": "INNSA",
+        "name": "Jawaharlal Nehru Port (JNPT)",
+        "city": "Navi Mumbai",
+        "state": "Maharashtra",
+        "country": "India",
+        "coordinates": {
+          "lat": 18.9647,
+          "lng": 72.9503
+        },
+        "type": "Major Port",
+        "facilities": ["Container Terminal", "Liquid Cargo", "Dry Bulk"]
+      },
+      {
+        "code": "INCOK",
+        "name": "Kochi Port",
+        "city": "Kochi",
+        "state": "Kerala",
+        "country": "India",
+        "coordinates": {
+          "lat": 9.9667,
+          "lng": 76.2667
+        },
+        "type": "Major Port",
+        "facilities": ["Container Terminal", "Cruise Terminal", "Spice Terminal"]
+      },
+      {
+        "code": "INCCU",
+        "name": "Kolkata Port",
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "country": "India",
+        "coordinates": {
+          "lat": 22.5726,
+          "lng": 88.3639
+        },
+        "type": "Major Port",
+        "facilities": ["Container Terminal", "Iron Ore Terminal", "Coal Terminal"]
+      },
+      {
+        "code": "INBLR",
+        "name": "Kempegowda International Airport (Cargo)",
+        "city": "Bangalore",
+        "state": "Karnataka",
+        "country": "India",
+        "coordinates": {
+          "lat": 13.1979,
+          "lng": 77.7068
+        },
+        "type": "Air Cargo Hub",
+        "facilities": ["Electronics Cargo", "Express Cargo", "Temperature Controlled"]
+      }
+    ],
+    "discharge": [
+      {
+        "code": "DEHAM",
+        "name": "Hamburg Port",
+        "city": "Hamburg",
+        "country": "Germany",
+        "coordinates": {
+          "lat": 53.5511,
+          "lng": 9.9937
+        },
+        "type": "Major European Port",
+        "facilities": ["Container Terminal", "Automotive Terminal", "Cruise Terminal"]
+      },
+      {
+        "code": "NLRTM",
+        "name": "Port of Rotterdam",
+        "city": "Rotterdam",
+        "country": "Netherlands",
+        "coordinates": {
+          "lat": 51.9225,
+          "lng": 4.4792
+        },
+        "type": "Europe's Largest Port",
+        "facilities": ["Container Terminal", "Chemical Terminal", "Energy Hub"]
+      },
+      {
+        "code": "AEJEA",
+        "name": "Jebel Ali Port",
+        "city": "Dubai",
+        "country": "UAE",
+        "coordinates": {
+          "lat": 25.0657,
+          "lng": 55.0981
+        },
+        "type": "Middle East Hub",
+        "facilities": ["Free Zone", "Container Terminal", "Cruise Terminal"]
+      },
+      {
+        "code": "USNYC",
+        "name": "Port of New York and New Jersey",
+        "city": "New York",
+        "country": "USA",
+        "coordinates": {
+          "lat": 40.6694,
+          "lng": -74.0447
+        },
+        "type": "Major US East Coast Port",
+        "facilities": ["Container Terminal", "Auto Terminal", "Cruise Terminal"]
+      },
+      {
+        "code": "CNSHA",
+        "name": "Shanghai Port",
+        "city": "Shanghai",
+        "country": "China",
+        "coordinates": {
+          "lat": 31.2304,
+          "lng": 121.4737
+        },
+        "type": "World's Busiest Container Port",
+        "facilities": ["Container Terminal", "Bulk Cargo", "Automotive Terminal"]
+      },
+      {
+        "code": "SGSIN",
+        "name": "Port of Singapore",
+        "city": "Singapore",
+        "country": "Singapore",
+        "coordinates": {
+          "lat": 1.2966,
+          "lng": 103.7764
+        },
+        "type": "Global Transshipment Hub",
+        "facilities": ["Container Terminal", "Bunkering", "Ship Repair"]
+      }
+    ]
+  },
+  "vessels": [
+    {
+      "name": "MV CHENNAI EXPRESS",
+      "imo": "9567890",
+      "flag": "India",
+      "operator": "Indian National Shipping Company",
+      "type": "Container Ship",
+      "capacity": "8000 TEU"
+    },
+    {
+      "name": "MV MUMBAI TRADER",
+      "imo": "9567891",
+      "flag": "India",
+      "operator": "Shipping Corporation of India",
+      "type": "Multi-Purpose Vessel",
+      "capacity": "12000 DWT"
+    },
+    {
+      "name": "MV KOCHI STAR",
+      "imo": "9567892",
+      "flag": "India",
+      "operator": "Great Eastern Shipping",
+      "type": "Break Bulk Carrier",
+      "capacity": "15000 DWT"
+    }
+  ],
+  "cargoTypes": [
+    {
+      "code": "SITC-0",
+      "name": "Food and Live Animals",
+      "description": "Agricultural products, live animals, food and beverages",
+      "exporters": ["itc_limited", "sree_palani_agros", "tantea_corp"],
+      "preferredPorts": ["INCOK", "INMAA"],
+      "sitcSection": "0",
+      "sitcDescription": "Food and live animals primarily for food",
+      "hsChapters": ["01-24"]
+    },
+    {
+      "code": "SITC-6",
+      "name": "Manufactured Goods (Textiles)",
+      "description": "Textile fibers, yarns, fabrics and clothing",
+      "exporters": ["jupiter_knitting", "vijayalakshmi_textiles", "tamil_nadu_fibrenet"],
+      "preferredPorts": ["INMAA", "INCOK"],
+      "sitcSection": "6",
+      "sitcDescription": "Manufactured goods classified chiefly by material (textiles)",
+      "hsChapters": ["50-63"]
+    },
+    {
+      "code": "SITC-7",
+      "name": "Machinery and Transport Equipment",
+      "description": "Electronic components, IT hardware, telecommunications equipment",
+      "exporters": ["tata_electronics"],
+      "preferredPorts": ["INBLR", "INMAA", "INNSA"],
+      "sitcSection": "7",
+      "sitcDescription": "Machinery and transport equipment (electronics and electrical)",
+      "hsChapters": ["84-85"]
+    }
+  ],
+  "defaults": {
+    "cargoValue": 100000,
+    "vesselName": "MV CHENNAI EXPRESS",
+    "currency": "USD",
+    "incoterms": "FOB",
+    "insuranceRate": 0.15,
+    "freightRate": 2.5,
+    "portOfLoading": "INMAA",
+    "portOfDischarge": "NLRTM",
+    "transitDays": 28
+  },
+  "compliance": {
+    "requiredDocuments": [
+      "Commercial Invoice",
+      "Packing List",
+      "Bill of Lading",
+      "Certificate of Origin",
+      "Export License",
+      "LEI Certificate"
+    ],
+    "leiMandatory": true,
+    "minimumTransactionValueForLEI": 5000000
+  }
+}

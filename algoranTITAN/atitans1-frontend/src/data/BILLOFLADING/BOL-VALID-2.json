@@ -1,0 +1,125 @@
+{
+  "transportDocumentReference": "BLBRCOFFEE202405",
+  "shippingInstructionsReference": "b234cdef-5678-1234-5678-abcdef123456",
+  "transportDocumentStatus": "DRAFT",
+  "transportDocumentTypeCode": "BOL",
+  "isShippedOnBoardType": true,
+  "freightPaymentTermCode": "PRE",
+  "isElectronic": true,
+  "isToOrder": true,
+  "shippedOnBoardDate": "2024-04-15",
+  "termsAndConditions": "Test BL for DCSA conformance. No real shipment.",
+  "receiptTypeAtOrigin": "CFS",
+  "deliveryTypeAtDestination": "CY",
+  "cargoMovementTypeAtOrigin": "LCL",
+  "cargoMovementTypeAtDestination": "FCL",
+  "serviceContractReference": "SCR-COFFEE-2024",
+  "carrierCode": "HLCU",
+  "carrierCodeListProvider": "SMDG",
+  "transports": {
+    "plannedDepartureDate": "2024-04-16",
+    "plannedArrivalDate": "2024-04-30",
+    "portOfLoading": {
+      "UNLocationCode": "BRSSZ"
+    },
+    "portOfDischarge": {
+      "UNLocationCode": "NLRTM"
+    },
+    "vesselVoyages": [
+      {
+        "vesselName": "Hapag-Lloyd Express",
+        "carrierExportVoyageNumber": "789B"
+      }
+    ]
+  },
+  "charges": [
+    {
+      "chargeName": "BL Fee",
+      "currencyAmount": 35,
+      "currencyCode": "EUR",
+      "paymentTermCode": "PRE",
+      "calculationBasis": "Per transport document",
+      "unitPrice": 35,
+      "quantity": 1
+    }
+  ],
+  "invoicePayableAt": {
+    "UNLocationCode": "BRSSZ"
+  },
+  "partyContactDetails": [
+    {
+      "name": "Coffee Exporter",
+      "email": "export@brazilcoffee.example.org"
+    }
+  ],
+  "documentParties": {
+    "shipper": {
+      "partyName": "Brazil Coffee Exporters",
+      "displayedAddress": [
+        "Rua do Café, 100",
+        "Santos, Brazil"
+      ],
+      "partyContactDetails": [
+        {
+          "name": "Carlos Silva",
+          "email": "carlos@brazilcoffee.com"
+        }
+      ]
+    },
+    "issuingParty": {
+      "partyName": "Hapag-Lloyd AG",
+      "address": {
+        "street": "Ballindamm",
+        "streetNumber": "25",
+        "city": "Hamburg",
+        "countryCode": "DE"
+      },
+      "identifyingCodes": [
+        {
+          "codeListProvider": "GLEIF",
+          "codeListName": "LEI",
+          "partyCode": "5299000J2N45DDNE4Y28"
+        }
+      ]
+    }
+  },
+  "consignmentItems": [
+    {
+      "carrierBookingReference": "CBR_789_COFFEE",
+      "descriptionOfGoods": [
+        "Green Coffee Beans"
+      ],
+      "HSCodes": [
+        "090111"
+      ],
+      "cargoItems": [
+        {
+          "equipmentReference": "HLCU9876543",
+          "cargoGrossWeight": {
+            "value": 21000,
+            "unit": "KGM"
+          },
+          "outerPackaging": {
+            "numberOfPackages": 350,
+            "packageCode": "BAG",
+            "description": "Jute Bags"
+          }
+        }
+      ]
+    }
+  ],
+  "utilizedTransportEquipments": [
+    {
+      "isShipperOwned": false,
+      "seals": [
+        {
+          "number": "HLCU-SEAL-4321"
+        }
+      ],
+      "equipment": {
+        "ISOEquipmentCode": "22G1",
+        "equipmentReference": "HLCU9876543"
+      }
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "dcsaVersion": "3.0.0",
+  "transportDocument": {
+    "transportDocumentReference": "SREE-PALANI-eBL-2025-001",
+    "transportDocumentStatus": "ISSUED",
+    "transportDocumentTypeCode": "BOL",
+    "transportDocumentCreatedDateTime": "2025-01-03T10:30:00Z",
+    "carrierBookingReference": "CBR-SREE-PALANI-2025",
+    "issuingParty": {
+      "partyName": "Enhanced Carrier Lines",
+      "partyContactDetails": [{
+        "name": "BL Department",
+        "email": "bl@enhancedcarrier.com",
+        "phone": "+91-44-1234-5678"
+      }],
+      "identifyingCodes": [{
+        "DCSAResponsibleAgencyCode": "SCAC",
+        "partyCode": "ECAR",
+        "codeListName": "Standard Carrier Alpha Code"
+      }]
+    },
+    "shipper": {
+      "partyName": "SREE PALANI ANDAVAR AGROS PRIVATE LIMITED",
+      "partyContactDetails": [{
+        "name": "Export Manager",
+        "email": "export@sreepalaniagros.com",
+        "phone": "+91-422-XXX-XXXX"
+      }],
+      "identifyingCodes": [{
+        "DCSAResponsibleAgencyCode": "LEI",
+        "partyCode": "894500Q32QG6KKGMMI95",
+        "codeListName": "LEI"
+      }],
+      "displayedAddress": [
+        "Tamil Nadu, India"
+      ]
+    },
+    "consignee": {
+      "partyName": "EUROPEAN SPICES IMPORT CORP",
+      "partyContactDetails": [{
+        "name": "Import Manager",
+        "email": "import@europeanspices.com",
+        "phone": "+31-10-XXX-XXXX"
+      }],
+      "displayedAddress": [
+        "Rotterdam Port Area",
+        "Netherlands"
+      ]
+    },
+    "consignmentItems": [{
+      "carrierBookingReference": "CBR-SREE-PALANI-2025",
+      "descriptionOfGoods": [
+        "Premium Spices and Agricultural Products from Tamil Nadu",
+        "Organic Certified Cardamom, Black Pepper, Turmeric",
+        "FSSAI Certified, Export Quality"
+      ],
+      "HSCodes": [
+        "0904.11.10",
+        "0904.12.00",
+        "0910.10.00"
+      ],
+      "cargoItems": [{
+        "equipmentReference": "CONT-SPAG-001",
+        "cargoGrossWeight": {
+          "value": 2500,
+          "unit": "KGM"
+        },
+        "cargoNetWeight": {
+          "value": 2350,
+          "unit": "KGM"
+        },
+        "cargoGrossVolume": {
+          "value": 67.2,
+          "unit": "MTQ"
+        },
+        "outerPackaging": {
+          "numberOfPackages": 100,
+          "packageCode": "BG",
+          "description": "PP Bags"
+        }
+      }]
+    }],
+    "transports": {
+      "portOfLoading": {
+        "portCode": "INMAA",
+        "portName": "Chennai Port",
+        "cityName": "Chennai",
+        "countryCode": "IN"
+      },
+      "portOfDischarge": {
+        "portCode": "NLRTM",
+        "portName": "Port of Rotterdam",
+        "cityName": "Rotterdam", 
+        "countryCode": "NL"
+      },
+      "vesselVoyages": [{
+        "vesselName": "MV CHENNAI EXPRESS",
+        "vesselIMONumber": "IMO9876543",
+        "voyageNumber": "CE-2025-001"
+      }]
+    },
+    "declaredValue": {
+      "amount": 85000,
+      "currency": "USD"
+    },
+    "termsAndConditions": {
+      "incoterms": "FOB",
+      "contractTerms": "Standard DCSA v3 terms apply",
+      "paymentTerms": "30 days from BL date"
+    },
+    "charges": [
+      {
+        "chargeType": "Freight",
+        "currencyAmount": 2500,
+        "currencyCode": "USD",
+        "paymentTermCode": "PRE",
+        "calculationBasis": "PER_CONTAINER"
+      },
+      {
+        "chargeType": "THC",
+        "currencyAmount": 300,
+        "currencyCode": "USD", 
+        "paymentTermCode": "PRE",
+        "calculationBasis": "PER_CONTAINER"
+      }
+    ]
+  },
+  "metadata": {
+    "dcsaVersion": "3.0.0",
+    "generatedDateTime": "2025-01-03T10:30:00Z",
+    "source": "Enhanced eBL System - DCSA v3 Compliant",
+    "complianceDocuments": [
+      "legalProof",
+      "certificateOfOrigin", 
+      "exportLicense",
+      "phytosanitaryCertificate"
+    ],
+    "zkProof": {
+      "system": "ZK-PRET",
+      "version": "2.1.0",
+      "proofHash": "0x1a2b3c4d5e6f7890abcdef1234567890abcdef1234567890abcdef1234567890",
+      "verified": true,
+      "verificationTimestamp": "2025-01-03T10:30:00Z"
+    },
+    "algorandBoxStorage": {
+      "enabled": true,
+      "boxAppId": 12345678,
+      "storageType": "DCSA_V3_eBL_RWA",
+      "boxKey": "ebl_SREE-PALANI-eBL-2025-001_1704277800"
+    },
+    "rwaTokenization": {
+      "enabled": true,
+      "totalShares": 2000,
+      "sharePrice": 42.5,
+      "minInvestment": 50,
+      "expectedYield": 14.5,
+      "marketplaceEligible": true,
+      "assetMetadata": {
+        "assetName": "eBL RWA - SREE PALANI AGROS",
+        "unitName": "eBLSPAG",
+        "description": "Real World Asset representing fractionalized ownership of Bill of Lading for premium spices export"
+      }
+    }
+  }
+}

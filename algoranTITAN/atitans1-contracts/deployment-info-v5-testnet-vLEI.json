@@ -1,0 +1,59 @@
+{
+  "network": "testnet",
+  "appId": 747043225,
+  "appAddress": {
+    "publicKey": {
+      "0": 138,
+      "1": 109,
+      "2": 23,
+      "3": 32,
+      "4": 98,
+      "5": 204,
+      "6": 65,
+      "7": 65,
+      "8": 193,
+      "9": 85,
+      "10": 8,
+      "11": 17,
+      "12": 126,
+      "13": 237,
+      "14": 127,
+      "15": 139,
+      "16": 246,
+      "17": 220,
+      "18": 133,
+      "19": 53,
+      "20": 0,
+      "21": 244,
+      "22": 5,
+      "23": 48,
+      "24": 93,
+      "25": 90,
+      "26": 74,
+      "27": 153,
+      "28": 155,
+      "29": 48,
+      "30": 42,
+      "31": 59
+    }
+  },
+  "deployerAddress": "AL32ZONZNIOCNTW35X6GSVP3JSTLWB2BBKOBNZCC66GYGLWWIT4M7L4F3U",
+  "treasuryAddress": "AL32ZONZNIOCNTW35X6GSVP3JSTLWB2BBKOBNZCC66GYGLWWIT4M7L4F3U",
+  "settlementAssetId": 0,
+  "deployedAt": "2025-10-07T00:38:46.524Z",
+  "explorerUrl": "https://testnet.explorer.perawallet.app/application/747043225",
+  "previousAppId": 746822940,
+  "notes": "vLEI-enabled Escrow V5 contract - FRESH DEPLOYMENT",
+  "rates": {
+    "regulatorTaxRate": 5,
+    "regulatorRefundRate": 2,
+    "marketplaceFeeRate": 0.25
+  },
+  "vLEISupport": {
+    "enabled": true,
+    "boxMaps": {
+      "vlei_c": "Creation vLEI documents (buyerLEI, sellerLEI, purchaseOrderVLEI + IPFS)",
+      "vlei_e": "Execution vLEI documents (shippingInstruction, commercialInvoice, rwaInstrumentLEI + IPFS)"
+    }
+  }
+}

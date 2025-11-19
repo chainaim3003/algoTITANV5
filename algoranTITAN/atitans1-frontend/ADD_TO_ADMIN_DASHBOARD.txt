@@ -1,0 +1,24 @@
+// ADD THIS TO AdminDashboard.tsx
+// Location: After the header section (around line 300-320), before the LocalNet Account Management section
+
+// Find this line:
+//       {/* LocalNet Account Management */}
+//       {isLocalNet && (
+
+// Add THESE LINES before it:
+      {/* Settlement Currency Manager - Available on TestNet */}
+      {!isLocalNet && (
+        <SettlementCurrencyManager />
+      )}
+
+// The complete section should look like:
+      </div>
+
+      {/* Settlement Currency Manager - Available on TestNet */}
+      {!isLocalNet && (
+        <SettlementCurrencyManager />
+      )}
+
+      {/* LocalNet Account Management */}
+      {isLocalNet && (
+        // ... rest of LocalNet code

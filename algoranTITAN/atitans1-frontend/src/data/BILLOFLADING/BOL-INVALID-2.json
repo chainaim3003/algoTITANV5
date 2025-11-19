@@ -1,0 +1,114 @@
+{
+  "transportDocumentReference": "CONTRADICT01",
+  "shippingInstructionsReference": "123e4567-e89b-12d3-a456-426614174000",
+  "transportDocumentStatus": "DRAFT",
+  "transportDocumentTypeCode": "BOL",
+  "isShippedOnBoardType": false,
+  "freightPaymentTermCode": "PRE",
+  "isElectronic": true,
+  "isToOrder": true,
+  "shippedOnBoardDate": "2024-05-01",
+  "termsAndConditions": "Test BL with contradictions.",
+  "receiptTypeAtOrigin": "CY",
+  "deliveryTypeAtDestination": "CY",
+  "cargoMovementTypeAtOrigin": "FCL",
+  "cargoMovementTypeAtDestination": "FCL",
+  "serviceContractReference": "SCR-ERROR",
+  "carrierCode": "MSC",
+  "carrierCodeListProvider": "SMDG",
+  "transports": {
+    "plannedDepartureDate": "2024-05-10",
+    "plannedArrivalDate": "2024-05-09",
+    "portOfLoading": {
+      "UNLocationCode": "SGSIN"
+    },
+    "portOfDischarge": {
+      "UNLocationCode": "USNYC"
+    },
+    "vesselVoyages": [
+      {
+        "vesselName": "MSC Error",
+        "carrierExportVoyageNumber": "000X"
+      }
+    ]
+  },
+  "charges": [
+    {
+      "chargeName": "Fee",
+      "currencyAmount": -100,
+      "currencyCode": "USD",
+      "paymentTermCode": "PRE",
+      "calculationBasis": "Per transport document",
+      "unitPrice": -100,
+      "quantity": 1
+    }
+  ],
+  "invoicePayableAt": {
+    "UNLocationCode": "SGSIN"
+  },
+  "partyContactDetails": [
+    {
+      "name": "Test",
+      "email": "test@example.com"
+    }
+  ],
+  "documentParties": {
+    "shipper": {
+      "partyName": "Contradictory Shipper",
+      "displayedAddress": [
+        "Nowhere"
+      ],
+      "partyContactDetails": [
+        {
+          "name": "Test",
+          "email": "test@example.com"
+        }
+      ]
+    },
+    "issuingParty": {
+      "partyName": "MSC",
+      "address": {
+        "street": "Error St",
+        "streetNumber": "0",
+        "city": "Error City",
+        "countryCode": "XX"
+      },
+      "identifyingCodes": []
+    }
+  },
+  "consignmentItems": [
+    {
+      "carrierBookingReference": "CBR_ERR",
+      "descriptionOfGoods": [
+        "Nothing"
+      ],
+      "HSCodes": [
+        ""
+      ],
+      "cargoItems": [
+        {
+          "equipmentReference": "",
+          "cargoGrossWeight": {
+            "value": -5000,
+            "unit": "KGM"
+          },
+          "outerPackaging": {
+            "numberOfPackages": 0,
+            "packageCode": "",
+            "description": ""
+          }
+        }
+      ]
+    }
+  ],
+  "utilizedTransportEquipments": [
+    {
+      "isShipperOwned": true,
+      "seals": [],
+      "equipment": {
+        "ISOEquipmentCode": "",
+        "equipmentReference": ""
+      }
+    }
+  ]
+}

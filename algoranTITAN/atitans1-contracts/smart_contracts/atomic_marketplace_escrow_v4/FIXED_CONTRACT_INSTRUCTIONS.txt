@@ -1,0 +1,20 @@
+FIXED CONTRACT - Copy this content to AtomicMarketplaceEscrowV4.algo.ts
+
+The file has been updated with:
+- Correct gtxn.PayTxn() and gtxn.AssetTransferTxn() syntax per Algorand docs
+- Fixed all byte/Account comparison issues
+- Fixed Asset() constructor usage
+- Fixed tuple return types
+- Removed hardcoded demo addresses
+- Removed amountDivisor (UI handles division)
+- Added flexible settlement currency (ALGO or USDCA)
+
+Key changes:
+1. gtxn.PayTxn(index) instead of gtxn.paymentTransaction(index)
+2. gtxn.AssetTransferTxn(index) instead of gtxn.assetTransferTransaction(index)
+3. Asset(assetId) instead of Asset.fromID(assetId)
+4. Txn.sender.bytes comparisons instead of mixed types
+5. paymentTxn.receiver.bytes for Account bytes access
+6. [uint64, uint64] instead of arc4.Tuple for return types
+
+Please run: npm run build

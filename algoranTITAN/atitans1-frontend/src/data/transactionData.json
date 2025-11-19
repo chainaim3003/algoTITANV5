@@ -1,0 +1,136 @@
+{
+  "sampleTransactions": [
+    {
+      "id": "TXN001",
+      "exporterId": "jupiter_knitting",
+      "importerId": "EU_IMPORTER_001",
+      "cargoType": "TEX",
+      "items": [
+        {
+          "code": "TEX001",
+          "quantity": 5000,
+          "weight": 1000,
+          "value": 75000
+        },
+        {
+          "code": "TEX002",
+          "quantity": 2000,
+          "weight": 2000,
+          "value": 45000
+        }
+      ],
+      "portOfLoading": "INMAA",
+      "portOfDischarge": "DEHAM",
+      "vessel": "MV CHENNAI EXPRESS",
+      "blNumber": "MAAHAM240001",
+      "status": "completed",
+      "date": "2024-08-15"
+    },
+    {
+      "id": "TXN002",
+      "exporterId": "tata_electronics",
+      "importerId": "US_ELECTRONICS_CORP",
+      "cargoType": "ELE",
+      "items": [
+        {
+          "code": "ELE001",
+          "quantity": 10000,
+          "weight": 500,
+          "value": 150000
+        },
+        {
+          "code": "ELE003",
+          "quantity": 5000,
+          "weight": 500,
+          "value": 125000
+        }
+      ],
+      "portOfLoading": "INBLR",
+      "portOfDischarge": "USNYC",
+      "vessel": "MV MUMBAI TRADER",
+      "blNumber": "BLRNYC240002",
+      "status": "in-transit",
+      "date": "2024-08-20"
+    },
+    {
+      "id": "TXN003",
+      "exporterId": "sree_palani_agros",
+      "importerId": "MIDDLE_EAST_SPICES_LLC",
+      "cargoType": "AGR",
+      "items": [
+        {
+          "code": "AGR001",
+          "quantity": 1000,
+          "weight": 1000,
+          "value": 35000
+        },
+        {
+          "code": "AGR002",
+          "quantity": 500,
+          "weight": 500,
+          "value": 45000
+        }
+      ],
+      "portOfLoading": "INCOK",
+      "portOfDischarge": "AEJEA",
+      "vessel": "MV KOCHI STAR",
+      "blNumber": "COKJEA240003",
+      "status": "loading",
+      "date": "2024-08-25"
+    }
+  ],
+  "exporterPerformance": {
+    "jupiter_knitting": {
+      "totalShipments": 45,
+      "totalValue": 3250000,
+      "onTimeDelivery": 94.5,
+      "qualityRating": 4.7,
+      "preferredMarkets": ["Europe", "USA", "Canada"]
+    },
+    "tata_electronics": {
+      "totalShipments": 32,
+      "totalValue": 5750000,
+      "onTimeDelivery": 96.8,
+      "qualityRating": 4.9,
+      "preferredMarkets": ["USA", "Japan", "Germany"]
+    },
+    "sree_palani_agros": {
+      "totalShipments": 67,
+      "totalValue": 2100000,
+      "onTimeDelivery": 92.3,
+      "qualityRating": 4.6,
+      "preferredMarkets": ["UAE", "Saudi Arabia", "Europe"]
+    },
+    "tantea_corp": {
+      "totalShipments": 78,
+      "totalValue": 1850000,
+      "onTimeDelivery": 89.7,
+      "qualityRating": 4.8,
+      "preferredMarkets": ["UK", "Russia", "Middle East"]
+    },
+    "itc_limited": {
+      "totalShipments": 156,
+      "totalValue": 12500000,
+      "onTimeDelivery": 97.2,
+      "qualityRating": 4.9,
+      "preferredMarkets": ["Global"]
+    }
+  },
+  "marketTrends": {
+    "textiles": {
+      "growth": 8.5,
+      "topDestinations": ["Germany", "USA", "UK", "France"],
+      "seasonality": "Peak: Sep-Dec, Low: Mar-May"
+    },
+    "electronics": {
+      "growth": 15.2,
+      "topDestinations": ["USA", "Germany", "Japan", "Singapore"],
+      "seasonality": "Peak: Oct-Jan, Low: Jun-Aug"
+    },
+    "agricultural": {
+      "growth": 6.8,
+      "topDestinations": ["UAE", "USA", "Germany", "Saudi Arabia"],
+      "seasonality": "Peak: Nov-Feb, Low: May-Jul"
+    }
+  }
+}

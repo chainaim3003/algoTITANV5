@@ -1,0 +1,386 @@
+{
+  "cargoDescriptions": {
+    "agricultural": {
+      "category": "Food and Live Animals (SITC-0)",
+      "sitcSection": "0",
+      "sitcDescription": "Food and live animals primarily for food",
+      "items": [
+        {
+          "code": "AGR001",
+          "name": "Black Pepper",
+          "description": "Dried Black Pepper Whole, 500 GL, Moisture 12% Max",
+          "hsCode": "0904.11.10",
+          "sitcCode": "0751",
+          "sitcDescription": "Pepper of the genus Piper",
+          "unitOfMeasure": "KGS",
+          "averageWeight": 1.0,
+          "packingType": "PP Bags",
+          "image": "/images/cargo/black-pepper.jpg",
+          "exporters": ["sree_palani_agros", "itc_limited"]
+        },
+        {
+          "code": "AGR002",
+          "name": "Cardamom",
+          "description": "Green Cardamom Large, 7-8mm, Moisture 10% Max",
+          "hsCode": "0908.31.00",
+          "sitcCode": "0753",
+          "sitcDescription": "Cardamoms",
+          "unitOfMeasure": "KGS",
+          "averageWeight": 1.0,
+          "packingType": "Cartons",
+          "image": "/images/cargo/cardamom.jpg",
+          "exporters": ["sree_palani_agros"]
+        },
+        {
+          "code": "AGR003",
+          "name": "Tea Leaves",
+          "description": "Black Tea CTC Grade, FTGFOP1, Premium Quality",
+          "hsCode": "0902.30.00",
+          "sitcCode": "0741",
+          "sitcDescription": "Tea, whether or not flavoured",
+          "unitOfMeasure": "KGS",
+          "averageWeight": 1.0,
+          "packingType": "Tea Chests",
+          "image": "/images/cargo/tea-leaves.jpg",
+          "exporters": ["tantea_corp"]
+        },
+        {
+          "code": "AGR004",
+          "name": "Turmeric Powder",
+          "description": "Turmeric Powder, Curcumin 3% Min, Moisture 10% Max",
+          "hsCode": "0910.30.00",
+          "sitcCode": "0752",
+          "sitcDescription": "Turmeric (curcuma)",
+          "unitOfMeasure": "KGS",
+          "averageWeight": 1.0,
+          "packingType": "PP Bags",
+          "image": "/images/cargo/turmeric-powder.jpg",
+          "exporters": ["sree_palani_agros", "itc_limited"]
+        },
+        {
+          "code": "AGR005",
+          "name": "Basmati Rice",
+          "description": "Aged Basmati Rice, Extra Long Grain, Purity 95% Min",
+          "hsCode": "1006.30.10",
+          "sitcCode": "0422",
+          "sitcDescription": "Rice, semi-milled or wholly milled",
+          "unitOfMeasure": "KGS",
+          "averageWeight": 1.0,
+          "packingType": "PP Bags",
+          "image": "/images/cargo/basmati-rice.jpg",
+          "exporters": ["itc_limited"]
+        }
+      ]
+    },
+    "textiles": {
+      "category": "Manufactured Goods - Textiles (SITC-6)",
+      "sitcSection": "6",
+      "sitcDescription": "Manufactured goods classified chiefly by material",
+      "items": [
+        {
+          "code": "TEX001",
+          "name": "Cotton T-Shirts",
+          "description": "100% Cotton Round Neck T-Shirts, Various Sizes and Colors",
+          "hsCode": "6109.10.00",
+          "sitcCode": "8414",
+          "sitcDescription": "T-shirts, singlets and other vests, of cotton, knitted or crocheted",
+          "unitOfMeasure": "PCS",
+          "averageWeight": 0.2,
+          "packingType": "Cartons",
+          "image": "/images/cargo/cotton-tshirts.jpg",
+          "exporters": ["jupiter_knitting"]
+        },
+        {
+          "code": "TEX002",
+          "name": "Knitted Fabrics",
+          "description": "Single Jersey Cotton Knitted Fabrics, 160-180 GSM",
+          "hsCode": "6002.42.00",
+          "sitcCode": "6555",
+          "sitcDescription": "Knitted or crocheted fabrics of cotton",
+          "unitOfMeasure": "KGS",
+          "averageWeight": 1.0,
+          "packingType": "Rolls",
+          "image": "/images/cargo/knitted-fabrics.jpg",
+          "exporters": ["jupiter_knitting", "vijayalakshmi_textiles"]
+        },
+        {
+          "code": "TEX003",
+          "name": "Cotton Yarn",
+          "description": "Combed Cotton Yarn, 30s Count, Ring Spun",
+          "hsCode": "5205.15.00",
+          "sitcCode": "6512",
+          "sitcDescription": "Cotton yarn, single, combed, measuring 714.29 decitex or more",
+          "unitOfMeasure": "KGS",
+          "averageWeight": 1.0,
+          "packingType": "Bales",
+          "image": "/images/cargo/cotton-yarn.jpg",
+          "exporters": ["vijayalakshmi_textiles"]
+        },
+        {
+          "code": "TEX004",
+          "name": "Synthetic Fiber",
+          "description": "Polyester Staple Fiber, 1.4D x 38mm, Semi-Dull",
+          "hsCode": "5503.20.00",
+          "sitcCode": "6611",
+          "sitcDescription": "Synthetic staple fibres of polyesters",
+          "unitOfMeasure": "KGS",
+          "averageWeight": 1.0,
+          "packingType": "Bales",
+          "image": "/images/cargo/synthetic-fiber.jpg",
+          "exporters": ["tamil_nadu_fibrenet"]
+        }
+      ]
+    },
+    "electronics": {
+      "category": "Machinery and Transport Equipment (SITC-7)",
+      "sitcSection": "7",
+      "sitcDescription": "Machinery and transport equipment",
+      "items": [
+        {
+          "code": "ELE001",
+          "name": "Mobile Phone Components",
+          "description": "Smartphone PCB Assemblies, Various Models",
+          "hsCode": "8517.70.90",
+          "sitcCode": "7643",
+          "sitcDescription": "Parts of telephone sets and other apparatus for transmission or reception of voice, images or other data",
+          "unitOfMeasure": "PCS",
+          "averageWeight": 0.05,
+          "packingType": "Anti-Static Boxes",
+          "image": "/images/cargo/mobile-components.jpg",
+          "exporters": ["tata_electronics"]
+        },
+        {
+          "code": "ELE002",
+          "name": "LED Displays",
+          "description": "LED Display Modules, Indoor/Outdoor, Various Pixel Pitch",
+          "hsCode": "8528.72.10",
+          "sitcCode": "7611",
+          "sitcDescription": "Reception apparatus for television, colour",
+          "unitOfMeasure": "PCS",
+          "averageWeight": 2.5,
+          "packingType": "Wooden Crates",
+          "image": "/images/cargo/led-displays.jpg",
+          "exporters": ["tata_electronics"]
+        },
+        {
+          "code": "ELE003",
+          "name": "Electronic Sensors",
+          "description": "Temperature, Pressure and Motion Sensors for Automotive",
+          "hsCode": "9032.89.90",
+          "sitcCode": "8748",
+          "sitcDescription": "Automatic regulating or controlling instruments and apparatus",
+          "unitOfMeasure": "PCS",
+          "averageWeight": 0.1,
+          "packingType": "Anti-Static Trays",
+          "image": "/images/cargo/electronic-sensors.jpg",
+          "exporters": ["tata_electronics"]
+        },
+        {
+          "code": "ELE004",
+          "name": "Power Adapters",
+          "description": "Switching Power Adapters, 5V-24V Output Range",
+          "hsCode": "8504.40.10",
+          "sitcCode": "7783",
+          "sitcDescription": "Static converters",
+          "unitOfMeasure": "PCS",
+          "averageWeight": 0.3,
+          "packingType": "Cartons",
+          "image": "/images/cargo/power-adapters.jpg",
+          "exporters": ["tata_electronics"]
+        },
+        {
+          "code": "ELE005",
+          "name": "Circuit Boards",
+          "description": "Printed Circuit Board Assemblies for Consumer Electronics",
+          "hsCode": "8534.00.90",
+          "sitcCode": "7764",
+          "sitcDescription": "Printed circuits",
+          "unitOfMeasure": "PCS",
+          "averageWeight": 0.15,
+          "packingType": "Anti-Static Boxes",
+          "image": "/images/cargo/circuit-boards.jpg",
+          "exporters": ["tata_electronics"]
+        }
+      ]
+    }
+  },
+  "packingTypes": {
+    "cartons": {
+      "name": "Cartons",
+      "description": "Corrugated cardboard boxes with appropriate cushioning",
+      "suitableFor": ["textiles", "electronics", "spices"],
+      "standardSizes": ["40x30x20cm", "50x40x30cm", "60x40x40cm"],
+      "maxWeight": 25
+    },
+    "pp_bags": {
+      "name": "PP Bags",
+      "description": "Polypropylene woven bags with inner liner",
+      "suitableFor": ["agricultural", "bulk_commodities"],
+      "standardSizes": ["50kg", "25kg", "10kg"],
+      "maxWeight": 50
+    },
+    "bales": {
+      "name": "Bales",
+      "description": "Compressed and strapped bales for fiber products",
+      "suitableFor": ["textiles", "fiber"],
+      "standardSizes": ["180x80x80cm", "200x100x80cm"],
+      "maxWeight": 200
+    },
+    "wooden_crates": {
+      "name": "Wooden Crates",
+      "description": "Heavy-duty wooden crates for fragile/heavy items",
+      "suitableFor": ["electronics", "machinery"],
+      "standardSizes": ["100x80x80cm", "120x100x100cm"],
+      "maxWeight": 500
+    },
+    "anti_static_boxes": {
+      "name": "Anti-Static Boxes",
+      "description": "ESD-safe packaging for electronic components",
+      "suitableFor": ["electronics", "semiconductors"],
+      "standardSizes": ["20x15x10cm", "30x20x15cm"],
+      "maxWeight": 10
+    }
+  },
+  "complianceFramework": {
+    "zkProofSystem": {
+      "name": "ZK-PRET",
+      "fullName": "Zero-Knowledge Privacy-Preserving Resource Exchange Technology",
+      "description": "A PLONK-based zero-knowledge proof system built on O1.js for privacy-preserving verification of trade compliance and cargo authenticity",
+      "basedOn": "O1.js PLONK implementation",
+      "features": [
+        "Privacy-preserving cargo verification",
+        "Compliance proof without revealing sensitive data",
+        "Cryptographic verification of trade documents",
+        "Decentralized proof generation and verification"
+      ],
+      "status": "Active",
+      "version": "2.1.0"
+    },
+    "tradeClassifications": {
+      "harmonizedSystem": {
+        "name": "Harmonized System (HS)",
+        "description": "International standard for classifying traded products",
+        "digitStructure": "6-digit base code, extended to 8-10 digits nationally",
+        "authority": "World Customs Organization (WCO)"
+      },
+      "sitc": {
+        "name": "Standard International Trade Classification",
+        "description": "UN classification system for trade statistics",
+        "currentRevision": "SITC Revision 4",
+        "authority": "United Nations Statistics Division",
+        "sections": {
+          "0": "Food and live animals",
+          "1": "Beverages and tobacco",
+          "2": "Crude materials, inedible, except fuels",
+          "3": "Mineral fuels, lubricants and related materials",
+          "4": "Animal and vegetable oils, fats and waxes",
+          "5": "Chemicals and related products",
+          "6": "Manufactured goods classified chiefly by material",
+          "7": "Machinery and transport equipment",
+          "8": "Miscellaneous manufactured articles",
+          "9": "Commodities and transactions not classified elsewhere"
+        }
+      },
+      "unLocode": {
+        "name": "UN/LOCODE",
+        "description": "United Nations Code for Trade and Transport Locations",
+        "format": "5-character code (2-letter country + 3-letter location)",
+        "authority": "United Nations Economic Commission for Europe (UNECE)",
+        "coverage": "103,000+ locations in 249 countries"
+      }
+    }
+  },
+  "shippingMarks": {
+    "templates": [
+      {
+        "name": "Standard Export",
+        "template": "{{exporterName}}\\n{{destination}}\\n{{packageNumber}}/{{totalPackages}}\\nGross Weight: {{grossWeight}}kg\\nNet Weight: {{netWeight}}kg\\n{{specialInstructions}}"
+      },
+      {
+        "name": "Electronics",
+        "template": "{{exporterName}}\\n{{destination}}\\n{{packageNumber}}/{{totalPackages}}\\nFRAGILE - HANDLE WITH CARE\\nTHIS SIDE UP\\nGross Weight: {{grossWeight}}kg\\nNet Weight: {{netWeight}}kg\\n{{specialInstructions}}"
+      },
+      {
+        "name": "Agricultural",
+        "template": "{{exporterName}}\\n{{destination}}\\n{{packageNumber}}/{{totalPackages}}\\nKEEP DRY\\nSTORE IN COOL PLACE\\nGross Weight: {{grossWeight}}kg\\nNet Weight: {{netWeight}}kg\\n{{specialInstructions}}"
+      }
+    ]
+  },
+  "measurementUnits": {
+    "weight": {
+      "primary": "KGS",
+      "alternatives": ["LBS", "MT", "TONS"]
+    },
+    "volume": {
+      "primary": "CBM",
+      "alternatives": ["CFT", "LTR"]
+    },
+    "quantity": {
+      "primary": "PCS",
+      "alternatives": ["SETS", "PAIRS", "DOZENS", "CARTONS", "BALES"]
+    }
+  },
+  "containerTypes": {
+    "20GP": {
+      "name": "20' General Purpose",
+      "dimensions": "5.90 x 2.35 x 2.39m",
+      "maxPayload": "28,230kg",
+      "cubicCapacity": "33.2 CBM"
+    },
+    "40GP": {
+      "name": "40' General Purpose",
+      "dimensions": "12.03 x 2.35 x 2.39m",
+      "maxPayload": "28,750kg",
+      "cubicCapacity": "67.7 CBM"
+    },
+    "40HC": {
+      "name": "40' High Cube",
+      "dimensions": "12.03 x 2.35 x 2.69m",
+      "maxPayload": "28,750kg",
+      "cubicCapacity": "76.4 CBM"
+    },
+    "20RF": {
+      "name": "20' Reefer",
+      "dimensions": "5.44 x 2.29 x 2.27m",
+      "maxPayload": "27,400kg",
+      "cubicCapacity": "28.3 CBM",
+      "temperatureRange": "-30°C to +30°C"
+    }
+  },
+  "blTemplate": {
+    "header": {
+      "title": "BILL OF LADING",
+      "subtitle": "Non-Negotiable Copy"
+    },
+    "sections": [
+      "shipper",
+      "consignee",
+      "notifyParty",
+      "vessel",
+      "portOfLoading",
+      "portOfDischarge",
+      "cargoDetails",
+      "freightCharges",
+      "terms"
+    ],
+    "footerText": "This Bill of Lading is issued in accordance with the terms and conditions printed on the reverse side hereof."
+  },
+  "validationRules": {
+    "mandatoryFields": [
+      "shipper",
+      "consignee",
+      "portOfLoading",
+      "portOfDischarge",
+      "cargoDescription",
+      "quantity",
+      "weight"
+    ],
+    "leiRequired": true,
+    "maxDescriptionLength": 500,
+    "maxPackages": 9999,
+    "maxWeight": 999999,
+    "zkProofRequired": true,
+    "sitcCodeRequired": true,
+    "hsCodeRequired": true
+  }
+}

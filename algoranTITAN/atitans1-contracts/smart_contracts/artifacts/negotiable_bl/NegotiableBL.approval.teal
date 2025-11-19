@@ -1,0 +1,232 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 1
+    bytecblock 0x151f7c75 " ALGO"
+    // smart_contracts/negotiable_bl/contract.algo.ts:7
+    // export class NegotiableBL extends Contract {
+    txn NumAppArgs
+    bz main_bare_routing@10
+    pushbytess 0x02bece11 0xcd68bb6f 0x125e1490 0x760a62d1 0x3d0802a3 // method "hello(string)string", method "createBL(string,string)string", method "listBL(string,string)string", method "transferBL(string,string)string", method "getInfo()string"
+    txna ApplicationArgs 0
+    match main_hello_route@3 main_createBL_route@4 main_listBL_route@5 main_transferBL_route@6 main_getInfo_route@7
+
+main_after_if_else@14:
+    // smart_contracts/negotiable_bl/contract.algo.ts:7
+    // export class NegotiableBL extends Contract {
+    pushint 0 // 0
+    return
+
+main_getInfo_route@7:
+    // smart_contracts/negotiable_bl/contract.algo.ts:39
+    // getInfo(): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    pushbytes 0x151f7c750033416c676f544954414e53204e65676f746961626c652042696c6c73206f66204c6164696e6720436f6e74726163742076312e30
+    log
+    intc_0 // 1
+    return
+
+main_transferBL_route@6:
+    // smart_contracts/negotiable_bl/contract.algo.ts:32
+    // transferBL(blId: string, newOwner: string): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/negotiable_bl/contract.algo.ts:7
+    // export class NegotiableBL extends Contract {
+    txna ApplicationArgs 1
+    extract 2 0
+    txna ApplicationArgs 2
+    extract 2 0
+    // smart_contracts/negotiable_bl/contract.algo.ts:32
+    // transferBL(blId: string, newOwner: string): string {
+    callsub transferBL
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_listBL_route@5:
+    // smart_contracts/negotiable_bl/contract.algo.ts:25
+    // listBL(blId: string, price: string): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/negotiable_bl/contract.algo.ts:7
+    // export class NegotiableBL extends Contract {
+    txna ApplicationArgs 1
+    extract 2 0
+    txna ApplicationArgs 2
+    extract 2 0
+    // smart_contracts/negotiable_bl/contract.algo.ts:25
+    // listBL(blId: string, price: string): string {
+    callsub listBL
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_createBL_route@4:
+    // smart_contracts/negotiable_bl/contract.algo.ts:18
+    // createBL(description: string, price: string): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/negotiable_bl/contract.algo.ts:7
+    // export class NegotiableBL extends Contract {
+    txna ApplicationArgs 1
+    extract 2 0
+    txna ApplicationArgs 2
+    extract 2 0
+    // smart_contracts/negotiable_bl/contract.algo.ts:18
+    // createBL(description: string, price: string): string {
+    callsub createBL
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_hello_route@3:
+    // smart_contracts/negotiable_bl/contract.algo.ts:11
+    // hello(name: string): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/negotiable_bl/contract.algo.ts:7
+    // export class NegotiableBL extends Contract {
+    txna ApplicationArgs 1
+    extract 2 0
+    // smart_contracts/negotiable_bl/contract.algo.ts:11
+    // hello(name: string): string {
+    callsub hello
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_bare_routing@10:
+    // smart_contracts/negotiable_bl/contract.algo.ts:7
+    // export class NegotiableBL extends Contract {
+    txn OnCompletion
+    bnz main_after_if_else@14
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    intc_0 // 1
+    return
+
+
+// smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.hello(name: bytes) -> bytes:
+hello:
+    // smart_contracts/negotiable_bl/contract.algo.ts:11
+    // hello(name: string): string {
+    proto 1 1
+    // smart_contracts/negotiable_bl/contract.algo.ts:12
+    // return `Hello from AlgoTITANS, ${name}!`
+    pushbytes "Hello from AlgoTITANS, "
+    frame_dig -1
+    concat
+    pushbytes "!"
+    concat
+    retsub
+
+
+// smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.createBL(description: bytes, price: bytes) -> bytes:
+createBL:
+    // smart_contracts/negotiable_bl/contract.algo.ts:18
+    // createBL(description: string, price: string): string {
+    proto 2 1
+    // smart_contracts/negotiable_bl/contract.algo.ts:19
+    // return `Created BL: ${description} for ${price} ALGO`
+    pushbytes "Created BL: "
+    frame_dig -2
+    concat
+    pushbytes " for "
+    concat
+    frame_dig -1
+    concat
+    bytec_1 // " ALGO"
+    concat
+    retsub
+
+
+// smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.listBL(blId: bytes, price: bytes) -> bytes:
+listBL:
+    // smart_contracts/negotiable_bl/contract.algo.ts:25
+    // listBL(blId: string, price: string): string {
+    proto 2 1
+    // smart_contracts/negotiable_bl/contract.algo.ts:26
+    // return `Listed BL ${blId} for sale at ${price} ALGO`
+    pushbytes "Listed BL "
+    frame_dig -2
+    concat
+    pushbytes " for sale at "
+    concat
+    frame_dig -1
+    concat
+    bytec_1 // " ALGO"
+    concat
+    retsub
+
+
+// smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.transferBL(blId: bytes, newOwner: bytes) -> bytes:
+transferBL:
+    // smart_contracts/negotiable_bl/contract.algo.ts:32
+    // transferBL(blId: string, newOwner: string): string {
+    proto 2 1
+    // smart_contracts/negotiable_bl/contract.algo.ts:33
+    // return `Transferred BL ${blId} to ${newOwner}`
+    pushbytes "Transferred BL "
+    frame_dig -2
+    concat
+    pushbytes " to "
+    concat
+    frame_dig -1
+    concat
+    retsub

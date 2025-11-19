@@ -1,0 +1,21 @@
+// Add this function after handleListForSale in EnhancedExporterDashboard.tsx
+
+const handleExecuteTrade = async (tradeId: number) => {
+  if (!activeAddress || !signTransactions) {
+    alert('Please connect your wallet')
+    return
+  }
+
+  try {
+    console.log('🚀 Executing trade:', tradeId)
+    
+    // TODO: Implement the full executeTrade transaction
+    alert(`Execute Trade #${tradeId}\n\nFunctionality coming soon!\n\nThis will:\n- Transfer the instrument NFT\n- Pay regulator tax\n- Call executeTrade on V5 Escrow contract`)
+    
+    // After implementation, reload data
+    // await loadExporterRWAs()
+  } catch (error: any) {
+    console.error('Error executing trade:', error)
+    alert(`Failed to execute trade: ${error.message}`)
+  }
+}

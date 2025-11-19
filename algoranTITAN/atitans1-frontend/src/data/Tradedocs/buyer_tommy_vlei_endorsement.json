@@ -1,0 +1,193 @@
+{
+  "meta": {
+    "goldenCopy": {
+      "publishDate": "2025-10-06T00:00:00Z"
+    },
+    "pagination": {
+      "currentPage": 1,
+      "perPage": 15,
+      "from": 1,
+      "to": 1,
+      "total": 1,
+      "lastPage": 1
+    }
+  },
+  "links": {
+    "first": "https://api.gleif.org/api/v1/lei-records?filter%5Bentity.legalName%5D=TOMMY+HILFIGER+EUROPE+B.V.&page%5Bnumber%5D=1&page%5Bsize%5D=15",
+    "last": "https://api.gleif.org/api/v1/lei-records?filter%5Bentity.legalName%5D=TOMMY+HILFIGER+EUROPE+B.V.&page%5Bnumber%5D=1&page%5Bsize%5D=15"
+  },
+  "data": [
+    {
+      "type": "lei-records",
+      "id": "54930012QJWZMYHNJW95",
+      "attributes": {
+        "lei": "54930012QJWZMYHNJW95",
+        "entity": {
+          "legalName": {
+            "name": "TOMMY HILFIGER EUROPE B.V.",
+            "language": "en"
+          },
+          "otherNames": [],
+          "transliteratedOtherNames": [],
+          "legalAddress": {
+            "language": "en",
+            "addressLines": [
+              "DANZIGERKADE 165"
+            ],
+            "addressNumber": null,
+            "addressNumberWithinBuilding": null,
+            "mailRouting": null,
+            "city": "AMSTERDAM",
+            "region": "NL-NH",
+            "country": "NL",
+            "postalCode": "1013 AP"
+          },
+          "headquartersAddress": {
+            "language": "en",
+            "addressLines": [
+              "DANZIGERKADE 165"
+            ],
+            "addressNumber": null,
+            "addressNumberWithinBuilding": null,
+            "mailRouting": null,
+            "city": "AMSTERDAM",
+            "region": "NL-NH",
+            "country": "NL",
+            "postalCode": "1013 AP"
+          },
+          "registeredAt": {
+            "id": "RA000463",
+            "other": null
+          },
+          "registeredAs": "33290078",
+          "jurisdiction": "NL",
+          "category": "GENERAL",
+          "legalForm": {
+            "id": "54M6",
+            "other": null
+          },
+          "associatedEntity": {
+            "lei": null,
+            "name": null
+          },
+          "status": "ACTIVE",
+          "expiration": {
+            "date": null,
+            "reason": null
+          },
+          "successorEntity": {
+            "lei": null,
+            "name": null
+          },
+          "successorEntities": [],
+          "creationDate": "1997-05-26T00:00:00Z",
+          "subCategory": null,
+          "otherAddresses": [],
+          "eventGroups": []
+        },
+        "registration": {
+          "initialRegistrationDate": "2012-12-17T19:10:00Z",
+          "lastUpdateDate": "2025-07-25T12:28:51Z",
+          "status": "ISSUED",
+          "nextRenewalDate": "2026-09-18T00:00:00Z",
+          "managingLou": "213800WAVVOPS85N2205",
+          "corroborationLevel": "FULLY_CORROBORATED",
+          "validatedAt": {
+            "id": "RA000463",
+            "other": null
+          },
+          "validatedAs": "33290078",
+          "otherValidationAuthorities": []
+        },
+        "bic": null,
+        "mic": null,
+        "ocid": "nl/33290078",
+        "qcc": "QNLCWYSE19",
+        "spglobal": [
+          "5659813"
+        ],
+        "conformityFlag": "CONFORMING"
+      },
+      "relationships": {
+        "managing-lou": {
+          "links": {
+            "related": "https://api.gleif.org/api/v1/lei-records/54930012QJWZMYHNJW95/managing-lou"
+          }
+        },
+        "lei-issuer": {
+          "links": {
+            "related": "https://api.gleif.org/api/v1/lei-records/54930012QJWZMYHNJW95/lei-issuer"
+          }
+        },
+        "field-modifications": {
+          "links": {
+            "related": "https://api.gleif.org/api/v1/lei-records/54930012QJWZMYHNJW95/field-modifications"
+          }
+        },
+        "direct-parent": {
+          "links": {
+            "relationship-record": "https://api.gleif.org/api/v1/lei-records/54930012QJWZMYHNJW95/direct-parent-relationship",
+            "lei-record": "https://api.gleif.org/api/v1/lei-records/54930012QJWZMYHNJW95/direct-parent"
+          }
+        },
+        "ultimate-parent": {
+          "links": {
+            "relationship-record": "https://api.gleif.org/api/v1/lei-records/54930012QJWZMYHNJW95/ultimate-parent-relationship",
+            "lei-record": "https://api.gleif.org/api/v1/lei-records/54930012QJWZMYHNJW95/ultimate-parent"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.gleif.org/api/v1/lei-records/54930012QJWZMYHNJW95"
+      }
+    }
+  ],
+  "endorsements": [
+    {
+      "endorsementId": "ORG-VLEI-THF-001",
+      "timestamp": "2025-10-06T10:00:00Z",
+      "publicData": {
+        "organizationDID": "did:lei:54930012QJWZMYHNJW95",
+        "companyLEI": "54930012QJWZMYHNJW95",
+        "hasVLEICredentials": true,
+        "credentialsValid": true,
+        "gleifVerified": true
+      },
+      "privateDataReference": {
+        "ipfsHash": "QmOrganizationTommyHilfigerEuropeProfile2025Hash",
+        "encryptionMethod": "AES-256-GCM",
+        "dataCommitment": "0xorg54930012qjwzmyhnjw95commitment",
+        "accessControl": [
+          "did:lei:54930012QJWZMYHNJW95",
+          "did:lei:213800WAVVOPS85N2205",
+          "did:regulator:REGULATOR_LEI"
+        ]
+      },
+      "vLEIProof": {
+        "credentialChainHash": "0x5t6h7f8e9u10r11o12p13e14b15v16a17m18s19t20e",
+        "gleifVerificationEndpoint": "https://api.gleif.org/verify/54930012QJWZMYHNJW95"
+      },
+      "algorandTransaction": {
+        "walletAddress": "TOMMY1HILFIGER1EUROPE1BV1ORG1WALLET1AMSTERDAM1MAIN1PQR",
+        "signature": "0xorg3045022100t1o2m3m4y5h6i7l8f9i0g1e2r3e4u5r6o7p8e9b0",
+        "transactionId": "TXORG54930012QJWZMYHNJW95202510STUVWXYZABCDEF",
+        "blockNumber": 45901456,
+        "timestamp": "2025-10-06T10:00:05Z"
+      }
+    }
+  ],
+  "privacyMetadata": {
+    "privacyLevel": "ENHANCED",
+    "complianceMode": "REGULATORY_ACCESSIBLE",
+    "publiclyVerifiable": true,
+    "gdprCompliant": true,
+    "notes": [
+      "Organization credentials encrypted and stored off-chain",
+      "Public can verify: valid LEI, valid vLEI credentials, GLEIF verified",
+      "Regulators/authorized parties can decrypt full details using DID-based access control",
+      "Blockchain signature ensures non-repudiation of organization identity",
+      "Global fashion brand - European operations headquartered in Amsterdam",
+      "Active since 1997, LEI registered since 2012"
+    ]
+  }
+}

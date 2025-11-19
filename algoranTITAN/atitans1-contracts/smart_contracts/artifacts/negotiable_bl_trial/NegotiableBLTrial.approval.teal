@@ -1,0 +1,223 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 0 1
+    bytecblock "blCounter" 0x151f7c75
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:3
+    // export class NegotiableBLTrial extends Contract {
+    txn NumAppArgs
+    bz main_bare_routing@8
+    pushbytess 0x02bece11 0x42b255e8 0x182990de // method "hello(string)string", method "createBL(string,string,string,string,string)string", method "getBLCount()uint64"
+    txna ApplicationArgs 0
+    match main_hello_route@3 main_createBL_route@4 main_getBLCount_route@5
+
+main_after_if_else@12:
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:3
+    // export class NegotiableBLTrial extends Contract {
+    intc_0 // 0
+    return
+
+main_getBLCount_route@5:
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:38
+    // getBLCount(): uint64 {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub getBLCount
+    itob
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_createBL_route@4:
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:17-23
+    // createBL(
+    //   description: string,
+    //   price: string,
+    //   imageURI: string,
+    //   titleJSON: string,
+    //   complianceJSON: string
+    // ): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:3
+    // export class NegotiableBLTrial extends Contract {
+    txna ApplicationArgs 1
+    extract 2 0
+    txna ApplicationArgs 2
+    extract 2 0
+    txna ApplicationArgs 3
+    extract 2 0
+    txna ApplicationArgs 4
+    extract 2 0
+    txna ApplicationArgs 5
+    extract 2 0
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:17-23
+    // createBL(
+    //   description: string,
+    //   price: string,
+    //   imageURI: string,
+    //   titleJSON: string,
+    //   complianceJSON: string
+    // ): string {
+    callsub createBL
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_hello_route@3:
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:10
+    // hello(name: string): string {
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:3
+    // export class NegotiableBLTrial extends Contract {
+    txna ApplicationArgs 1
+    extract 2 0
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:10
+    // hello(name: string): string {
+    callsub hello
+    dup
+    len
+    itob
+    extract 6 2
+    swap
+    concat
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_bare_routing@8:
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:3
+    // export class NegotiableBLTrial extends Contract {
+    txn OnCompletion
+    bnz main_after_if_else@12
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    intc_1 // 1
+    return
+
+
+// smart_contracts/negotiable_bl_trial/contract.algo.ts::NegotiableBLTrial.hello(name: bytes) -> bytes:
+hello:
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:10
+    // hello(name: string): string {
+    proto 1 1
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:11
+    // return `Hello from BLTrial, ${name}`
+    pushbytes "Hello from BLTrial, "
+    frame_dig -1
+    concat
+    retsub
+
+
+// smart_contracts/negotiable_bl_trial/contract.algo.ts::NegotiableBLTrial.createBL(description: bytes, price: bytes, imageURI: bytes, titleJSON: bytes, complianceJSON: bytes) -> bytes:
+createBL:
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:17-23
+    // createBL(
+    //   description: string,
+    //   price: string,
+    //   imageURI: string,
+    //   titleJSON: string,
+    //   complianceJSON: string
+    // ): string {
+    proto 5 1
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:5
+    // blCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_0 // "blCounter"
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:25
+    // if (!this.blCounter.hasValue) {
+    app_global_get_ex
+    bury 1
+    bnz createBL_after_if_else@2
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:5
+    // blCounter = GlobalState<uint64>()
+    bytec_0 // "blCounter"
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:26
+    // this.blCounter.value = 0
+    intc_0 // 0
+    app_global_put
+
+createBL_after_if_else@2:
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:5
+    // blCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_0 // "blCounter"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:30
+    // this.blCounter.value = this.blCounter.value + 1
+    intc_1 // 1
+    +
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:5
+    // blCounter = GlobalState<uint64>()
+    bytec_0 // "blCounter"
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:30
+    // this.blCounter.value = this.blCounter.value + 1
+    swap
+    app_global_put
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:32
+    // return `Created BL for ${description} valued at ${price}`
+    pushbytes "Created BL for "
+    frame_dig -5
+    concat
+    pushbytes " valued at "
+    concat
+    frame_dig -4
+    concat
+    retsub
+
+
+// smart_contracts/negotiable_bl_trial/contract.algo.ts::NegotiableBLTrial.getBLCount() -> uint64:
+getBLCount:
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:5
+    // blCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_0 // "blCounter"
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:39
+    // return this.blCounter.hasValue ? this.blCounter.value : 0
+    app_global_get_ex
+    bury 1
+    bz getBLCount_ternary_false@2
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:5
+    // blCounter = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_0 // "blCounter"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:39
+    // return this.blCounter.hasValue ? this.blCounter.value : 0
+    retsub
+
+getBLCount_ternary_false@2:
+    // smart_contracts/negotiable_bl_trial/contract.algo.ts:39
+    // return this.blCounter.hasValue ? this.blCounter.value : 0
+    intc_0 // 0
+    retsub

@@ -1,0 +1,453 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "Based on UN/CEFACT experimental JSON Schema - SCRDMCCBDAv1 (Supply Chain Reference Data Model Cross Industry Basic Document Assembly)",
+  
+  "exchangedDocument": {
+    "id": "PO-2025-001-MSME",
+    "typeCode": "220",
+    "issueDateTime": {
+      "dateTimeString": {
+        "value": "2025-01-15T10:30:00Z",
+        "format": "205"
+      }
+    },
+    "purpose": "Purchase Order for Cotton Textiles",
+    "languageId": "en",
+    "includedNote": [
+      {
+        "content": "Rush order - Required for Spring 2025 Collection",
+        "contentCode": "AAI",
+        "subjectCode": "DEL"
+      }
+    ]
+  },
+  
+  "supplyChainTradeTransaction": {
+    "applicableHeaderTradeAgreement": {
+      "buyerReference": "MSME-BUYER-REF-2025-Q1",
+      "sellerTradeParty": {
+        "id": [
+          {
+            "value": "SELLER-TIRUPUR-001",
+            "schemeId": "0088",
+            "schemeAgencyId": "6"
+          }
+        ],
+        "globalId": [
+          {
+            "value": "984500D87AB1CF2D6E73",
+            "schemeId": "0088"
+          }
+        ],
+        "name": "Tirupur Textiles Manufacturing Ltd",
+        "roleCode": "SE",
+        "definedTradeContact": [
+          {
+            "personName": "Arjun Patel",
+            "departmentName": "Sales Department",
+            "telephoneUniversalCommunication": {
+              "completeNumber": "+91-421-2234567"
+            },
+            "emailURIUniversalCommunication": {
+              "uriId": "sales@tirupur-textiles.in"
+            }
+          }
+        ],
+        "postalTradeAddress": {
+          "postcode": "641604",
+          "lineOne": "Industrial Area, Phase II",
+          "lineTwo": "Tirupur Export Zone",
+          "cityName": "Tirupur",
+          "countryId": "IN",
+          "countryName": "India",
+          "countrySubDivisionName": "Tamil Nadu"
+        },
+        "specifiedTaxRegistration": [
+          {
+            "id": {
+              "value": "33AABCT1234F1Z5",
+              "schemeId": "VA"
+            }
+          }
+        ]
+      },
+      "buyerTradeParty": {
+        "id": [
+          {
+            "value": "BUYER-HAMBURG-001",
+            "schemeId": "0088"
+          }
+        ],
+        "globalId": [
+          {
+            "value": "5493001KJTIIGC8Y1R12",
+            "schemeId": "0088"
+          }
+        ],
+        "name": "Hamburg Fashion Imports GmbH",
+        "roleCode": "BY",
+        "definedTradeContact": [
+          {
+            "personName": "Klaus Schmidt",
+            "departmentName": "Procurement",
+            "telephoneUniversalCommunication": {
+              "completeNumber": "+49-40-12345678"
+            },
+            "emailURIUniversalCommunication": {
+              "uriId": "procurement@hamburg-fashion.de"
+            }
+          }
+        ],
+        "postalTradeAddress": {
+          "postcode": "20457",
+          "lineOne": "HafenCity Strasse 45",
+          "cityName": "Hamburg",
+          "countryId": "DE",
+          "countryName": "Germany"
+        },
+        "specifiedTaxRegistration": [
+          {
+            "id": {
+              "value": "DE123456789",
+              "schemeId": "VA"
+            }
+          }
+        ]
+      },
+      "buyerOrderReferencedDocument": {
+        "issuerAssignedId": "RFQ-2025-SPRING-COLLECTION",
+        "formattedIssueDateTime": {
+          "dateTimeString": {
+            "value": "2025-01-10",
+            "format": "102"
+          }
+        }
+      },
+      "contractReferencedDocument": {
+        "issuerAssignedId": "FRAME-CONTRACT-2025-TEXTILES",
+        "formattedIssueDateTime": {
+          "dateTimeString": {
+            "value": "2025-01-01",
+            "format": "102"
+          }
+        }
+      },
+      "specifiedProcuringProject": {
+        "id": "SPRING-2025-COLLECTION",
+        "name": "Spring 2025 Sustainable Cotton Collection"
+      }
+    },
+    
+    "applicableHeaderTradeDelivery": {
+      "shipToTradeParty": {
+        "id": [
+          {
+            "value": "WAREHOUSE-HAMBURG-CENTRAL"
+          }
+        ],
+        "name": "Hamburg Fashion Imports - Central Warehouse",
+        "roleCode": "ST",
+        "postalTradeAddress": {
+          "postcode": "21079",
+          "lineOne": "Logistics Park Hamburg",
+          "lineTwo": "Warehouse Building 5",
+          "cityName": "Hamburg",
+          "countryId": "DE",
+          "countryName": "Germany"
+        }
+      },
+      "requestedDeliverySupplyChainEvent": {
+        "occurrenceDateTime": {
+          "dateTimeString": {
+            "value": "2025-03-15",
+            "format": "102"
+          }
+        }
+      },
+      "despatchAdviceReferencedDocument": {
+        "issuerAssignedId": "TO-BE-GENERATED"
+      }
+    },
+    
+    "applicableHeaderTradeSettlement": {
+      "creditorReferenceId": "CREDIT-REF-2025-001",
+      "paymentReference": "PO-2025-001-PAYMENT",
+      "invoiceCurrencyCode": "USD",
+      "payerTradeParty": {
+        "id": [
+          {
+            "value": "BUYER-HAMBURG-001"
+          }
+        ],
+        "name": "Hamburg Fashion Imports GmbH",
+        "roleCode": "PE"
+      },
+      "payeeTradeParty": {
+        "id": [
+          {
+            "value": "SELLER-TIRUPUR-001"
+          }
+        ],
+        "name": "Tirupur Textiles Manufacturing Ltd",
+        "roleCode": "PY",
+        "specifiedLegalOrganization": {
+          "id": "984500D87AB1CF2D6E73",
+          "tradingBusinessName": "Tirupur Textiles Mfg Ltd"
+        }
+      },
+      "specifiedTradeSettlementPaymentMeans": [
+        {
+          "typeCode": "42",
+          "information": "Payment via Letter of Credit",
+          "payerPartyDebtorFinancialAccount": {
+            "ibanId": "DE89370400440532013000",
+            "accountName": "Hamburg Fashion Imports GmbH"
+          },
+          "payeePartyCreditorFinancialAccount": {
+            "ibanId": "IN12ICIC00001234567890",
+            "accountName": "Tirupur Textiles Manufacturing Ltd"
+          },
+          "payeeSpecifiedCreditorFinancialInstitution": {
+            "bicId": "ICICINBBXXX",
+            "name": "ICICI Bank Limited",
+            "locationFinancialInstitutionAddress": {
+              "cityName": "Tirupur",
+              "countryId": "IN"
+            }
+          }
+        }
+      ],
+      "applicableTradeTax": [
+        {
+          "calculatedAmount": {
+            "value": 0,
+            "currencyId": "USD"
+          },
+          "typeCode": "VAT",
+          "exemptionReason": "Export - Zero rated",
+          "basisAmount": {
+            "value": 125000,
+            "currencyId": "USD"
+          },
+          "categoryCode": "Z",
+          "rateApplicablePercent": 0
+        }
+      ],
+      "specifiedTradePaymentTerms": [
+        {
+          "description": "Letter of Credit at sight - 30 days from Bill of Lading date",
+          "dueDateDateTime": {
+            "dateTimeString": {
+              "value": "2025-04-14",
+              "format": "102"
+            }
+          },
+          "directDebitMandateId": "LC-2025-TIRUPUR-001"
+        }
+      ],
+      "specifiedTradeAllowanceCharge": [
+        {
+          "chargeIndicator": false,
+          "actualAmount": {
+            "value": 2500,
+            "currencyId": "USD"
+          },
+          "reasonCode": "95",
+          "reason": "Early payment discount - 2%"
+        }
+      ],
+      "specifiedTradeSettlementHeaderMonetarySummation": {
+        "lineTotalAmount": {
+          "value": 125000,
+          "currencyId": "USD"
+        },
+        "chargeTotalAmount": {
+          "value": 0,
+          "currencyId": "USD"
+        },
+        "allowanceTotalAmount": {
+          "value": 2500,
+          "currencyId": "USD"
+        },
+        "taxBasisTotalAmount": {
+          "value": 122500,
+          "currencyId": "USD"
+        },
+        "taxTotalAmount": {
+          "value": 0,
+          "currencyId": "USD",
+          "currencyCodeListVersionId": "ISO 4217"
+        },
+        "grandTotalAmount": {
+          "value": 122500,
+          "currencyId": "USD"
+        },
+        "duePayableAmount": {
+          "value": 122500,
+          "currencyId": "USD"
+        }
+      }
+    },
+    
+    "includedSupplyChainTradeLineItem": [
+      {
+        "associatedDocumentLineDocument": {
+          "lineId": "1",
+          "includedNote": [
+            {
+              "content": "100% Organic Cotton - GOTS Certified",
+              "contentCode": "AAI"
+            }
+          ]
+        },
+        "specifiedTradeProduct": {
+          "id": [
+            {
+              "value": "COTTON-ORGANIC-WHITE-100S",
+              "schemeId": "SELLER"
+            }
+          ],
+          "globalId": [
+            {
+              "value": "5201001000",
+              "schemeId": "HS"
+            }
+          ],
+          "name": "Organic Cotton Fabric - Pure White",
+          "description": "100% Organic Cotton Plain Weave Fabric, 100s Count, GOTS Certified",
+          "tradeCountry": [
+            {
+              "id": "IN",
+              "name": "India"
+            }
+          ],
+          "designatedProductClassification": [
+            {
+              "classCode": {
+                "value": "5201001000",
+                "listId": "HS",
+                "listVersionId": "2022"
+              },
+              "className": "Cotton, not carded or combed"
+            }
+          ],
+          "applicableProductCharacteristic": [
+            {
+              "description": "Organic Cotton",
+              "value": "100%"
+            },
+            {
+              "description": "Thread Count",
+              "value": "100s"
+            },
+            {
+              "description": "Certification",
+              "value": "GOTS Certified"
+            },
+            {
+              "description": "Color",
+              "value": "Pure White"
+            }
+          ],
+          "originTradeCountry": {
+            "id": "IN",
+            "name": "India"
+          }
+        },
+        "specifiedLineTradeAgreement": {
+          "buyerOrderReferencedDocument": {
+            "lineId": "1",
+            "issuerAssignedId": "RFQ-2025-SPRING-LINE-001"
+          },
+          "grossPriceProductTradePrice": {
+            "chargeAmount": {
+              "value": 12.50,
+              "currencyId": "USD"
+            },
+            "basisQuantity": {
+              "value": 1,
+              "unitCode": "MTR"
+            }
+          },
+          "netPriceProductTradePrice": {
+            "chargeAmount": {
+              "value": 12.50,
+              "currencyId": "USD"
+            },
+            "basisQuantity": {
+              "value": 1,
+              "unitCode": "MTR"
+            }
+          }
+        },
+        "specifiedLineTradeDelivery": {
+          "billedQuantity": {
+            "value": 10000,
+            "unitCode": "MTR"
+          },
+          "requestedDeliverySupplyChainEvent": {
+            "occurrenceDateTime": {
+              "dateTimeString": {
+                "value": "2025-03-15",
+                "format": "102"
+              }
+            }
+          },
+          "shipToTradeParty": {
+            "name": "Hamburg Fashion Imports - Central Warehouse"
+          }
+        },
+        "specifiedLineTradeSettlement": {
+          "applicableTradeTax": [
+            {
+              "typeCode": "VAT",
+              "categoryCode": "Z",
+              "rateApplicablePercent": 0,
+              "exemptionReason": "Export - Zero rated"
+            }
+          ],
+          "specifiedTradeSettlementLineMonetarySummation": {
+            "lineTotalAmount": {
+              "value": 125000,
+              "currencyId": "USD"
+            }
+          }
+        }
+      }
+    ]
+  },
+  
+  "digitalSignatures": [
+    {
+      "signatureId": "SIG-PO-2025-001",
+      "timestamp": "2025-01-15T10:30:00Z",
+      "signerDID": "did:lei:984500D87AB1CF2D6E73:officer:procurement",
+      "companyLEI": "984500D87AB1CF2D6E73",
+      "roleLevel": "AUTHORIZED_SIGNATORY",
+      "hasSigningAuthority": true,
+      "credentialsValid": true,
+      "vLEIProof": {
+        "credentialChainHash": "0xab12cd34ef56gh78ij90kl12mn34op56",
+        "gleifVerificationEndpoint": "https://api.gleif.org/verify/984500D87AB1CF2D6E73"
+      },
+      "algorandTransaction": {
+        "walletAddress": "TIRUPUR3TEXTILES4MANUFACTURING5LIMITED6WALLET7ADDR8Q",
+        "signature": "0x9876543210abcdef9876543210abcdef9876543210abcdef9876543210abcdef9876543210abcdef9876543210abcdef9876543210abcdef9876543210abcdef",
+        "transactionId": "TXPO20250011234567890ABCDEFGHIJKLMNOPQRSTUVW",
+        "blockNumber": 45678901,
+        "timestamp": "2025-01-15T10:30:05Z"
+      }
+    }
+  ],
+  
+  "metadata": {
+    "standard": "UN/CEFACT Buy-Ship-Pay Reference Data Model (BSP RDM)",
+    "version": "SCRDMCCBDAv1.0.0",
+    "documentType": "Cross Industry Order (Purchase Order)",
+    "jsonSchemaVersion": "draft-2020-12",
+    "implementationNote": "Based on UN/CEFACT experimental JSON Schema from https://github.com/uncefact/spec-JSONschema",
+    "complianceLevel": "EXPERIMENTAL",
+    "generatedDate": "2025-01-15T10:30:00Z",
+    "useCaseContext": "MSME Cross-border Trade - Textiles Export from India to Germany"
+  }
+}

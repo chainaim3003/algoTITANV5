@@ -1,0 +1,125 @@
+{
+  "transportDocumentReference": "A1B2C3D4E5F6G7H8I9J0",
+  "shippingInstructionsReference": "a123bcde-4567-8901-2345-6789abcdef01",
+  "transportDocumentStatus": "DRAFT",
+  "transportDocumentTypeCode": "BOL",
+  "isShippedOnBoardType": false,
+  "freightPaymentTermCode": "COL",
+  "isElectronic": true,
+  "isToOrder": false,
+  "shippedOnBoardDate": "2024-05-10",
+  "termsAndConditions": "This is a fictitious document for testing purposes only. No actual shipment is associated.",
+  "receiptTypeAtOrigin": "CY",
+  "deliveryTypeAtDestination": "CFS",
+  "cargoMovementTypeAtOrigin": "FCL",
+  "cargoMovementTypeAtDestination": "LCL",
+  "serviceContractReference": "SCR-5678-ELEC",
+  "carrierCode": "MAEU",
+  "carrierCodeListProvider": "SMDG",
+  "transports": {
+    "plannedDepartureDate": "2024-05-12",
+    "plannedArrivalDate": "2024-05-20",
+    "portOfLoading": {
+      "UNLocationCode": "CNSHA"
+    },
+    "portOfDischarge": {
+      "UNLocationCode": "USLAX"
+    },
+    "vesselVoyages": [
+      {
+        "vesselName": "Maersk Eindhoven",
+        "carrierExportVoyageNumber": "123A"
+      }
+    ]
+  },
+  "charges": [
+    {
+      "chargeName": "Documentation Fee",
+      "currencyAmount": 50,
+      "currencyCode": "USD",
+      "paymentTermCode": "PRE",
+      "calculationBasis": "Per transport document",
+      "unitPrice": 50,
+      "quantity": 1
+    }
+  ],
+  "invoicePayableAt": {
+    "UNLocationCode": "CNSHA"
+  },
+  "partyContactDetails": [
+    {
+      "name": "Test User",
+      "email": "test@maersk.example.org"
+    }
+  ],
+  "documentParties": {
+    "shipper": {
+      "partyName": "Shanghai Electronics Ltd.",
+      "displayedAddress": [
+        "123 Tech Road",
+        "Shanghai, China"
+      ],
+      "partyContactDetails": [
+        {
+          "name": "Alice Zhang",
+          "email": "alice.zhang@shanghai-electronics.cn"
+        }
+      ]
+    },
+    "issuingParty": {
+      "partyName": "Maersk Line",
+      "address": {
+        "street": "Esplanaden",
+        "streetNumber": "50",
+        "city": "Copenhagen",
+        "countryCode": "DK"
+      },
+      "identifyingCodes": [
+        {
+          "codeListProvider": "GLEIF",
+          "codeListName": "LEI",
+          "partyCode": "5493001KJTIIGC8Y1R12"
+        }
+      ]
+    }
+  },
+  "consignmentItems": [
+    {
+      "carrierBookingReference": "CBR_456_ELEC",
+      "descriptionOfGoods": [
+        "Laptops"
+      ],
+      "HSCodes": [
+        "847130"
+      ],
+      "cargoItems": [
+        {
+          "equipmentReference": "MAEU1234567",
+          "cargoGrossWeight": {
+            "value": 8000,
+            "unit": "KGM"
+          },
+          "outerPackaging": {
+            "numberOfPackages": 200,
+            "packageCode": "CTN",
+            "description": "Cartons"
+          }
+        }
+      ]
+    }
+  ],
+  "utilizedTransportEquipments": [
+    {
+      "isShipperOwned": true,
+      "seals": [
+        {
+          "number": "MAEU-SEAL-5678"
+        }
+      ],
+      "equipment": {
+        "ISOEquipmentCode": "45G1",
+        "equipmentReference": "MAEU1234567"
+      }
+    }
+  ]
+}

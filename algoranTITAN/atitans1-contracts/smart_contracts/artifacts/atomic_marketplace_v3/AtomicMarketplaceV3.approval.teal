@@ -1,0 +1,1581 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 0 1 4 100 640
+    bytecblock 0x00 0x151f7c75 "nextListingId" "listings" "nextSaleId" "totalVolume" "totalFees" "payments" 0x80 "marketplaceFeeRate" "defaultUsdcAssetId" "active" "sales"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txn NumAppArgs
+    bz main_bare_routing@17
+    pushbytess 0xea7167c2 0xeb1d983f 0xfaa2c939 0x7c1b83d3 0x8b70e489 0x994973c3 0x5e47ecd3 0xf7549a52 0xaaff10e1 0x4e74e4d3 0x1c394d68 0x0cd1842e // method "initialize(uint64)bool", method "addPaymentAsset(uint64)bool", method "removePaymentAsset(uint64)bool", method "isPaymentAssetAccepted(uint64)bool", method "getDefaultUsdcAssetId()uint64", method "listInstrument(uint64,uint64,uint64,uint64)uint64", method "purchaseWithAlgo(uint64,pay)bool", method "purchaseWithUSDC(uint64,axfer)bool", method "cancelListing(uint64)bool", method "getListing(uint64)(uint64,uint64,address,uint64,uint64,uint64,uint64,bool,uint64)", method "getSale(uint64)(uint64,uint64,address,address,uint64,uint64,uint64)", method "getMarketplaceStats()(uint64,uint64,uint64,uint64)"
+    txna ApplicationArgs 0
+    match main_initialize_route@3 main_addPaymentAsset_route@4 main_removePaymentAsset_route@5 main_isPaymentAssetAccepted_route@6 main_getDefaultUsdcAssetId_route@7 main_listInstrument_route@8 main_purchaseWithAlgo_route@9 main_purchaseWithUSDC_route@10 main_cancelListing_route@11 main_getListing_route@12 main_getSale_route@13 main_getMarketplaceStats_route@14
+
+main_after_if_else@21:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    intc_0 // 0
+    return
+
+main_getMarketplaceStats_route@14:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:402
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub getMarketplaceStats
+    uncover 3
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_getSale_route@13:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:393
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:393
+    // @abimethod({ readonly: true })
+    callsub getSale
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_getListing_route@12:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:384
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:384
+    // @abimethod({ readonly: true })
+    callsub getListing
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_cancelListing_route@11:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:362
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:362
+    // @abimethod()
+    callsub cancelListing
+    bytec_0 // 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_purchaseWithUSDC_route@10:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:236
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_2 // axfer
+    ==
+    assert // transaction type is axfer
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:236
+    // @abimethod()
+    callsub purchaseWithUSDC
+    bytec_0 // 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_purchaseWithAlgo_route@9:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:202
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txn GroupIndex
+    intc_1 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_1 // pay
+    ==
+    assert // transaction type is pay
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:202
+    // @abimethod()
+    callsub purchaseWithAlgo
+    bytec_0 // 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_listInstrument_route@8:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:158
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    btoi
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:158
+    // @abimethod()
+    callsub listInstrument
+    itob
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_getDefaultUsdcAssetId_route@7:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:150
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub getDefaultUsdcAssetId
+    itob
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_isPaymentAssetAccepted_route@6:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:139
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:139
+    // @abimethod({ readonly: true })
+    callsub isPaymentAssetAccepted
+    bytec_0 // 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_removePaymentAsset_route@5:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:124
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:124
+    // @abimethod()
+    callsub removePaymentAsset
+    bytec_0 // 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_addPaymentAsset_route@4:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:109
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:109
+    // @abimethod()
+    callsub addPaymentAsset
+    bytec_0 // 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_initialize_route@3:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:85
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:85
+    // @abimethod()
+    callsub initialize
+    bytec_0 // 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    bytec_1 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_1 // 1
+    return
+
+main_bare_routing@17:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:53
+    // export default class AtomicMarketplaceV3 extends Contract {
+    txn OnCompletion
+    bnz main_after_if_else@21
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    intc_1 // 1
+    return
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.initialize(defaultUsdcAssetId: uint64) -> uint64:
+initialize:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:85-86
+    // @abimethod()
+    // public initialize(defaultUsdcAssetId: uint64): boolean {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:87
+    // assert(Txn.sender === Global.creatorAddress, 'Only creator can initialize')
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Only creator can initialize
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:70
+    // public nextListingId = GlobalState<uint64>()
+    bytec_2 // "nextListingId"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:89
+    // this.nextListingId.value = 1
+    intc_1 // 1
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:71
+    // public nextSaleId = GlobalState<uint64>()
+    bytec 4 // "nextSaleId"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:90
+    // this.nextSaleId.value = 1
+    intc_1 // 1
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:72
+    // public totalVolume = GlobalState<uint64>()
+    bytec 5 // "totalVolume"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:91
+    // this.totalVolume.value = 0
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:73
+    // public totalFees = GlobalState<uint64>()
+    bytec 6 // "totalFees"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:92
+    // this.totalFees.value = 0
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:74
+    // public marketplaceFeeRate = GlobalState<uint64>()
+    bytec 9 // "marketplaceFeeRate"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:93
+    // this.marketplaceFeeRate.value = 100 // 1%
+    intc_3 // 100
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:79
+    // public defaultUsdcAssetId = GlobalState<uint64>()
+    bytec 10 // "defaultUsdcAssetId"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:96
+    // this.defaultUsdcAssetId.value = defaultUsdcAssetId
+    frame_dig -1
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:99
+    // this.acceptedPaymentAssets(defaultUsdcAssetId).value = new arc4.Bool(true)
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:65
+    // public acceptedPaymentAssets = BoxMap<uint64, arc4.Bool>({ keyPrefix: 'payments' })
+    bytec 7 // "payments"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:99
+    // this.acceptedPaymentAssets(defaultUsdcAssetId).value = new arc4.Bool(true)
+    bytec 8 // 0x80
+    box_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:101
+    // return true
+    intc_1 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.addPaymentAsset(assetId: uint64) -> uint64:
+addPaymentAsset:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:109-110
+    // @abimethod()
+    // public addPaymentAsset(assetId: uint64): boolean {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:111
+    // assert(Txn.sender === Global.creatorAddress, 'Only creator can add payment assets')
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Only creator can add payment assets
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:114
+    // this.acceptedPaymentAssets(assetId).value = new arc4.Bool(true)
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:65
+    // public acceptedPaymentAssets = BoxMap<uint64, arc4.Bool>({ keyPrefix: 'payments' })
+    bytec 7 // "payments"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:114
+    // this.acceptedPaymentAssets(assetId).value = new arc4.Bool(true)
+    bytec 8 // 0x80
+    box_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:116
+    // return true
+    intc_1 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.removePaymentAsset(assetId: uint64) -> uint64:
+removePaymentAsset:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:124-125
+    // @abimethod()
+    // public removePaymentAsset(assetId: uint64): boolean {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:126
+    // assert(Txn.sender === Global.creatorAddress, 'Only creator can remove payment assets')
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Only creator can remove payment assets
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:79
+    // public defaultUsdcAssetId = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 10 // "defaultUsdcAssetId"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:127
+    // assert(assetId !== this.defaultUsdcAssetId.value, 'Cannot remove default USDC')
+    frame_dig -1
+    !=
+    assert // Cannot remove default USDC
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:130
+    // this.acceptedPaymentAssets(assetId).value = new arc4.Bool(false)
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:65
+    // public acceptedPaymentAssets = BoxMap<uint64, arc4.Bool>({ keyPrefix: 'payments' })
+    bytec 7 // "payments"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:130
+    // this.acceptedPaymentAssets(assetId).value = new arc4.Bool(false)
+    bytec_0 // 0x00
+    box_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:132
+    // return true
+    intc_1 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.isPaymentAssetAccepted(assetId: uint64) -> uint64:
+isPaymentAssetAccepted:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:139-140
+    // @abimethod({ readonly: true })
+    // public isPaymentAssetAccepted(assetId: uint64): boolean {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:141
+    // if (!this.acceptedPaymentAssets(assetId).exists) {
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:65
+    // public acceptedPaymentAssets = BoxMap<uint64, arc4.Bool>({ keyPrefix: 'payments' })
+    bytec 7 // "payments"
+    swap
+    concat
+    dup
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:141
+    // if (!this.acceptedPaymentAssets(assetId).exists) {
+    box_len
+    bury 1
+    bnz isPaymentAssetAccepted_after_if_else@2
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:142
+    // return false
+    intc_0 // 0
+    swap
+    retsub
+
+isPaymentAssetAccepted_after_if_else@2:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:144
+    // return this.acceptedPaymentAssets(assetId).value.native
+    frame_dig 0
+    box_get
+    assert // Box must have value
+    intc_0 // 0
+    getbit
+    swap
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.getDefaultUsdcAssetId() -> uint64:
+getDefaultUsdcAssetId:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:79
+    // public defaultUsdcAssetId = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 10 // "defaultUsdcAssetId"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:152
+    // return this.defaultUsdcAssetId.value
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.listInstrument(instrumentId: uint64, askPriceAlgo: uint64, askPriceUSDC: uint64, validityPeriod: uint64) -> uint64:
+listInstrument:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:158-164
+    // @abimethod()
+    // public listInstrument(
+    //   instrumentId: uint64,
+    //   askPriceAlgo: uint64,
+    //   askPriceUSDC: uint64,
+    //   validityPeriod: uint64
+    // ): uint64 {
+    proto 4 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:70
+    // public nextListingId = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_2 // "nextListingId"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:166
+    // if (this.nextListingId.value === 0) {
+    bnz listInstrument_after_if_else@2
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:70
+    // public nextListingId = GlobalState<uint64>()
+    bytec_2 // "nextListingId"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:167
+    // this.nextListingId.value = 1
+    intc_1 // 1
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:71
+    // public nextSaleId = GlobalState<uint64>()
+    bytec 4 // "nextSaleId"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:168
+    // this.nextSaleId.value = 1
+    intc_1 // 1
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:72
+    // public totalVolume = GlobalState<uint64>()
+    bytec 5 // "totalVolume"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:169
+    // this.totalVolume.value = 0
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:73
+    // public totalFees = GlobalState<uint64>()
+    bytec 6 // "totalFees"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:170
+    // this.totalFees.value = 0
+    intc_0 // 0
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:74
+    // public marketplaceFeeRate = GlobalState<uint64>()
+    bytec 9 // "marketplaceFeeRate"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:171
+    // this.marketplaceFeeRate.value = 100 // 1%
+    intc_3 // 100
+    app_global_put
+
+listInstrument_after_if_else@2:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:175
+    // assert(askPriceAlgo > 0 || askPriceUSDC > 0, 'Must set price in at least one currency')
+    frame_dig -3
+    bnz listInstrument_bool_true@4
+    frame_dig -2
+    bz listInstrument_bool_false@5
+
+listInstrument_bool_true@4:
+    intc_1 // 1
+
+listInstrument_bool_merge@6:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:175
+    // assert(askPriceAlgo > 0 || askPriceUSDC > 0, 'Must set price in at least one currency')
+    assert // Must set price in at least one currency
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:70
+    // public nextListingId = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_2 // "nextListingId"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:180
+    // listingId: new arc4.UintN64(listingId),
+    dup
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:181
+    // instrumentId: new arc4.UintN64(instrumentId),
+    frame_dig -4
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:182
+    // seller: new arc4.Address(Txn.sender),
+    txn Sender
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:183
+    // askPriceAlgo: new arc4.UintN64(askPriceAlgo),
+    frame_dig -3
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:184
+    // askPriceUSDC: new arc4.UintN64(askPriceUSDC),
+    frame_dig -2
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:185
+    // listingTime: new arc4.UintN64(Global.latestTimestamp),
+    global LatestTimestamp
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:186
+    // validUntil: new arc4.UintN64(Global.latestTimestamp + validityPeriod),
+    global LatestTimestamp
+    frame_dig -1
+    +
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:74
+    // public marketplaceFeeRate = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 9 // "marketplaceFeeRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:188
+    // marketplaceFee: new arc4.UintN64(this.marketplaceFeeRate.value)
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:179-189
+    // const listing = new InstrumentListing({
+    //   listingId: new arc4.UintN64(listingId),
+    //   instrumentId: new arc4.UintN64(instrumentId),
+    //   seller: new arc4.Address(Txn.sender),
+    //   askPriceAlgo: new arc4.UintN64(askPriceAlgo),
+    //   askPriceUSDC: new arc4.UintN64(askPriceUSDC),
+    //   listingTime: new arc4.UintN64(Global.latestTimestamp),
+    //   validUntil: new arc4.UintN64(Global.latestTimestamp + validityPeriod),
+    //   isActive: new arc4.Bool(true),
+    //   marketplaceFee: new arc4.UintN64(this.marketplaceFeeRate.value)
+    // })
+    dig 7
+    uncover 7
+    concat
+    uncover 6
+    concat
+    uncover 5
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:187
+    // isActive: new arc4.Bool(true),
+    bytec 8 // 0x80
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:179-189
+    // const listing = new InstrumentListing({
+    //   listingId: new arc4.UintN64(listingId),
+    //   instrumentId: new arc4.UintN64(instrumentId),
+    //   seller: new arc4.Address(Txn.sender),
+    //   askPriceAlgo: new arc4.UintN64(askPriceAlgo),
+    //   askPriceUSDC: new arc4.UintN64(askPriceUSDC),
+    //   listingTime: new arc4.UintN64(Global.latestTimestamp),
+    //   validUntil: new arc4.UintN64(Global.latestTimestamp + validityPeriod),
+    //   isActive: new arc4.Bool(true),
+    //   marketplaceFee: new arc4.UintN64(this.marketplaceFeeRate.value)
+    // })
+    concat
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:57
+    // public listings = BoxMap<uint64, InstrumentListing>({ keyPrefix: 'listings' })
+    bytec_3 // "listings"
+    dig 2
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:192
+    // this.listings(listingId).value = listing.copy()
+    swap
+    box_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:59
+    // public activeListings = BoxMap<uint64, arc4.Bool>({ keyPrefix: 'active' })
+    bytec 11 // "active"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:193
+    // this.activeListings(listingId).value = new arc4.Bool(true)
+    bytec 8 // 0x80
+    box_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:194
+    // this.nextListingId.value = listingId + 1
+    dup
+    intc_1 // 1
+    +
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:70
+    // public nextListingId = GlobalState<uint64>()
+    bytec_2 // "nextListingId"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:194
+    // this.nextListingId.value = listingId + 1
+    swap
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:196
+    // return listingId
+    retsub
+
+listInstrument_bool_false@5:
+    intc_0 // 0
+    b listInstrument_bool_merge@6
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.purchaseWithAlgo(listingId: uint64, payment: uint64) -> uint64:
+purchaseWithAlgo:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:202-206
+    // @abimethod()
+    // public purchaseWithAlgo(
+    //   listingId: uint64,
+    //   payment: gtxn.PaymentTxn
+    // ): boolean {
+    proto 2 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:207
+    // assert(this.listings(listingId).exists, 'Listing not found')
+    frame_dig -2
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:57
+    // public listings = BoxMap<uint64, InstrumentListing>({ keyPrefix: 'listings' })
+    bytec_3 // "listings"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:207
+    // assert(this.listings(listingId).exists, 'Listing not found')
+    dup
+    box_len
+    bury 1
+    assert // Listing not found
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:208
+    // const listing = this.listings(listingId).value.copy()
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:211
+    // assert(listing.isActive.native === true, 'Listing inactive')
+    dup
+    intc 4 // 640
+    getbit
+    bytec_0 // 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    intc_0 // 0
+    getbit
+    intc_1 // 1
+    ==
+    assert // Listing inactive
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:212
+    // assert(listing.validUntil.native > Global.latestTimestamp, 'Listing expired')
+    dup
+    pushint 72 // 72
+    extract_uint64
+    global LatestTimestamp
+    >
+    assert // Listing expired
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:213
+    // assert(listing.askPriceAlgo.native > 0, 'ALGO not accepted for this listing')
+    dup
+    pushint 48 // 48
+    extract_uint64
+    dup
+    assert // ALGO not accepted for this listing
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:216
+    // assert(payment.amount === listing.askPriceAlgo.native, 'Incorrect payment amount')
+    frame_dig -1
+    gtxns Amount
+    dup
+    uncover 2
+    ==
+    assert // Incorrect payment amount
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:217
+    // assert(payment.receiver === Global.currentApplicationAddress, 'Payment to wrong address')
+    frame_dig -1
+    gtxns Receiver
+    global CurrentApplicationAddress
+    ==
+    assert // Payment to wrong address
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:218
+    // assert(payment.sender === Txn.sender, 'Payment sender mismatch')
+    frame_dig -1
+    gtxns Sender
+    txn Sender
+    ==
+    assert // Payment sender mismatch
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:223
+    // Txn.sender.bytes,
+    txn Sender
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:221-227
+    // this.executeAtomicSettlement(
+    //   listing,
+    //   Txn.sender.bytes,
+    //   payment.amount,
+    //   1, // ALGO currency
+    //   0  // No asset ID for ALGO
+    // )
+    swap
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:225
+    // 1, // ALGO currency
+    intc_1 // 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:226
+    // 0  // No asset ID for ALGO
+    intc_0 // 0
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:221-227
+    // this.executeAtomicSettlement(
+    //   listing,
+    //   Txn.sender.bytes,
+    //   payment.amount,
+    //   1, // ALGO currency
+    //   0  // No asset ID for ALGO
+    // )
+    callsub executeAtomicSettlement
+    pop
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:229
+    // return true
+    intc_1 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.purchaseWithUSDC(listingId: uint64, payment: uint64) -> uint64:
+purchaseWithUSDC:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:236-240
+    // @abimethod()
+    // public purchaseWithUSDC(
+    //   listingId: uint64,
+    //   payment: gtxn.AssetTransferTxn
+    // ): boolean {
+    proto 2 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:241
+    // assert(this.listings(listingId).exists, 'Listing not found')
+    frame_dig -2
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:57
+    // public listings = BoxMap<uint64, InstrumentListing>({ keyPrefix: 'listings' })
+    bytec_3 // "listings"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:241
+    // assert(this.listings(listingId).exists, 'Listing not found')
+    dup
+    box_len
+    bury 1
+    assert // Listing not found
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:242
+    // const listing = this.listings(listingId).value.copy()
+    box_get
+    swap
+    dup
+    uncover 2
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:245
+    // assert(listing.isActive.native === true, 'Listing inactive')
+    dup
+    intc 4 // 640
+    getbit
+    bytec_0 // 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    intc_0 // 0
+    getbit
+    intc_1 // 1
+    ==
+    assert // Listing inactive
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:246
+    // assert(listing.validUntil.native > Global.latestTimestamp, 'Listing expired')
+    dup
+    pushint 72 // 72
+    extract_uint64
+    global LatestTimestamp
+    >
+    assert // Listing expired
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:247
+    // assert(listing.askPriceUSDC.native > 0, 'USDC not accepted for this listing')
+    pushint 56 // 56
+    extract_uint64
+    dup
+    assert // USDC not accepted for this listing
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:250
+    // assert(payment.assetAmount === listing.askPriceUSDC.native, 'Incorrect payment amount')
+    frame_dig -1
+    gtxns AssetAmount
+    dup
+    uncover 2
+    ==
+    assert // Incorrect payment amount
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:251
+    // assert(payment.assetReceiver === Global.currentApplicationAddress, 'Payment to wrong address')
+    frame_dig -1
+    gtxns AssetReceiver
+    global CurrentApplicationAddress
+    ==
+    assert // Payment to wrong address
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:252
+    // assert(payment.sender === Txn.sender, 'Payment sender mismatch')
+    frame_dig -1
+    gtxns Sender
+    txn Sender
+    ==
+    assert // Payment sender mismatch
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:256
+    // this.acceptedPaymentAssets(payment.xferAsset.id).exists &&
+    frame_dig -1
+    gtxns XferAsset
+    dup
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:65
+    // public acceptedPaymentAssets = BoxMap<uint64, arc4.Bool>({ keyPrefix: 'payments' })
+    bytec 7 // "payments"
+    swap
+    concat
+    dup
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:256
+    // this.acceptedPaymentAssets(payment.xferAsset.id).exists &&
+    box_len
+    bury 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:256-257
+    // this.acceptedPaymentAssets(payment.xferAsset.id).exists &&
+    // this.acceptedPaymentAssets(payment.xferAsset.id).value.native === true,
+    bz purchaseWithUSDC_bool_false@3
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:257
+    // this.acceptedPaymentAssets(payment.xferAsset.id).value.native === true,
+    frame_dig 3
+    box_get
+    assert // Box must have value
+    intc_0 // 0
+    getbit
+    intc_1 // 1
+    ==
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:256-257
+    // this.acceptedPaymentAssets(payment.xferAsset.id).exists &&
+    // this.acceptedPaymentAssets(payment.xferAsset.id).value.native === true,
+    bz purchaseWithUSDC_bool_false@3
+    intc_1 // 1
+
+purchaseWithUSDC_bool_merge@4:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:255-259
+    // assert(
+    //   this.acceptedPaymentAssets(payment.xferAsset.id).exists &&
+    //   this.acceptedPaymentAssets(payment.xferAsset.id).value.native === true,
+    //   'Payment asset not accepted'
+    // )
+    assert // Payment asset not accepted
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:262-268
+    // this.executeAtomicSettlement(
+    //   listing,
+    //   Txn.sender.bytes,
+    //   payment.assetAmount,
+    //   2, // USDC currency
+    //   payment.xferAsset.id // Store which USDC asset was used
+    // )
+    frame_dig 0
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:264
+    // Txn.sender.bytes,
+    txn Sender
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:262-268
+    // this.executeAtomicSettlement(
+    //   listing,
+    //   Txn.sender.bytes,
+    //   payment.assetAmount,
+    //   2, // USDC currency
+    //   payment.xferAsset.id // Store which USDC asset was used
+    // )
+    frame_dig 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:266
+    // 2, // USDC currency
+    pushint 2 // 2
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:262-268
+    // this.executeAtomicSettlement(
+    //   listing,
+    //   Txn.sender.bytes,
+    //   payment.assetAmount,
+    //   2, // USDC currency
+    //   payment.xferAsset.id // Store which USDC asset was used
+    // )
+    frame_dig 2
+    callsub executeAtomicSettlement
+    pop
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:270
+    // return true
+    intc_1 // 1
+    frame_bury 0
+    retsub
+
+purchaseWithUSDC_bool_false@3:
+    intc_0 // 0
+    b purchaseWithUSDC_bool_merge@4
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.executeAtomicSettlement(listing: bytes, buyer: bytes, totalAmount: uint64, currency: uint64, assetId: uint64) -> bytes:
+executeAtomicSettlement:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:276-282
+    // private executeAtomicSettlement(
+    //   listing: InstrumentListing,
+    //   buyer: bytes,
+    //   totalAmount: uint64,
+    //   currency: uint64,
+    //   assetId: uint64
+    // ) {
+    proto 5 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:284
+    // const marketplaceFee: uint64 = totalAmount / 100 // 1% fee
+    frame_dig -3
+    intc_3 // 100
+    /
+    dup
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:285
+    // const sellerAmount: uint64 = totalAmount - marketplaceFee
+    frame_dig -3
+    swap
+    -
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:287
+    // if (currency === 1) { // ALGO
+    frame_dig -2
+    intc_1 // 1
+    ==
+    bz executeAtomicSettlement_else_body@3
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:289-295
+    // itxn
+    //   .payment({
+    //     amount: sellerAmount,
+    //     receiver: listing.seller.bytes,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:292
+    // receiver: listing.seller.bytes,
+    frame_dig -5
+    extract 16 32 // on error: Index access is out of bounds
+    itxn_field Receiver
+    itxn_field Amount
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:289-294
+    // itxn
+    //   .payment({
+    //     amount: sellerAmount,
+    //     receiver: listing.seller.bytes,
+    //     fee: 0,
+    //   })
+    intc_1 // 1
+    itxn_field TypeEnum
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:293
+    // fee: 0,
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:289-295
+    // itxn
+    //   .payment({
+    //     amount: sellerAmount,
+    //     receiver: listing.seller.bytes,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+
+executeAtomicSettlement_after_if_else@5:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:309-316
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: Asset(listing.instrumentId.native),
+    //     assetReceiver: buyer,
+    //     assetAmount: 1,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:311
+    // xferAsset: Asset(listing.instrumentId.native),
+    frame_dig -5
+    extract 8 8 // on error: Index access is out of bounds
+    frame_dig -5
+    pushint 8 // 8
+    extract_uint64
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:313
+    // assetAmount: 1,
+    intc_1 // 1
+    itxn_field AssetAmount
+    frame_dig -4
+    itxn_field AssetReceiver
+    itxn_field XferAsset
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:309-315
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: Asset(listing.instrumentId.native),
+    //     assetReceiver: buyer,
+    //     assetAmount: 1,
+    //     fee: 0,
+    //   })
+    intc_2 // 4
+    itxn_field TypeEnum
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:314
+    // fee: 0,
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:309-316
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: Asset(listing.instrumentId.native),
+    //     assetReceiver: buyer,
+    //     assetAmount: 1,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:319
+    // this.recordSale(listing, buyer, totalAmount, assetId === 0 ? currency : assetId)
+    frame_dig -1
+    !
+    frame_dig -1
+    frame_dig -2
+    uncover 2
+    select
+    frame_bury -2
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:71
+    // public nextSaleId = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 4 // "nextSaleId"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:345
+    // saleId: new arc4.UintN64(saleId),
+    dup
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:347
+    // seller: listing.seller,
+    frame_dig -5
+    extract 16 32 // on error: Index access is out of bounds
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:349
+    // salePrice: new arc4.UintN64(salePrice),
+    frame_dig -3
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:350
+    // currency: new arc4.UintN64(currency),
+    frame_dig -2
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:351
+    // saleTime: new arc4.UintN64(Global.latestTimestamp)
+    global LatestTimestamp
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:344-352
+    // const sale = new InstrumentSale({
+    //   saleId: new arc4.UintN64(saleId),
+    //   instrumentId: listing.instrumentId,
+    //   seller: listing.seller,
+    //   buyer: new arc4.Address(buyer),
+    //   salePrice: new arc4.UintN64(salePrice),
+    //   currency: new arc4.UintN64(currency),
+    //   saleTime: new arc4.UintN64(Global.latestTimestamp)
+    // })
+    dig 4
+    dig 7
+    concat
+    dig 4
+    concat
+    frame_dig -4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:58
+    // public sales = BoxMap<uint64, InstrumentSale>({ keyPrefix: 'sales' })
+    bytec 12 // "sales"
+    uncover 3
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:355
+    // this.sales(saleId).value = sale.copy()
+    swap
+    box_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:356
+    // this.nextSaleId.value = saleId + 1
+    swap
+    intc_1 // 1
+    +
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:71
+    // public nextSaleId = GlobalState<uint64>()
+    bytec 4 // "nextSaleId"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:356
+    // this.nextSaleId.value = saleId + 1
+    swap
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:322-325
+    // this.listings(listing.listingId.native).value = new InstrumentListing({
+    //   ...listing,
+    //   isActive: new arc4.Bool(false)
+    // })
+    frame_dig -5
+    extract 0 8 // on error: Index access is out of bounds
+    frame_dig -5
+    extract 48 8 // on error: Index access is out of bounds
+    frame_dig -5
+    extract 56 8 // on error: Index access is out of bounds
+    frame_dig -5
+    extract 64 8 // on error: Index access is out of bounds
+    frame_dig -5
+    extract 72 8 // on error: Index access is out of bounds
+    frame_dig -5
+    extract 81 8 // on error: Index access is out of bounds
+    uncover 5
+    uncover 7
+    concat
+    uncover 6
+    concat
+    uncover 5
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:324
+    // isActive: new arc4.Bool(false)
+    bytec_0 // 0x00
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:322-325
+    // this.listings(listing.listingId.native).value = new InstrumentListing({
+    //   ...listing,
+    //   isActive: new arc4.Bool(false)
+    // })
+    concat
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:322
+    // this.listings(listing.listingId.native).value = new InstrumentListing({
+    frame_dig -5
+    intc_0 // 0
+    extract_uint64
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:57
+    // public listings = BoxMap<uint64, InstrumentListing>({ keyPrefix: 'listings' })
+    bytec_3 // "listings"
+    dig 1
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:322-325
+    // this.listings(listing.listingId.native).value = new InstrumentListing({
+    //   ...listing,
+    //   isActive: new arc4.Bool(false)
+    // })
+    uncover 2
+    box_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:59
+    // public activeListings = BoxMap<uint64, arc4.Bool>({ keyPrefix: 'active' })
+    bytec 11 // "active"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:326
+    // this.activeListings(listing.listingId.native).value = new arc4.Bool(false)
+    bytec_0 // 0x00
+    box_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:72
+    // public totalVolume = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 5 // "totalVolume"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:329
+    // this.totalVolume.value = this.totalVolume.value + totalAmount
+    frame_dig -3
+    +
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:72
+    // public totalVolume = GlobalState<uint64>()
+    bytec 5 // "totalVolume"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:329
+    // this.totalVolume.value = this.totalVolume.value + totalAmount
+    swap
+    app_global_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:73
+    // public totalFees = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 6 // "totalFees"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:330
+    // this.totalFees.value = this.totalFees.value + marketplaceFee
+    frame_dig 0
+    +
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:73
+    // public totalFees = GlobalState<uint64>()
+    bytec 6 // "totalFees"
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:330
+    // this.totalFees.value = this.totalFees.value + marketplaceFee
+    swap
+    app_global_put
+    frame_dig -5
+    swap
+    retsub
+
+executeAtomicSettlement_else_body@3:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:298-305
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: Asset(assetId),
+    //     assetReceiver: listing.seller.bytes,
+    //     assetAmount: sellerAmount,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:301
+    // assetReceiver: listing.seller.bytes,
+    frame_dig -5
+    extract 16 32 // on error: Index access is out of bounds
+    itxn_field AssetReceiver
+    itxn_field AssetAmount
+    frame_dig -1
+    itxn_field XferAsset
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:298-304
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: Asset(assetId),
+    //     assetReceiver: listing.seller.bytes,
+    //     assetAmount: sellerAmount,
+    //     fee: 0,
+    //   })
+    intc_2 // 4
+    itxn_field TypeEnum
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:303
+    // fee: 0,
+    intc_0 // 0
+    itxn_field Fee
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:298-305
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: Asset(assetId),
+    //     assetReceiver: listing.seller.bytes,
+    //     assetAmount: sellerAmount,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    b executeAtomicSettlement_after_if_else@5
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.cancelListing(listingId: uint64) -> uint64:
+cancelListing:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:362-363
+    // @abimethod()
+    // public cancelListing(listingId: uint64): boolean {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:364
+    // assert(this.listings(listingId).exists, 'Listing not found')
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:57
+    // public listings = BoxMap<uint64, InstrumentListing>({ keyPrefix: 'listings' })
+    bytec_3 // "listings"
+    dig 1
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:364
+    // assert(this.listings(listingId).exists, 'Listing not found')
+    dup
+    box_len
+    bury 1
+    assert // Listing not found
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:365
+    // const listing = this.listings(listingId).value.copy()
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:368
+    // assert(listing.seller.bytes === Txn.sender.bytes, 'Only seller can cancel')
+    dup
+    extract 16 32 // on error: Index access is out of bounds
+    dup
+    txn Sender
+    ==
+    assert // Only seller can cancel
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:369
+    // assert(listing.isActive.native === true, 'Listing already inactive')
+    dig 1
+    intc 4 // 640
+    getbit
+    bytec_0 // 0x00
+    intc_0 // 0
+    uncover 2
+    setbit
+    intc_0 // 0
+    getbit
+    intc_1 // 1
+    ==
+    assert // Listing already inactive
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:372-375
+    // this.listings(listingId).value = new InstrumentListing({
+    //   ...listing,
+    //   isActive: new arc4.Bool(false)
+    // })
+    dig 1
+    extract 0 8 // on error: Index access is out of bounds
+    dig 2
+    extract 8 8 // on error: Index access is out of bounds
+    dig 3
+    extract 48 8 // on error: Index access is out of bounds
+    dig 4
+    extract 56 8 // on error: Index access is out of bounds
+    dig 5
+    extract 64 8 // on error: Index access is out of bounds
+    dig 6
+    extract 72 8 // on error: Index access is out of bounds
+    uncover 7
+    extract 81 8 // on error: Index access is out of bounds
+    uncover 6
+    uncover 6
+    concat
+    uncover 6
+    concat
+    uncover 5
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:374
+    // isActive: new arc4.Bool(false)
+    bytec_0 // 0x00
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:372-375
+    // this.listings(listingId).value = new InstrumentListing({
+    //   ...listing,
+    //   isActive: new arc4.Bool(false)
+    // })
+    concat
+    swap
+    concat
+    box_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:59
+    // public activeListings = BoxMap<uint64, arc4.Bool>({ keyPrefix: 'active' })
+    bytec 11 // "active"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:376
+    // this.activeListings(listingId).value = new arc4.Bool(false)
+    bytec_0 // 0x00
+    box_put
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:378
+    // return true
+    intc_1 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.getListing(listingId: uint64) -> bytes:
+getListing:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:384-385
+    // @abimethod({ readonly: true })
+    // public getListing(listingId: uint64): InstrumentListing {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:386
+    // assert(this.listings(listingId).exists, 'Listing not found')
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:57
+    // public listings = BoxMap<uint64, InstrumentListing>({ keyPrefix: 'listings' })
+    bytec_3 // "listings"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:386
+    // assert(this.listings(listingId).exists, 'Listing not found')
+    dup
+    box_len
+    bury 1
+    assert // Listing not found
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:387
+    // return this.listings(listingId).value
+    box_get
+    assert // Box must have value
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.getSale(saleId: uint64) -> bytes:
+getSale:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:393-394
+    // @abimethod({ readonly: true })
+    // public getSale(saleId: uint64): InstrumentSale {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:395
+    // assert(this.sales(saleId).exists, 'Sale not found')
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:58
+    // public sales = BoxMap<uint64, InstrumentSale>({ keyPrefix: 'sales' })
+    bytec 12 // "sales"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:395
+    // assert(this.sales(saleId).exists, 'Sale not found')
+    dup
+    box_len
+    bury 1
+    assert // Sale not found
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:396
+    // return this.sales(saleId).value
+    box_get
+    assert // Box must have value
+    retsub
+
+
+// smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts::AtomicMarketplaceV3.getMarketplaceStats() -> bytes, bytes, bytes, bytes:
+getMarketplaceStats:
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:72
+    // public totalVolume = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 5 // "totalVolume"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:405
+    // new arc4.UintN64(this.totalVolume.value),
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:73
+    // public totalFees = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 6 // "totalFees"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:406
+    // new arc4.UintN64(this.totalFees.value),
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:70
+    // public nextListingId = GlobalState<uint64>()
+    intc_0 // 0
+    bytec_2 // "nextListingId"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:407
+    // new arc4.UintN64(this.nextListingId.value - 1),
+    intc_1 // 1
+    -
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:71
+    // public nextSaleId = GlobalState<uint64>()
+    intc_0 // 0
+    bytec 4 // "nextSaleId"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:408
+    // new arc4.UintN64(this.nextSaleId.value - 1)
+    intc_1 // 1
+    -
+    itob
+    // smart_contracts/atomic_marketplace_v3/AtomicMarketplaceV3.algo.ts:404-409
+    // return [
+    //   new arc4.UintN64(this.totalVolume.value),
+    //   new arc4.UintN64(this.totalFees.value),
+    //   new arc4.UintN64(this.nextListingId.value - 1),
+    //   new arc4.UintN64(this.nextSaleId.value - 1)
+    // ]
+    retsub

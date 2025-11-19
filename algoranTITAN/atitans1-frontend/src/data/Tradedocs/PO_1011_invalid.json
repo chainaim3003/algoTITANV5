@@ -1,0 +1,453 @@
+{
+  "exchangedDocument": {
+    "id": "PO-VLEI-1001",
+    "typeCode": "220",
+    "issueDateTime": {
+      "dateTimeString": {
+        "value": "",
+        "format": "205"
+      }
+    },
+    "includedNote": [
+      {
+        "content": "Standard order - Men's Cotton Knitted T-Shirts",
+        "contentCode": "AAI",
+        "subjectCode": "DEL"
+      }
+    ]
+  },
+  "supplyChainTradeTransaction": {
+    "applicableHeaderTradeAgreement": {
+      "buyerReference": "TOMMY-BUYER-REF-2025-Q4",
+      "sellerTradeParty": {
+        "id": [
+          {
+            "value": "SELLER-TIRUPUR-JKC-001",
+            "schemeId": "0088"
+          }
+        ],
+        "globalId": [
+          {
+            "value": "3358004DXAMRWRUIYJ05",
+            "schemeId": "0088"
+          }
+        ],
+        "name": "JUPITER KNITTING COMPANY",
+        "roleCode": "SE",
+        "definedTradeContact": [
+          {
+            "personName": "Export Manager",
+            "departmentName": "Sales and Export Department",
+            "telephoneUniversalCommunication": {
+              "completeNumber": "+91-421-XXXXXXX"
+            },
+            "emailURIUniversalCommunication": {
+              "uriId": "exports@jupiterknitting.com"
+            }
+          }
+        ],
+        "postalTradeAddress": {
+          "postcode": "641652",
+          "lineOne": "I-J-24, JUPITER AVENUE",
+          "lineTwo": "ANUPPARPALAYAM POST",
+          "cityName": "TIRUPPUR",
+          "countryId": "IN",
+          "countryName": "India",
+          "countrySubDivisionName": "Tamil Nadu"
+        },
+        "specifiedTaxRegistration": [
+          {
+            "id": {
+              "value": "33AACFJ3024D1Z4",
+              "schemeId": "VA"
+            }
+          }
+        ]
+      },
+      "buyerTradeParty": {
+        "id": [
+          {
+            "value": "BUYER-AMSTERDAM-THF-001",
+            "schemeId": "0088"
+          }
+        ],
+        "globalId": [
+          {
+            "value": "54930012QJWZMYHNJW95",
+            "schemeId": "0088"
+          }
+        ],
+        "name": "TOMMY HILFIGER EUROPE B.V.",
+        "roleCode": "BY",
+        "definedTradeContact": [
+          {
+            "personName": "Procurement Manager",
+            "departmentName": "Global Procurement",
+            "telephoneUniversalCommunication": {
+              "completeNumber": "+31-20-XXXXXXX"
+            },
+            "emailURIUniversalCommunication": {
+              "uriId": "procurement@tommy.com"
+            }
+          }
+        ],
+        "postalTradeAddress": {
+          "postcode": "1013 AP",
+          "lineOne": "DANZIGERKADE 165",
+          "cityName": "AMSTERDAM",
+          "countryId": "NL",
+          "countryName": "Netherlands",
+          "countrySubDivisionName": "North Holland"
+        },
+        "specifiedTaxRegistration": [
+          {
+            "id": {
+              "value": "NL33290078B01",
+              "schemeId": "VA"
+            }
+          }
+        ]
+      },
+      "buyerOrderReferencedDocument": {
+        "issuerAssignedId": "RFQ-2025-WINTER-COLLECTION",
+        "formattedIssueDateTime": {
+          "dateTimeString": {
+            "value": "2025-10-01",
+            "format": "102"
+          }
+        }
+      },
+      "contractReferencedDocument": {
+        "issuerAssignedId": "FRAME-CONTRACT-2025-KNITWEAR",
+        "formattedIssueDateTime": {
+          "dateTimeString": {
+            "value": "2025-01-01",
+            "format": "102"
+          }
+        }
+      },
+      "specifiedProcuringProject": {
+        "id": "WINTER-2025-BASICS",
+        "name": "Winter 2025 Basic Cotton Collection"
+      }
+    },
+    "applicableHeaderTradeDelivery": {
+      "shipToTradeParty": {
+        "id": [
+          {
+            "value": "WAREHOUSE-AMSTERDAM-CENTRAL"
+          }
+        ],
+        "name": "TOMMY HILFIGER EUROPE B.V. - Central Distribution",
+        "roleCode": "ST",
+        "postalTradeAddress": {
+          "postcode": "1013 AP",
+          "lineOne": "DANZIGERKADE 165",
+          "lineTwo": "Distribution Center",
+          "cityName": "AMSTERDAM",
+          "countryId": "NL",
+          "countryName": "Netherlands"
+        }
+      },
+      "requestedDeliverySupplyChainEvent": {
+        "occurrenceDateTime": {
+          "dateTimeString": {
+            "value": "2025-11-15",
+            "format": "102"
+          }
+        }
+      }
+    },
+    "applicableHeaderTradeSettlement": {
+      "creditorReferenceId": "CREDIT-REF-PO-1001",
+      "paymentReference": "PO-1001-PAYMENT",
+      "invoiceCurrencyCode": "USD",
+      "payerTradeParty": {
+        "id": [
+          {
+            "value": "BUYER-AMSTERDAM-THF-001"
+          }
+        ],
+        "name": "TOMMY HILFIGER EUROPE B.V.",
+        "roleCode": "PE"
+      },
+      "payeeTradeParty": {
+        "id": [
+          {
+            "value": "SELLER-TIRUPUR-JKC-001"
+          }
+        ],
+        "name": "JUPITER KNITTING COMPANY",
+        "roleCode": "PY",
+        "specifiedLegalOrganization": {
+          "id": "3358004DXAMRWRUIYJ05",
+          "tradingBusinessName": "JUPITER KNITTING COMPANY"
+        }
+      },
+      "specifiedTradeSettlementPaymentMeans": [
+        {
+          "typeCode": "42",
+          "information": "Payment via Letter of Credit",
+          "payerPartyDebtorFinancialAccount": {
+            "ibanId": "NL91ABNA0417164300",
+            "accountName": "TOMMY HILFIGER EUROPE B.V."
+          },
+          "payeePartyCreditorFinancialAccount": {
+            "ibanId": "IN12SBIN0001234",
+            "accountName": "JUPITER KNITTING COMPANY"
+          },
+          "payeeSpecifiedCreditorFinancialInstitution": {
+            "bicId": "SBININBBXXX",
+            "name": "State Bank of India",
+            "locationFinancialInstitutionAddress": {
+              "cityName": "Tiruppur",
+              "countryId": "IN"
+            }
+          }
+        }
+      ],
+      "applicableTradeTax": [
+        {
+          "calculatedAmount": {
+            "value": 0,
+            "currencyId": "USD"
+          },
+          "typeCode": "VAT",
+          "exemptionReason": "Export - Zero rated",
+          "basisAmount": {
+            "value": 8500,
+            "currencyId": "USD"
+          },
+          "categoryCode": "Z",
+          "rateApplicablePercent": 0
+        }
+      ],
+      "specifiedTradePaymentTerms": [
+        {
+          "description": "Letter of Credit at sight - 30 days from Bill of Lading date",
+          "dueDateDateTime": {
+            "dateTimeString": {
+              "value": "2025-12-15",
+              "format": "102"
+            }
+          },
+          "directDebitMandateId": "LC-2025-JUPITER-001"
+        }
+      ],
+      "specifiedTradeAllowanceCharge": [
+        {
+          "chargeIndicator": false,
+          "actualAmount": {
+            "value": 170,
+            "currencyId": "USD"
+          },
+          "reasonCode": "95",
+          "reason": "Early payment discount - 2%"
+        }
+      ],
+      "specifiedTradeSettlementHeaderMonetarySummation": {
+        "lineTotalAmount": {
+          "value": 8500,
+          "currencyId": "USD"
+        },
+        "chargeTotalAmount": {
+          "value": 0,
+          "currencyId": "USD"
+        },
+        "allowanceTotalAmount": {
+          "value": 170,
+          "currencyId": "USD"
+        },
+        "taxBasisTotalAmount": {
+          "value": 8330,
+          "currencyId": "USD"
+        },
+        "taxTotalAmount": {
+          "value": 0,
+          "currencyId": "USD"
+        },
+        "grandTotalAmount": {
+          "value": "INVALID_AMOUNT",
+          "currencyId": "USD"
+        },
+        "duePayableAmount": {
+          "value": 9999,
+          "currencyId": "USD"
+        }
+      }
+    },
+    "includedSupplyChainTradeLineItem": [
+      {
+        "associatedDocumentLineDocument": {
+          "lineId": "1",
+          "includedNote": [
+            {
+              "content": "100% Cotton Knitted T-Shirts - Premium Quality",
+              "contentCode": "AAI"
+            }
+          ]
+        },
+        "specifiedTradeProduct": {
+          "id": [
+            {
+              "value": "THF-CTSH-001",
+              "schemeId": "SELLER"
+            }
+          ],
+          "globalId": [
+            {
+              "value": "6109100000",
+              "schemeId": "HS"
+            }
+          ],
+          "name": "Men's Cotton Knitted T-Shirts",
+          "description": "100% Cotton Knitted T-Shirts, Premium Quality, Various Sizes (S-XL)",
+          "tradeCountry": [
+            {
+              "id": "IN",
+              "name": "India"
+            }
+          ],
+          "designatedProductClassification": [
+            {
+              "classCode": {
+                "value": "6109100000",
+                "listId": "HS",
+                "listVersionId": "2022"
+              },
+              "className": "T-shirts, singlets and other vests, knitted or crocheted, of cotton"
+            }
+          ],
+          "applicableProductCharacteristic": [
+            {
+              "description": "Material",
+              "value": "100% Cotton"
+            },
+            {
+              "description": "Type",
+              "value": "Knitted T-Shirt"
+            },
+            {
+              "description": "Gender",
+              "value": "Men's"
+            },
+            {
+              "description": "Sizes",
+              "value": "S, M, L, XL"
+            },
+            {
+              "description": "Quality",
+              "value": "Premium Export Quality"
+            }
+          ],
+          "originTradeCountry": {
+            "id": "IN",
+            "name": "India"
+          }
+        },
+        "specifiedLineTradeAgreement": {
+          "buyerOrderReferencedDocument": {
+            "lineId": "1",
+            "issuerAssignedId": "RFQ-2025-WINTER-LINE-001"
+          },
+          "grossPriceProductTradePrice": {
+            "chargeAmount": {
+              "value": 8.50,
+              "currencyId": "USD"
+            },
+            "basisQuantity": {
+              "value": 1,
+              "unitCode": "C62"
+            }
+          },
+          "netPriceProductTradePrice": {
+            "chargeAmount": {
+              "value": 8.50,
+              "currencyId": "USD"
+            },
+            "basisQuantity": {
+              "value": 1,
+              "unitCode": "C62"
+            }
+          }
+        },
+        "specifiedLineTradeDelivery": {
+          "billedQuantity": {
+            "value": 1000,
+            "unitCode": "C62"
+          },
+          "requestedDeliverySupplyChainEvent": {
+            "occurrenceDateTime": {
+              "dateTimeString": {
+                "value": "2025-11-15",
+                "format": "102"
+              }
+            }
+          }
+        },
+        "specifiedLineTradeSettlement": {
+          "applicableTradeTax": [
+            {
+              "typeCode": "VAT",
+              "categoryCode": "Z",
+              "rateApplicablePercent": 0,
+              "exemptionReason": "Export - Zero rated"
+            }
+          ],
+          "specifiedTradeSettlementLineMonetarySummation": {
+            "lineTotalAmount": {
+              "value": 8500,
+              "currencyId": "USD"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "endorsements": [
+    {
+      "endorsementId": "END-PO-1001",
+      "timestamp": "2025-10-06T10:00:00Z",
+      "publicData": {
+        "signerDID": "did:lei:54930012QJWZMYHNJW95:officer:procurement",
+        "companyLEI": "54930012QJWZMYHNJW95",
+        "roleLevel": "PROCUREMENT_MANAGER",
+        "hasSigningAuthority": true,
+        "credentialsValid": true
+      },
+      "privateDataReference": {
+        "ipfsHash": "QmPurchaseOrderPO1001TommyHilfigerJupiterHash456",
+        "encryptionMethod": "AES-256-GCM",
+        "dataCommitment": "0xpo1001a45fceea167a5a36dedd4bea2543",
+        "accessControl": [
+          "did:lei:3358004DXAMRWRUIYJ05",
+          "did:lei:REGULATOR_LEI"
+        ]
+      },
+      "vLEIProof": {
+        "credentialChainHash": "0x9z8y7x6w5v4u3t2s1r0q9p8o7n6m5l4k",
+        "gleifVerificationEndpoint": "https://api.gleif.org/verify/54930012QJWZMYHNJW95"
+      },
+      "algorandTransaction": {
+        "walletAddress": "TOMMYHILFIGER9EUROPE9BV9PROCUREMENT9WALLET9XYZ",
+        "signature": "INVALID_SIGNATURE_FORMAT",
+        "transactionId": "TXPO10012025100612345ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "blockNumber": 45789012,
+        "timestamp": "2025-10-06T10:00:05Z"
+      }
+    }
+  ],
+  "privacyMetadata": {
+    "privacyLevel": "ENHANCED",
+    "complianceMode": "REGULATORY_ACCESSIBLE",
+    "publiclyVerifiable": true,
+    "gdprCompliant": true,
+    "notes": [
+      "Purchase order terms encrypted and stored off-chain",
+      "Public can verify: valid signature, valid credentials, authorized buyer",
+      "Regulators/authorized parties can decrypt full details using DID-based access control",
+      "Blockchain signature ensures non-repudiation of order",
+      "Full compliance with UN/CEFACT standards for cross-border trade"
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "transportDocumentReference": "BAD12323456DFGH567GVP",
+  "shippingInstructionsReference": "not-a-uuid",
+  "transportDocumentStatus": "INVALID_STATUS",
+  "transportDocumentTypeCode": "XYZ",
+  "isShippedOnBoardType": "yes",
+  "freightPaymentTermCode": "UNKNOWN",
+  "isElectronic": "true",
+  "isToOrder": "no",
+  "shippedOnBoardDate": "31-02-2024",
+  "termsAndConditions": 12345,
+  "receiptTypeAtOrigin": "INVALID",
+  "deliveryTypeAtDestination": "INVALID",
+  "cargoMovementTypeAtOrigin": "ABC",
+  "cargoMovementTypeAtDestination": 123,
+  "serviceContractReference": null,
+  "carrierCode": "???",
+  "carrierCodeListProvider": 999,
+  "transports": {
+    "plannedDepartureDate": "not-a-date",
+    "plannedArrivalDate": "2024-13-01",
+    "portOfLoading": {
+      "UNLocationCode": "12345"
+    },
+    "portOfDischarge": {
+      "UNLocationCode": "ABCDE"
+    },
+    "vesselVoyages": [
+      {
+        "vesselName": "",
+        "carrierExportVoyageNumber": ""
+      }
+    ]
+  },
+  "charges": [
+    {
+      "chargeName": "",
+      "currencyAmount": "fifty",
+      "currencyCode": "EURO",
+      "paymentTermCode": "PREPAID",
+      "calculationBasis": "",
+      "unitPrice": "ten",
+      "quantity": "one"
+    }
+  ],
+  "invoicePayableAt": {
+    "UNLocationCode": ""
+  },
+  "partyContactDetails": [
+    {
+      "name": "",
+      "email": "not-an-email"
+    }
+  ],
+  "documentParties": {
+    "shipper": {
+      "partyName": "",
+      "displayedAddress": [],
+      "partyContactDetails": []
+    },
+    "issuingParty": {
+      "partyName": "",
+      "address": {},
+      "identifyingCodes": []
+    }
+  },
+  "consignmentItems": [],
+  "utilizedTransportEquipments": []
+}

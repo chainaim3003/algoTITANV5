@@ -1,0 +1,884 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 1 0 4 8
+    bytecblock 0x151f7c75 "nextInstrumentId" "totalInstruments" "instruments" 0x00 "eBL" "exp_inst"
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:42
+    // export default class TradeInstrumentRegistryV3 extends Contract {
+    txn NumAppArgs
+    bz main_bare_routing@11
+    pushbytess 0xc3b145ab 0xeba5142d 0xe82910e1 0x993b46b8 0x752465a0 0xb1105ea1 // method "initialize()bool", method "createInstrument(string,address,address,string,uint64,string,string)uint64", method "endorseInstrument(uint64,address)bool", method "getInstrument(uint64)(string,uint64,uint64,uint64,uint64,address,address,address,string,uint64,string,string,uint64,uint64,uint64,uint64)", method "getExporterInstruments(address)uint64[]", method "updateInstrumentStatus(uint64,uint64)bool"
+    txna ApplicationArgs 0
+    match main_initialize_route@3 main_createInstrument_route@4 main_endorseInstrument_route@5 main_getInstrument_route@6 main_getExporterInstruments_route@7 main_updateInstrumentStatus_route@8
+
+main_after_if_else@15:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:42
+    // export default class TradeInstrumentRegistryV3 extends Contract {
+    intc_1 // 0
+    return
+
+main_updateInstrumentStatus_route@8:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:218
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:42
+    // export default class TradeInstrumentRegistryV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:218
+    // @abimethod()
+    callsub updateInstrumentStatus
+    bytec 4 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_getExporterInstruments_route@7:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:206
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:42
+    // export default class TradeInstrumentRegistryV3 extends Contract {
+    txna ApplicationArgs 1
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:206
+    // @abimethod({ readonly: true })
+    callsub getExporterInstruments
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_getInstrument_route@6:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:197
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:42
+    // export default class TradeInstrumentRegistryV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:197
+    // @abimethod({ readonly: true })
+    callsub getInstrument
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_endorseInstrument_route@5:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:165
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:42
+    // export default class TradeInstrumentRegistryV3 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:165
+    // @abimethod()
+    callsub endorseInstrument
+    bytec 4 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_createInstrument_route@4:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:71
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:42
+    // export default class TradeInstrumentRegistryV3 extends Contract {
+    txna ApplicationArgs 1
+    extract 2 0
+    txna ApplicationArgs 2
+    txna ApplicationArgs 3
+    txna ApplicationArgs 4
+    extract 2 0
+    txna ApplicationArgs 5
+    btoi
+    txna ApplicationArgs 6
+    extract 2 0
+    txna ApplicationArgs 7
+    extract 2 0
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:71
+    // @abimethod()
+    callsub createInstrument
+    itob
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_initialize_route@3:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:58
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub initialize
+    bytec 4 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_bare_routing@11:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:42
+    // export default class TradeInstrumentRegistryV3 extends Contract {
+    txn OnCompletion
+    bnz main_after_if_else@15
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    intc_0 // 1
+    return
+
+
+// smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts::TradeInstrumentRegistryV3.initialize() -> uint64:
+initialize:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:60
+    // assert(Txn.sender === Global.creatorAddress, 'Only creator can initialize')
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Only creator can initialize
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:52
+    // public nextInstrumentId = GlobalState<uint64>()
+    bytec_1 // "nextInstrumentId"
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:62
+    // this.nextInstrumentId.value = 1
+    intc_0 // 1
+    app_global_put
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:53
+    // public totalInstruments = GlobalState<uint64>()
+    bytec_2 // "totalInstruments"
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:63
+    // this.totalInstruments.value = 0
+    intc_1 // 0
+    app_global_put
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:65
+    // return true
+    intc_0 // 1
+    retsub
+
+
+// smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts::TradeInstrumentRegistryV3.createInstrument(instrumentNumber: bytes, exporterAddress: bytes, importerAddress: bytes, cargoDescription: bytes, cargoValue: uint64, originPort: bytes, destinationPort: bytes) -> uint64:
+createInstrument:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:71-80
+    // @abimethod()
+    // public createInstrument(
+    //   instrumentNumber: string,
+    //   exporterAddress: arc4.Address,
+    //   importerAddress: arc4.Address,
+    //   cargoDescription: string,
+    //   cargoValue: uint64,
+    //   originPort: string,
+    //   destinationPort: string
+    // ): uint64 {
+    proto 7 1
+    intc_1 // 0
+    pushbytes ""
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:52
+    // public nextInstrumentId = GlobalState<uint64>()
+    intc_1 // 0
+    bytec_1 // "nextInstrumentId"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:82
+    // if (this.nextInstrumentId.value === 0) {
+    bnz createInstrument_after_if_else@2
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:52
+    // public nextInstrumentId = GlobalState<uint64>()
+    bytec_1 // "nextInstrumentId"
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:83
+    // this.nextInstrumentId.value = 1
+    intc_0 // 1
+    app_global_put
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:53
+    // public totalInstruments = GlobalState<uint64>()
+    bytec_2 // "totalInstruments"
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:84
+    // this.totalInstruments.value = 0
+    intc_1 // 0
+    app_global_put
+
+createInstrument_after_if_else@2:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:52
+    // public nextInstrumentId = GlobalState<uint64>()
+    intc_1 // 0
+    bytec_1 // "nextInstrumentId"
+    app_global_get_ex
+    swap
+    dup
+    cover 2
+    frame_bury 1
+    assert // check GlobalState exists
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:90-102
+    // const assetResult = itxn
+    //   .assetConfig({
+    //     assetName: 'eBL',
+    //     unitName: 'eBL',
+    //     total: 1,
+    //     decimals: 0,
+    //     manager: exporterAddress.bytes,
+    //     reserve: exporterAddress.bytes,
+    //     freeze: exporterAddress.bytes,
+    //     clawback: exporterAddress.bytes,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    frame_dig -6
+    itxn_field ConfigAssetClawback
+    frame_dig -6
+    itxn_field ConfigAssetFreeze
+    frame_dig -6
+    itxn_field ConfigAssetReserve
+    frame_dig -6
+    itxn_field ConfigAssetManager
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:95
+    // decimals: 0,
+    intc_1 // 0
+    itxn_field ConfigAssetDecimals
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:94
+    // total: 1,
+    intc_0 // 1
+    itxn_field ConfigAssetTotal
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:93
+    // unitName: 'eBL',
+    bytec 5 // "eBL"
+    itxn_field ConfigAssetUnitName
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:92
+    // assetName: 'eBL',
+    bytec 5 // "eBL"
+    itxn_field ConfigAssetName
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:90-101
+    // const assetResult = itxn
+    //   .assetConfig({
+    //     assetName: 'eBL',
+    //     unitName: 'eBL',
+    //     total: 1,
+    //     decimals: 0,
+    //     manager: exporterAddress.bytes,
+    //     reserve: exporterAddress.bytes,
+    //     freeze: exporterAddress.bytes,
+    //     clawback: exporterAddress.bytes,
+    //     fee: 0,
+    //   })
+    pushint 3 // 3
+    itxn_field TypeEnum
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:100
+    // fee: 0,
+    intc_1 // 0
+    itxn_field Fee
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:90-102
+    // const assetResult = itxn
+    //   .assetConfig({
+    //     assetName: 'eBL',
+    //     unitName: 'eBL',
+    //     total: 1,
+    //     decimals: 0,
+    //     manager: exporterAddress.bytes,
+    //     reserve: exporterAddress.bytes,
+    //     freeze: exporterAddress.bytes,
+    //     clawback: exporterAddress.bytes,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    itxn CreatedAssetID
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:105-112
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: assetResult.createdAsset,
+    //     assetReceiver: exporterAddress.bytes,
+    //     assetAmount: 1,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:109
+    // assetAmount: 1,
+    intc_0 // 1
+    itxn_field AssetAmount
+    frame_dig -6
+    itxn_field AssetReceiver
+    dup
+    itxn_field XferAsset
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:105-111
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: assetResult.createdAsset,
+    //     assetReceiver: exporterAddress.bytes,
+    //     assetAmount: 1,
+    //     fee: 0,
+    //   })
+    intc_2 // 4
+    itxn_field TypeEnum
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:110
+    // fee: 0,
+    intc_1 // 0
+    itxn_field Fee
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:105-112
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: assetResult.createdAsset,
+    //     assetReceiver: exporterAddress.bytes,
+    //     assetAmount: 1,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:116
+    // instrumentNumber: new arc4.Str(instrumentNumber),
+    frame_dig -7
+    len
+    itob
+    extract 6 2
+    frame_dig -7
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:117
+    // instrumentAssetId: new arc4.UintN64(assetResult.createdAsset.id),
+    swap
+    itob
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:118
+    // issueDate: new arc4.UintN64(Global.latestTimestamp),
+    global LatestTimestamp
+    itob
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:119
+    // maturityDate: new arc4.UintN64(Global.latestTimestamp + 2592000), // +30 days
+    global LatestTimestamp
+    pushint 2592000 // 2592000
+    +
+    itob
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:120
+    // faceValue: new arc4.UintN64(cargoValue),
+    frame_dig -3
+    itob
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:124
+    // cargoDescription: new arc4.Str(cargoDescription),
+    frame_dig -4
+    len
+    itob
+    extract 6 2
+    frame_dig -4
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:126
+    // originPort: new arc4.Str(originPort),
+    frame_dig -2
+    len
+    itob
+    extract 6 2
+    frame_dig -2
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:127
+    // destinationPort: new arc4.Str(destinationPort),
+    frame_dig -1
+    len
+    itob
+    extract 6 2
+    frame_dig -1
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:130
+    // createdAt: new arc4.UintN64(Global.latestTimestamp),
+    global LatestTimestamp
+    itob
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:131
+    // lastUpdated: new arc4.UintN64(Global.latestTimestamp)
+    global LatestTimestamp
+    itob
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:115-132
+    // const instrument = new TradeInstrument({
+    //   instrumentNumber: new arc4.Str(instrumentNumber),
+    //   instrumentAssetId: new arc4.UintN64(assetResult.createdAsset.id),
+    //   issueDate: new arc4.UintN64(Global.latestTimestamp),
+    //   maturityDate: new arc4.UintN64(Global.latestTimestamp + 2592000), // +30 days
+    //   faceValue: new arc4.UintN64(cargoValue),
+    //   currentHolder: exporterAddress,
+    //   exporterAddress: exporterAddress,
+    //   importerAddress: importerAddress,
+    //   cargoDescription: new arc4.Str(cargoDescription),
+    //   cargoValue: new arc4.UintN64(cargoValue),
+    //   originPort: new arc4.Str(originPort),
+    //   destinationPort: new arc4.Str(destinationPort),
+    //   riskScore: new arc4.UintN64(500), // Default score
+    //   instrumentStatus: new arc4.UintN64(1), // Active
+    //   createdAt: new arc4.UintN64(Global.latestTimestamp),
+    //   lastUpdated: new arc4.UintN64(Global.latestTimestamp)
+    // })
+    dig 9
+    len
+    pushint 176 // 176
+    +
+    pushbytes 0x00b0
+    uncover 10
+    concat
+    uncover 9
+    concat
+    uncover 8
+    concat
+    dig 7
+    concat
+    frame_dig -6
+    concat
+    frame_dig -6
+    concat
+    frame_dig -5
+    concat
+    dig 1
+    itob
+    extract 6 2
+    concat
+    dig 6
+    len
+    uncover 2
+    +
+    swap
+    uncover 7
+    concat
+    dig 1
+    itob
+    extract 6 2
+    concat
+    dig 5
+    len
+    uncover 2
+    +
+    itob
+    extract 6 2
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:128
+    // riskScore: new arc4.UintN64(500), // Default score
+    pushbytes 0x00000000000001f4
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:115-132
+    // const instrument = new TradeInstrument({
+    //   instrumentNumber: new arc4.Str(instrumentNumber),
+    //   instrumentAssetId: new arc4.UintN64(assetResult.createdAsset.id),
+    //   issueDate: new arc4.UintN64(Global.latestTimestamp),
+    //   maturityDate: new arc4.UintN64(Global.latestTimestamp + 2592000), // +30 days
+    //   faceValue: new arc4.UintN64(cargoValue),
+    //   currentHolder: exporterAddress,
+    //   exporterAddress: exporterAddress,
+    //   importerAddress: importerAddress,
+    //   cargoDescription: new arc4.Str(cargoDescription),
+    //   cargoValue: new arc4.UintN64(cargoValue),
+    //   originPort: new arc4.Str(originPort),
+    //   destinationPort: new arc4.Str(destinationPort),
+    //   riskScore: new arc4.UintN64(500), // Default score
+    //   instrumentStatus: new arc4.UintN64(1), // Active
+    //   createdAt: new arc4.UintN64(Global.latestTimestamp),
+    //   lastUpdated: new arc4.UintN64(Global.latestTimestamp)
+    // })
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:129
+    // instrumentStatus: new arc4.UintN64(1), // Active
+    pushbytes 0x0000000000000001
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:115-132
+    // const instrument = new TradeInstrument({
+    //   instrumentNumber: new arc4.Str(instrumentNumber),
+    //   instrumentAssetId: new arc4.UintN64(assetResult.createdAsset.id),
+    //   issueDate: new arc4.UintN64(Global.latestTimestamp),
+    //   maturityDate: new arc4.UintN64(Global.latestTimestamp + 2592000), // +30 days
+    //   faceValue: new arc4.UintN64(cargoValue),
+    //   currentHolder: exporterAddress,
+    //   exporterAddress: exporterAddress,
+    //   importerAddress: importerAddress,
+    //   cargoDescription: new arc4.Str(cargoDescription),
+    //   cargoValue: new arc4.UintN64(cargoValue),
+    //   originPort: new arc4.Str(originPort),
+    //   destinationPort: new arc4.Str(destinationPort),
+    //   riskScore: new arc4.UintN64(500), // Default score
+    //   instrumentStatus: new arc4.UintN64(1), // Active
+    //   createdAt: new arc4.UintN64(Global.latestTimestamp),
+    //   lastUpdated: new arc4.UintN64(Global.latestTimestamp)
+    // })
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:135
+    // this.instruments(instrumentId).value = instrument.copy()
+    swap
+    itob
+    dup
+    cover 2
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:46
+    // public instruments = BoxMap<uint64, TradeInstrument>({ keyPrefix: 'instruments' })
+    bytec_3 // "instruments"
+    swap
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:135
+    // this.instruments(instrumentId).value = instrument.copy()
+    dup
+    box_del
+    pop
+    swap
+    box_put
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:47
+    // public exporterInstruments = BoxMap<arc4.Address, arc4.DynamicArray<arc4.UintN64>>({ keyPrefix: 'exp_inst' })
+    bytec 6 // "exp_inst"
+    frame_dig -6
+    concat
+    dup
+    frame_bury 0
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:151
+    // if (this.exporterInstruments(exporterAddress).exists) {
+    box_len
+    bury 1
+    bz createInstrument_else_body@7
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:152
+    // const instruments = this.exporterInstruments(exporterAddress).value.copy()
+    frame_dig 0
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:153
+    // instruments.push(new arc4.UintN64(instrumentId))
+    extract 2 0
+    uncover 2
+    concat
+    dup
+    len
+    intc_3 // 8
+    /
+    itob
+    extract 6 2
+    swap
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:154
+    // this.exporterInstruments(exporterAddress).value = instruments.copy()
+    dig 1
+    box_del
+    pop
+    box_put
+
+createInstrument_after_if_else@8:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:141
+    // this.nextInstrumentId.value = instrumentId + 1
+    frame_dig 1
+    dup
+    intc_0 // 1
+    +
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:52
+    // public nextInstrumentId = GlobalState<uint64>()
+    bytec_1 // "nextInstrumentId"
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:141
+    // this.nextInstrumentId.value = instrumentId + 1
+    swap
+    app_global_put
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:53
+    // public totalInstruments = GlobalState<uint64>()
+    intc_1 // 0
+    bytec_2 // "totalInstruments"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:142
+    // this.totalInstruments.value = this.totalInstruments.value + 1
+    intc_0 // 1
+    +
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:53
+    // public totalInstruments = GlobalState<uint64>()
+    bytec_2 // "totalInstruments"
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:142
+    // this.totalInstruments.value = this.totalInstruments.value + 1
+    swap
+    app_global_put
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:144
+    // return instrumentId
+    frame_bury 0
+    retsub
+
+createInstrument_else_body@7:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:157
+    // newArray.push(new arc4.UintN64(instrumentId))
+    dup
+    len
+    intc_3 // 8
+    /
+    itob
+    extract 6 2
+    swap
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:158
+    // this.exporterInstruments(exporterAddress).value = newArray.copy()
+    frame_dig 0
+    dup
+    box_del
+    pop
+    swap
+    box_put
+    b createInstrument_after_if_else@8
+
+
+// smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts::TradeInstrumentRegistryV3.endorseInstrument(instrumentId: uint64, newHolderAddress: bytes) -> uint64:
+endorseInstrument:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:165-166
+    // @abimethod()
+    // public endorseInstrument(instrumentId: uint64, newHolderAddress: arc4.Address): boolean {
+    proto 2 1
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:167
+    // assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    frame_dig -2
+    itob
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:46
+    // public instruments = BoxMap<uint64, TradeInstrument>({ keyPrefix: 'instruments' })
+    bytec_3 // "instruments"
+    swap
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:167
+    // assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    dup
+    box_len
+    bury 1
+    assert // Instrument not found
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:169
+    // const instrument = this.instruments(instrumentId).value.copy()
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:172
+    // assert(instrument.currentHolder.bytes === Txn.sender.bytes, 'Only holder can endorse')
+    dup
+    extract 34 32 // on error: Index access is out of bounds
+    txn Sender
+    ==
+    assert // Only holder can endorse
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:175
+    // instrument.currentHolder = newHolderAddress
+    frame_dig -1
+    replace2 34
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:176
+    // instrument.lastUpdated = new arc4.UintN64(Global.latestTimestamp)
+    global LatestTimestamp
+    itob
+    replace2 168
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:178
+    // this.instruments(instrumentId).value = instrument.copy()
+    dig 1
+    box_del
+    pop
+    swap
+    dig 1
+    box_put
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:181
+    // const asset = Asset(instrument.instrumentAssetId.native)
+    pushint 2 // 2
+    extract_uint64
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:182-189
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: asset,
+    //     assetReceiver: newHolderAddress.bytes,
+    //     assetAmount: 1,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_begin
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:186
+    // assetAmount: 1,
+    intc_0 // 1
+    itxn_field AssetAmount
+    frame_dig -1
+    itxn_field AssetReceiver
+    itxn_field XferAsset
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:182-188
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: asset,
+    //     assetReceiver: newHolderAddress.bytes,
+    //     assetAmount: 1,
+    //     fee: 0,
+    //   })
+    intc_2 // 4
+    itxn_field TypeEnum
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:187
+    // fee: 0,
+    intc_1 // 0
+    itxn_field Fee
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:182-189
+    // itxn
+    //   .assetTransfer({
+    //     xferAsset: asset,
+    //     assetReceiver: newHolderAddress.bytes,
+    //     assetAmount: 1,
+    //     fee: 0,
+    //   })
+    //   .submit()
+    itxn_submit
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:191
+    // return true
+    intc_0 // 1
+    retsub
+
+
+// smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts::TradeInstrumentRegistryV3.getInstrument(instrumentId: uint64) -> bytes:
+getInstrument:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:197-198
+    // @abimethod({ readonly: true })
+    // public getInstrument(instrumentId: uint64): TradeInstrument {
+    proto 1 1
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:199
+    // assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    frame_dig -1
+    itob
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:46
+    // public instruments = BoxMap<uint64, TradeInstrument>({ keyPrefix: 'instruments' })
+    bytec_3 // "instruments"
+    swap
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:199
+    // assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    dup
+    box_len
+    bury 1
+    assert // Instrument not found
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:200
+    // return this.instruments(instrumentId).value
+    box_get
+    assert // Box must have value
+    retsub
+
+
+// smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts::TradeInstrumentRegistryV3.getExporterInstruments(exporterAddress: bytes) -> bytes:
+getExporterInstruments:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:206-207
+    // @abimethod({ readonly: true })
+    // public getExporterInstruments(exporterAddress: arc4.Address): arc4.DynamicArray<arc4.UintN64> {
+    proto 1 1
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:47
+    // public exporterInstruments = BoxMap<arc4.Address, arc4.DynamicArray<arc4.UintN64>>({ keyPrefix: 'exp_inst' })
+    bytec 6 // "exp_inst"
+    frame_dig -1
+    concat
+    dup
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:208
+    // if (this.exporterInstruments(exporterAddress).exists) {
+    box_len
+    bury 1
+    bz getExporterInstruments_after_if_else@2
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:209
+    // return this.exporterInstruments(exporterAddress).value
+    frame_dig 0
+    box_get
+    assert // Box must have value
+    swap
+    retsub
+
+getExporterInstruments_after_if_else@2:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:212
+    // return new arc4.DynamicArray<arc4.UintN64>()
+    pushbytes 0x0000
+    swap
+    retsub
+
+
+// smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts::TradeInstrumentRegistryV3.updateInstrumentStatus(instrumentId: uint64, newStatus: uint64) -> uint64:
+updateInstrumentStatus:
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:218-219
+    // @abimethod()
+    // public updateInstrumentStatus(instrumentId: uint64, newStatus: uint64): boolean {
+    proto 2 1
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:220
+    // assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    frame_dig -2
+    itob
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:46
+    // public instruments = BoxMap<uint64, TradeInstrument>({ keyPrefix: 'instruments' })
+    bytec_3 // "instruments"
+    swap
+    concat
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:220
+    // assert(this.instruments(instrumentId).exists, 'Instrument not found')
+    dup
+    box_len
+    bury 1
+    assert // Instrument not found
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:222
+    // const instrument = this.instruments(instrumentId).value.copy()
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:225
+    // assert(instrument.currentHolder.bytes === Txn.sender.bytes, 'Only holder can update status')
+    dup
+    extract 34 32 // on error: Index access is out of bounds
+    txn Sender
+    ==
+    assert // Only holder can update status
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:227
+    // instrument.instrumentStatus = new arc4.UintN64(newStatus)
+    frame_dig -1
+    itob
+    replace2 152
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:228
+    // instrument.lastUpdated = new arc4.UintN64(Global.latestTimestamp)
+    global LatestTimestamp
+    itob
+    replace2 168
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:230
+    // this.instruments(instrumentId).value = instrument.copy()
+    dig 1
+    box_del
+    pop
+    box_put
+    // smart_contracts/trade_instrument_registry_v3/TradeInstrumentRegistry.algo.ts:232
+    // return true
+    intc_0 // 1
+    retsub

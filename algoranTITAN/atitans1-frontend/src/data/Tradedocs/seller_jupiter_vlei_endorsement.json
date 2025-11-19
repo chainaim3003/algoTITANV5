@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "goldenCopy": {
+      "publishDate": "2025-10-06T08:00:00Z"
+    },
+    "pagination": {
+      "currentPage": 1,
+      "perPage": 15,
+      "from": 1,
+      "to": 1,
+      "total": 1,
+      "lastPage": 1
+    }
+  },
+  "links": {
+    "first": "https://api.gleif.org/api/v1/lei-records?filter%5Bentity.legalName%5D=JUPITER+KNITTING+COMPANY&page%5Bnumber%5D=1&page%5Bsize%5D=15",
+    "last": "https://api.gleif.org/api/v1/lei-records?filter%5Bentity.legalName%5D=JUPITER+KNITTING+COMPANY&page%5Bnumber%5D=1&page%5Bsize%5D=15"
+  },
+  "data": [
+    {
+      "type": "lei-records",
+      "id": "3358004DXAMRWRUIYJ05",
+      "attributes": {
+        "lei": "3358004DXAMRWRUIYJ05",
+        "entity": {
+          "legalName": {
+            "name": "JUPITER KNITTING COMPANY",
+            "language": "en"
+          },
+          "otherNames": [],
+          "transliteratedOtherNames": [],
+          "legalAddress": {
+            "language": "en",
+            "addressLines": [
+              "I-J-24, JUPITER AVENUE ANUPPARPALAYAM POST"
+            ],
+            "addressNumber": null,
+            "addressNumberWithinBuilding": null,
+            "mailRouting": null,
+            "city": "TIRUPPUR",
+            "region": "IN-TN",
+            "country": "IN",
+            "postalCode": "641652"
+          },
+          "headquartersAddress": {
+            "language": "en",
+            "addressLines": [
+              "I-J-24, JUPITER AVENUE ANUPPARPALAYAM POST"
+            ],
+            "addressNumber": null,
+            "addressNumberWithinBuilding": null,
+            "mailRouting": null,
+            "city": "TIRUPPUR",
+            "region": "IN-TN",
+            "country": "IN",
+            "postalCode": "641652"
+          },
+          "registeredAt": {
+            "id": "RA000754",
+            "other": null
+          },
+          "registeredAs": "33AACFJ3024D1Z4",
+          "jurisdiction": "IN",
+          "category": "GENERAL",
+          "legalForm": {
+            "id": "A0PS",
+            "other": null
+          },
+          "associatedEntity": {
+            "lei": null,
+            "name": null
+          },
+          "status": "ACTIVE",
+          "expiration": {
+            "date": null,
+            "reason": null
+          },
+          "successorEntity": {
+            "lei": null,
+            "name": null
+          },
+          "successorEntities": [],
+          "creationDate": "1992-08-02T18:30:00Z",
+          "subCategory": null,
+          "otherAddresses": [],
+          "eventGroups": []
+        },
+        "registration": {
+          "initialRegistrationDate": "2018-06-19T13:13:12Z",
+          "lastUpdateDate": "2025-05-29T05:18:01Z",
+          "status": "ISSUED",
+          "nextRenewalDate": "2026-07-01T18:30:00Z",
+          "managingLou": "335800FVH4MOKZS9VH40",
+          "corroborationLevel": "PARTIALLY_CORROBORATED",
+          "validatedAt": {
+            "id": "RA000754",
+            "other": null
+          },
+          "validatedAs": "33AACFJ3024D1Z4",
+          "otherValidationAuthorities": []
+        },
+        "bic": null,
+        "mic": null,
+        "ocid": null,
+        "qcc": null,
+        "spglobal": [
+          "52599588"
+        ],
+        "conformityFlag": "CONFORMING"
+      },
+      "relationships": {
+        "managing-lou": {
+          "links": {
+            "related": "https://api.gleif.org/api/v1/lei-records/3358004DXAMRWRUIYJ05/managing-lou"
+          }
+        },
+        "lei-issuer": {
+          "links": {
+            "related": "https://api.gleif.org/api/v1/lei-records/3358004DXAMRWRUIYJ05/lei-issuer"
+          }
+        },
+        "field-modifications": {
+          "links": {
+            "related": "https://api.gleif.org/api/v1/lei-records/3358004DXAMRWRUIYJ05/field-modifications"
+          }
+        },
+        "direct-parent": {
+          "links": {
+            "reporting-exception": "https://api.gleif.org/api/v1/lei-records/3358004DXAMRWRUIYJ05/direct-parent-reporting-exception"
+          }
+        },
+        "ultimate-parent": {
+          "links": {
+            "reporting-exception": "https://api.gleif.org/api/v1/lei-records/3358004DXAMRWRUIYJ05/ultimate-parent-reporting-exception"
+          }
+        }
+      },
+      "links": {
+        "self": "https://api.gleif.org/api/v1/lei-records/3358004DXAMRWRUIYJ05"
+      }
+    }
+  ],
+  "endorsements": [
+    {
+      "endorsementId": "ORG-VLEI-JKC-001",
+      "timestamp": "2025-10-06T09:00:00Z",
+      "publicData": {
+        "organizationDID": "did:lei:3358004DXAMRWRUIYJ05",
+        "companyLEI": "3358004DXAMRWRUIYJ05",
+        "hasVLEICredentials": true,
+        "credentialsValid": true,
+        "gleifVerified": true
+      },
+      "privateDataReference": {
+        "ipfsHash": "QmOrganizationJupiterKnittingCompanyProfile2025Hash",
+        "encryptionMethod": "AES-256-GCM",
+        "dataCommitment": "0xorg3358004dxamrwruiyj05commitment",
+        "accessControl": [
+          "did:lei:3358004DXAMRWRUIYJ05",
+          "did:lei:335800FVH4MOKZS9VH40",
+          "did:regulator:REGULATOR_LEI"
+        ]
+      },
+      "vLEIProof": {
+        "credentialChainHash": "0x7j8k9l0m1n2o3p4q5r6s7t8u9v0w1x2y",
+        "gleifVerificationEndpoint": "https://api.gleif.org/verify/3358004DXAMRWRUIYJ05"
+      },
+      "algorandTransaction": {
+        "walletAddress": "JUPITER1KNITTING1COMPANY1ORG1WALLET1TIRUPPUR1MAIN1XYZ",
+        "signature": "0xorg3045022100j1u2p3i4t5e6r7k8n9i0t1t2i3n4g5c6o7m8p9a0",
+        "transactionId": "TXORG3358004DXAMRWRUIYJ05202510MNOPQRSTUVWXYZ",
+        "blockNumber": 45901345,
+        "timestamp": "2025-10-06T09:00:05Z"
+      }
+    }
+  ],
+  "privacyMetadata": {
+    "privacyLevel": "ENHANCED",
+    "complianceMode": "REGULATORY_ACCESSIBLE",
+    "publiclyVerifiable": true,
+    "gdprCompliant": true,
+    "notes": [
+      "Organization credentials encrypted and stored off-chain",
+      "Public can verify: valid LEI, valid vLEI credentials, GLEIF verified",
+      "Regulators/authorized parties can decrypt full details using DID-based access control",
+      "Blockchain signature ensures non-repudiation of organization identity",
+      "Textile exporter from Tiruppur, Tamil Nadu, India",
+      "Active since 1992, LEI registered since 2018"
+    ]
+  }
+}

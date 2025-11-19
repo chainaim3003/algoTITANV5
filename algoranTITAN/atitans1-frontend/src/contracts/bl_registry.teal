@@ -1,0 +1,59 @@
+#pragma version 8
+
+// BL Registry Smart Contract
+// Manages Bill of Lading metadata in Box Storage
+// Anyone can write BL data, anyone can read
+
+txn ApplicationID
+int 0
+==
+bnz create_app
+
+// Handle application calls
+txn OnCompletion
+int NoOp
+==
+bnz handle_noop
+
+// Reject all other operations
+err
+
+create_app:
+    // App creation - approve
+    int 1
+    return
+
+handle_noop:
+    // Check if this is a box write operation
+    txn NumAppArgs
+    int 1
+    >=
+    assert
+    
+    // First arg should be "store_bl" or "get_bl"
+    txna ApplicationArgs 0
+    byte "store_bl"
+    ==
+    bnz store_bl
+    
+    txna ApplicationArgs 0
+    byte "get_bl"
+    ==
+    bnz get_bl
+    
+    // Unknown operation
+    err
+
+store_bl:
+    // Store BL data in box
+    // Box name comes from ApplicationArgs 1
+    // Box data comes from the box reference in the transaction
+    // Anyone can store (in production, you'd add access control here)
+    int 1
+    return
+
+get_bl:
+    // Read BL data from box
+    // This is implicitly allowed - boxes are publicly readable
+    int 1
+    return

@@ -1,0 +1,625 @@
+{
+    "exchangedDocument": {
+        "id": "BL-3001",
+        "typeCode": "705",
+        "issueDateTime": {
+            "dateTimeString": {
+                "value": "2025-11-15T12:00:00Z",
+                "format": "205"
+            }
+        },
+        "copyIndicator": false,
+        "includedNote": [
+            {
+                "content": "Ocean Bill of Lading - Shipped on Board in Apparent Good Order and Condition",
+                "contentCode": "AAI",
+                "subjectCode": "SUR"
+            },
+            {
+                "content": "Freight Prepaid - FOB Tuticorin",
+                "contentCode": "AAI",
+                "subjectCode": "FRE"
+            }
+        ],
+        "effectiveSpecifiedPeriod": {
+            "startDateTime": {
+                "dateTimeString": {
+                    "value": "2025-11-15",
+                    "format": "102"
+                }
+            }
+        }
+    },
+    "supplyChainTradeTransaction": {
+        "applicableHeaderTradeAgreement": {
+            "buyerReference": "PO-1001",
+            "sellerTradeParty": {
+                "id": [
+                    {
+                        "value": "CONSIGNOR-TIRUPUR-JKC-001",
+                        "schemeId": "0088"
+                    }
+                ],
+                "globalId": [
+                    {
+                        "value": "3358004DXAMRWRUIYJ05",
+                        "schemeId": "0088"
+                    }
+                ],
+                "name": "JUPITER KNITTING COMPANY",
+                "roleCode": "CZ",
+                "definedTradeContact": [
+                    {
+                        "personName": "Export Manager",
+                        "departmentName": "Logistics and Shipping",
+                        "telephoneUniversalCommunication": {
+                            "completeNumber": "+91-421-XXXXXXX"
+                        },
+                        "emailURIUniversalCommunication": {
+                            "uriId": "exports@jupiterknitting.com"
+                        }
+                    }
+                ],
+                "postalTradeAddress": {
+                    "postcode": "641652",
+                    "lineOne": "I-J-24, JUPITER AVENUE",
+                    "lineTwo": "ANUPPARPALAYAM POST",
+                    "cityName": "TIRUPPUR",
+                    "countryId": "IN",
+                    "countryName": "India",
+                    "countrySubDivisionName": "Tamil Nadu"
+                },
+                "specifiedTaxRegistration": [
+                    {
+                        "id": {
+                            "value": "33AACFJ3024D1Z4",
+                            "schemeId": "VA"
+                        }
+                    }
+                ]
+            },
+            "buyerTradeParty": {
+                "id": [
+                    {
+                        "value": "CONSIGNEE-AMSTERDAM-THF-001",
+                        "schemeId": "0088"
+                    }
+                ],
+                "globalId": [
+                    {
+                        "value": "54930012QJWZMYHNJW95",
+                        "schemeId": "0088"
+                    }
+                ],
+                "name": "TOMMY HILFIGER EUROPE B.V.",
+                "roleCode": "CN",
+                "definedTradeContact": [
+                    {
+                        "personName": "Logistics Manager",
+                        "departmentName": "Supply Chain and Logistics",
+                        "telephoneUniversalCommunication": {
+                            "completeNumber": "+31-20-XXXXXXX"
+                        },
+                        "emailURIUniversalCommunication": {
+                            "uriId": "logistics@tommy.com"
+                        }
+                    }
+                ],
+                "postalTradeAddress": {
+                    "postcode": "1013 AP",
+                    "lineOne": "DANZIGERKADE 165",
+                    "cityName": "AMSTERDAM",
+                    "countryId": "NL",
+                    "countryName": "Netherlands",
+                    "countrySubDivisionName": "North Holland"
+                },
+                "specifiedTaxRegistration": [
+                    {
+                        "id": {
+                            "value": "NL33290078B01",
+                            "schemeId": "VA"
+                        }
+                    }
+                ]
+            },
+            "carrierTradeParty": {
+                "id": [
+                    {
+                        "value": "CARRIER-GSL-001",
+                        "schemeId": "0088"
+                    }
+                ],
+                "globalId": [
+                    {
+                        "value": "CARRIER-LEI-GSL-PLACEHOLDER",
+                        "schemeId": "0088"
+                    }
+                ],
+                "name": "Global Shipping Lines Pvt. Ltd.",
+                "roleCode": "CA",
+                "definedTradeContact": [
+                    {
+                        "personName": "Operations Manager",
+                        "departmentName": "Marine Operations",
+                        "telephoneUniversalCommunication": {
+                            "completeNumber": "+91-44-XXXXXXXX"
+                        },
+                        "emailURIUniversalCommunication": {
+                            "uriId": "operations@globalshipping.com"
+                        }
+                    }
+                ],
+                "postalTradeAddress": {
+                    "postcode": "600001",
+                    "lineOne": "Shipping House, Harbor Road",
+                    "cityName": "Chennai",
+                    "countryId": "IN",
+                    "countryName": "India",
+                    "countrySubDivisionName": "Tamil Nadu"
+                }
+            },
+            "contractReferencedDocument": {
+                "issuerAssignedId": "BOOKING-2025-1001",
+                "typeCode": "325",
+                "formattedIssueDateTime": {
+                    "dateTimeString": {
+                        "value": "2025-11-01",
+                        "format": "102"
+                    }
+                }
+            },
+            "additionalReferencedDocument": [
+                {
+                    "issuerAssignedId": "PO-1001",
+                    "typeCode": "220",
+                    "name": "Purchase Order",
+                    "formattedIssueDateTime": {
+                        "dateTimeString": {
+                            "value": "2025-10-06",
+                            "format": "102"
+                        }
+                    }
+                },
+                {
+                    "issuerAssignedId": "CI-2001",
+                    "typeCode": "380",
+                    "name": "Commercial Invoice",
+                    "formattedIssueDateTime": {
+                        "dateTimeString": {
+                            "value": "2025-11-15",
+                            "format": "102"
+                        }
+                    }
+                }
+            ]
+        },
+        "applicableHeaderTradeDelivery": {
+            "shipToTradeParty": {
+                "id": [
+                    {
+                        "value": "CONSIGNEE-AMSTERDAM-THF-001"
+                    }
+                ],
+                "name": "TOMMY HILFIGER EUROPE B.V.",
+                "roleCode": "CN",
+                "postalTradeAddress": {
+                    "postcode": "1013 AP",
+                    "lineOne": "DANZIGERKADE 165",
+                    "lineTwo": "Central Distribution Center",
+                    "cityName": "AMSTERDAM",
+                    "countryId": "NL",
+                    "countryName": "Netherlands"
+                }
+            },
+            "shipFromTradeParty": {
+                "id": [
+                    {
+                        "value": "CONSIGNOR-TIRUPUR-JKC-001"
+                    }
+                ],
+                "name": "JUPITER KNITTING COMPANY",
+                "roleCode": "CZ",
+                "postalTradeAddress": {
+                    "postcode": "641652",
+                    "lineOne": "I-J-24, JUPITER AVENUE",
+                    "cityName": "TIRUPPUR",
+                    "countryId": "IN"
+                }
+            },
+            "ultimateShipToTradeParty": {
+                "id": [
+                    {
+                        "value": "NOTIFY-AMSTERDAM-THF-001"
+                    }
+                ],
+                "name": "TOMMY HILFIGER EUROPE B.V.",
+                "roleCode": "NP",
+                "definedTradeContact": [
+                    {
+                        "personName": "Logistics Manager",
+                        "departmentName": "Import Department",
+                        "telephoneUniversalCommunication": {
+                            "completeNumber": "+31-20-XXXXXXX"
+                        },
+                        "emailURIUniversalCommunication": {
+                            "uriId": "logistics@tommy.com"
+                        }
+                    }
+                ],
+                "postalTradeAddress": {
+                    "postcode": "1013 AP",
+                    "lineOne": "DANZIGERKADE 165",
+                    "cityName": "AMSTERDAM",
+                    "countryId": "NL"
+                }
+            },
+            "shipmentStage": [
+                {
+                    "id": "STAGE-001",
+                    "modeCode": "1",
+                    "stageCode": "MAIN",
+                    "transportMovement": {
+                        "id": "VOY-2025-NL-087",
+                        "usedTransportMeans": {
+                            "id": "IMO-9XXXXXX",
+                            "name": "MV OCEAN TRADER",
+                            "typeCode": "VESSEL"
+                        },
+                        "departureEvent": {
+                            "departureOccurrenceDateTime": {
+                                "dateTimeString": {
+                                    "value": "2025-11-15T14:00:00Z",
+                                    "format": "205"
+                                }
+                            },
+                            "departureRelatedTradeLocation": {
+                                "id": "INTUT",
+                                "name": "Tuticorin Port"
+                            }
+                        },
+                        "arrivalEvent": {
+                            "arrivalOccurrenceDateTime": {
+                                "dateTimeString": {
+                                    "value": "2025-12-20T08:00:00Z",
+                                    "format": "205"
+                                }
+                            },
+                            "arrivalRelatedTradeLocation": {
+                                "id": "NLRTM",
+                                "name": "Port of Rotterdam"
+                            }
+                        }
+                    }
+                }
+            ],
+            "utilizedLogisticsTransportEquipment": [
+                {
+                    "id": "CONT-2025-001",
+                    "characteristicCode": "CN",
+                    "supplierPartyProvidedTransportEquipment": {
+                        "id": "CONT-2025-001",
+                        "characteristicCode": "22G1",
+                        "supplierPartyProvidedTransportSeal": [
+                            {
+                                "id": "SEAL-12345",
+                                "issuerTypeCode": "CAS"
+                            }
+                        ]
+                    },
+                    "settingTemperature": {
+                        "value": null,
+                        "unitCode": null
+                    },
+                    "applicableNote": [
+                        {
+                            "content": "20 Foot Standard Container - Dry Cargo",
+                            "contentCode": "AAI"
+                        }
+                    ],
+                    "affixedLogisticsSeal": [
+                        {
+                            "id": "SEAL-12345",
+                            "issuerTypeCode": "CAS",
+                            "issuingPartyName": "Global Shipping Lines"
+                        }
+                    ]
+                }
+            ],
+            "mainCarriageLogisticsTransportMovement": [
+                {
+                    "id": "VOY-2025-NL-087",
+                    "usedLogisticsTransportMeans": {
+                        "id": "IMO-9XXXXXX",
+                        "name": "MV OCEAN TRADER",
+                        "typeCode": "11"
+                    },
+                    "departureEvent": {
+                        "departureOccurrenceDateTime": {
+                            "dateTimeString": {
+                                "value": "2025-11-15",
+                                "format": "102"
+                            }
+                        }
+                    }
+                }
+            ],
+            "relatedTradeLocation": [
+                {
+                    "id": "INTUT",
+                    "name": "Tuticorin Port",
+                    "typeCode": "10",
+                    "roleCode": "PLD",
+                    "physicalGeographicalCoordinate": {
+                        "latitudeMeasure": 8.8072,
+                        "longitudeMeasure": 78.1516
+                    }
+                },
+                {
+                    "id": "NLRTM",
+                    "name": "Port of Rotterdam",
+                    "typeCode": "10",
+                    "roleCode": "POD",
+                    "physicalGeographicalCoordinate": {
+                        "latitudeMeasure": 51.9225,
+                        "longitudeMeasure": 4.47917
+                    }
+                },
+                {
+                    "id": "TIRUPPUR-ORIGIN",
+                    "name": "Tiruppur",
+                    "typeCode": "11",
+                    "roleCode": "POR"
+                },
+                {
+                    "id": "AMSTERDAM-DEST",
+                    "name": "Amsterdam",
+                    "typeCode": "11",
+                    "roleCode": "FD"
+                }
+            ],
+            "deliveryEvent": {
+                "occurrenceDateTime": {
+                    "dateTimeString": {
+                        "value": "2025-11-15T12:00:00Z",
+                        "format": "205"
+                    }
+                },
+                "typeCode": "SHIPPED_ON_BOARD"
+            }
+        },
+        "applicableHeaderTradeSettlement": {
+            "invoiceCurrencyCode": "USD",
+            "paymentReference": "BL-3001-FREIGHT",
+            "invoiceIssuerReference": "BL-3001",
+            "payerTradeParty": {
+                "id": [
+                    {
+                        "value": "CONSIGNOR-TIRUPUR-JKC-001"
+                    }
+                ],
+                "name": "JUPITER KNITTING COMPANY",
+                "roleCode": "FR"
+            },
+            "payeeTradeParty": {
+                "id": [
+                    {
+                        "value": "CARRIER-GSL-001"
+                    }
+                ],
+                "name": "Global Shipping Lines Pvt. Ltd.",
+                "roleCode": "CA"
+            },
+            "specifiedTradeSettlementPaymentMeans": [
+                {
+                    "typeCode": "42",
+                    "information": "Freight Prepaid at Origin"
+                }
+            ],
+            "applicableTradeTax": [
+                {
+                    "calculatedAmount": {
+                        "value": 0.00,
+                        "currencyId": "USD"
+                    },
+                    "typeCode": "SER",
+                    "categoryCode": "S",
+                    "rateApplicablePercent": 0.00
+                }
+            ],
+            "specifiedLogisticsServiceCharge": [
+                {
+                    "description": "Ocean Freight - Tuticorin to Rotterdam",
+                    "appliedAmount": {
+                        "value": 0.00,
+                        "currencyId": "USD"
+                    },
+                    "typeCode": "FC",
+                    "paymentArrangementCode": "PP"
+                },
+                {
+                    "description": "FOB Terms - Freight and Insurance Buyer's Account",
+                    "appliedAmount": {
+                        "value": 0.00,
+                        "currencyId": "USD"
+                    },
+                    "typeCode": "IN",
+                    "paymentArrangementCode": "CC"
+                }
+            ],
+            "specifiedTradePaymentTerms": [
+                {
+                    "description": "Freight Prepaid - FOB Tuticorin",
+                    "typeCode": "1"
+                }
+            ],
+            "specifiedTradeSettlementHeaderMonetarySummation": {
+                "grandTotalAmount": {
+                    "value": 0.00,
+                    "currencyId": "USD"
+                }
+            }
+        },
+        "includedSupplyChainTradeLineItem": [
+            {
+                "associatedDocumentLineDocument": {
+                    "lineId": "1",
+                    "lineStatusCode": "ORIGINAL",
+                    "includedNote": [
+                        {
+                            "content": "Shipped on Board - Apparent Good Order and Condition",
+                            "contentCode": "AAI"
+                        },
+                        {
+                            "content": "Said to Contain: Men's Cotton Knitted T-Shirts",
+                            "contentCode": "AAI"
+                        }
+                    ]
+                },
+                "specifiedTradeProduct": {
+                    "id": [
+                        {
+                            "value": "THF-CTSH-001",
+                            "schemeId": "SELLER"
+                        }
+                    ],
+                    "globalId": [
+                        {
+                            "value": "6109100000",
+                            "schemeId": "HS"
+                        }
+                    ],
+                    "name": "Men's Cotton Knitted T-Shirts",
+                    "description": "100% Cotton Knitted T-Shirts, Premium Quality, Various Sizes, Export Quality - Made in India",
+                    "tradeCountry": [
+                        {
+                            "id": "IN",
+                            "name": "India"
+                        }
+                    ],
+                    "designatedProductClassification": [
+                        {
+                            "classCode": {
+                                "value": "6109100000",
+                                "listId": "HS",
+                                "listVersionId": "2022"
+                            },
+                            "className": "T-shirts, singlets and other vests, knitted or crocheted, of cotton"
+                        }
+                    ],
+                    "originTradeCountry": {
+                        "id": "IN",
+                        "name": "India"
+                    },
+                    "additionalInformationNote": [
+                        {
+                            "content": "Marks and Numbers: THF-CTSH-001 / PO-1001 / CI-2001 / MADE IN INDIA",
+                            "contentCode": "MKS"
+                        }
+                    ]
+                },
+                "physicalLogisticsShippingMarks": [
+                    {
+                        "marking": "THF-CTSH-001",
+                        "barcodeLogisticsLabel": {
+                            "id": "BARCODE-THF-CTSH-001"
+                        }
+                    },
+                    {
+                        "marking": "PO-1001 / CI-2001"
+                    },
+                    {
+                        "marking": "MADE IN INDIA"
+                    },
+                    {
+                        "marking": "DESTINATION: AMSTERDAM, NETHERLANDS"
+                    }
+                ],
+                "specifiedLineTradeDelivery": {
+                    "billedQuantity": {
+                        "value": 1000,
+                        "unitCode": "C62"
+                    },
+                    "packageQuantity": {
+                        "value": 20,
+                        "unitCode": "PK"
+                    },
+                    "grossWeightMeasure": {
+                        "value": 275.00,
+                        "unitCode": "KGM"
+                    },
+                    "netWeightMeasure": {
+                        "value": 250.00,
+                        "unitCode": "KGM"
+                    },
+                    "grossVolumeMeasure": {
+                        "value": 1.92,
+                        "unitCode": "MTQ"
+                    },
+                    "netVolumeMeasure": {
+                        "value": 1.92,
+                        "unitCode": "MTQ"
+                    },
+                    "utilizedTransportEquipment": [
+                        {
+                            "id": "CONT-2025-001",
+                            "characteristicCode": "CN"
+                        }
+                    ],
+                    "relatedSupplyChainPackaging": [
+                        {
+                            "typeCode": "CT",
+                            "type": "Export Standard Cartons",
+                            "itemQuantity": {
+                                "value": 20,
+                                "unitCode": "PK"
+                            },
+                            "linearSpatialDimension": {
+                                "widthMeasure": {
+                                    "value": 60.00,
+                                    "unitCode": "CMT"
+                                },
+                                "heightMeasure": {
+                                    "value": 40.00,
+                                    "unitCode": "CMT"
+                                },
+                                "lengthMeasure": {
+                                    "value": 40.00,
+                                    "unitCode": "CMT"
+                                }
+                            },
+                            "physicalLogisticsShippingMarks": [
+                                {
+                                    "marking": "Carton 1-20 of 20",
+                                    "markingInstructionCode": "SN"
+                                }
+                            ]
+                        }
+                    ],
+                    "specifiedDeliveryAdjustment": {
+                        "reasonCode": "NONE",
+                        "reason": "Full quantity shipped as per invoice"
+                    }
+                },
+                "specifiedLineTradeSettlement": {
+                    "additionalReferencedDocument": [
+                        {
+                            "issuerAssignedId": "CI-2001",
+                            "typeCode": "380",
+                            "name": "Commercial Invoice"
+                        },
+                        {
+                            "issuerAssignedId": "PL-2001",
+                            "typeCode": "271",
+                            "name": "Packing List"
+                        },
+                        {
+                            "issuerAssignedId": "CERT-ORIGIN-2025-001",
+                            "typeCode": "861",
+                            "name": "Certificate of Origin"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

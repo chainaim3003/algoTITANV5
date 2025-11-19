@@ -1,0 +1,3265 @@
+#pragma version 10
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 1 0 2 10000 200
+    bytecblock 0x151f7c75 "settlementCurrency" 0x00 "trades" "marketplaceFeeRate" 0x0000000000000000 "nextTradeId" "regulatorTaxRate" "regulatorRefundRate" 0x0000 "metadata" 0x0000000000000001 "platformTreasury" "buyer" "seller" 0x0001 0x0000000000000002 0x0000000000000003 0x0000000000000005
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txn NumAppArgs
+    bz main_bare_routing@25
+    pushbytess 0xf3f73bcc 0xf0b4b67a 0x54924194 0x5d6e2a39 0xd61ed3e1 0x98947189 0x889c1d7e 0x8687d230 0xebccc915 0x4b139cbe 0x868f2675 0x314f644c 0x1c8e10a0 0xdc03cbc8 0xb44deecd 0x1a10828b 0xcaabd5aa 0x88df6657 0x53b42727 0x1de92eaf // method "initialize(uint64,address)bool", method "setSettlementCurrency(uint64)bool", method "setRates(uint64,uint64,uint64)bool", method "createTrade(address,uint64,string,string,string)uint64", method "escrowTrade(pay,uint64)bool", method "escrowTradeWithAsset(axfer,uint64)bool", method "escrowTradeAsFinancier(pay,uint64)bool", method "escrowTradeAsFinancierWithAsset(axfer,uint64)bool", method "executeTrade(axfer,pay,uint64,uint64,uint64,string,string,string,address)bool", method "executeTradeWithAsset(axfer,axfer,uint64,uint64,uint64,string,string,string,address)bool", method "acknowledgePayment(pay,uint64)bool", method "acknowledgePaymentWithAsset(axfer,uint64)bool", method "expireTrade(uint64)bool", method "getTrade(uint64)(uint64,address,address,address,uint64,uint64,uint64,uint64,uint64,uint64,address,uint64,uint64,uint64)", method "getTradeMetadata(uint64)(string,string,string,string,string,string)", method "getTradesByBuyer(address)uint64[]", method "getTradesBySeller(address)uint64[]", method "calculateEscrowCost(uint64)(uint64,uint64)", method "calculateRegulatorCosts(uint64)(uint64,uint64)", method "getPaymentConfig()(uint64,bool)"
+    txna ApplicationArgs 0
+    match main_initialize_route@3 main_setSettlementCurrency_route@4 main_setRates_route@5 main_createTrade_route@6 main_escrowTrade_route@7 main_escrowTradeWithAsset_route@8 main_escrowTradeAsFinancier_route@9 main_escrowTradeAsFinancierWithAsset_route@10 main_executeTrade_route@11 main_executeTradeWithAsset_route@12 main_acknowledgePayment_route@13 main_acknowledgePaymentWithAsset_route@14 main_expireTrade_route@15 main_getTrade_route@16 main_getTradeMetadata_route@17 main_getTradesByBuyer_route@18 main_getTradesBySeller_route@19 main_calculateEscrowCost_route@20 main_calculateRegulatorCosts_route@21 main_getPaymentConfig_route@22
+
+main_after_if_else@29:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    intc_1 // 0
+    return
+
+main_getPaymentConfig_route@22:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:732
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    callsub getPaymentConfig
+    swap
+    itob
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 3
+    setbit
+    concat
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_calculateRegulatorCosts_route@21:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:721
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:721
+    // @abimethod({ readonly: true })
+    callsub calculateRegulatorCosts
+    swap
+    itob
+    swap
+    itob
+    concat
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_calculateEscrowCost_route@20:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:710
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:710
+    // @abimethod({ readonly: true })
+    callsub calculateEscrowCost
+    swap
+    itob
+    swap
+    itob
+    concat
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_getTradesBySeller_route@19:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:699
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txna ApplicationArgs 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:699
+    // @abimethod({ readonly: true })
+    callsub getTradesBySeller
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_getTradesByBuyer_route@18:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:688
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txna ApplicationArgs 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:688
+    // @abimethod({ readonly: true })
+    callsub getTradesByBuyer
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_getTradeMetadata_route@17:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:680
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:680
+    // @abimethod({ readonly: true })
+    callsub getTradeMetadata
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_getTrade_route@16:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:672
+    // @abimethod({ readonly: true })
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:672
+    // @abimethod({ readonly: true })
+    callsub getTrade
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_expireTrade_route@15:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:641
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:641
+    // @abimethod()
+    callsub expireTrade
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_acknowledgePaymentWithAsset_route@14:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:616
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    pushint 4 // axfer
+    ==
+    assert // transaction type is axfer
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:616
+    // @abimethod()
+    callsub acknowledgePaymentWithAsset
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_acknowledgePayment_route@13:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:587
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_0 // pay
+    ==
+    assert // transaction type is pay
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:587
+    // @abimethod()
+    callsub acknowledgePayment
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_executeTradeWithAsset_route@12:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:509
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txn GroupIndex
+    intc_2 // 2
+    -
+    dup
+    gtxns TypeEnum
+    pushint 4 // axfer
+    ==
+    assert // transaction type is axfer
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    pushint 4 // axfer
+    ==
+    assert // transaction type is axfer
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    extract 2 0
+    txna ApplicationArgs 5
+    extract 2 0
+    txna ApplicationArgs 6
+    extract 2 0
+    txna ApplicationArgs 7
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:509
+    // @abimethod()
+    callsub executeTradeWithAsset
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_executeTrade_route@11:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:430
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txn GroupIndex
+    intc_2 // 2
+    -
+    dup
+    gtxns TypeEnum
+    pushint 4 // axfer
+    ==
+    assert // transaction type is axfer
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_0 // pay
+    ==
+    assert // transaction type is pay
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    txna ApplicationArgs 4
+    extract 2 0
+    txna ApplicationArgs 5
+    extract 2 0
+    txna ApplicationArgs 6
+    extract 2 0
+    txna ApplicationArgs 7
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:430
+    // @abimethod()
+    callsub executeTrade
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_escrowTradeAsFinancierWithAsset_route@10:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:397
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    pushint 4 // axfer
+    ==
+    assert // transaction type is axfer
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:397
+    // @abimethod()
+    callsub escrowTradeAsFinancierWithAsset
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_escrowTradeAsFinancier_route@9:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:365
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_0 // pay
+    ==
+    assert // transaction type is pay
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:365
+    // @abimethod()
+    callsub escrowTradeAsFinancier
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_escrowTradeWithAsset_route@8:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:334
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    pushint 4 // axfer
+    ==
+    assert // transaction type is axfer
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:334
+    // @abimethod()
+    callsub escrowTradeWithAsset
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_escrowTrade_route@7:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:303
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txn GroupIndex
+    intc_0 // 1
+    -
+    dup
+    gtxns TypeEnum
+    intc_0 // pay
+    ==
+    assert // transaction type is pay
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:303
+    // @abimethod()
+    callsub escrowTrade
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_createTrade_route@6:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:231
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txna ApplicationArgs 1
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    extract 2 0
+    txna ApplicationArgs 4
+    extract 2 0
+    txna ApplicationArgs 5
+    extract 2 0
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:231
+    // @abimethod()
+    callsub createTrade
+    itob
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_setRates_route@5:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:146
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    btoi
+    txna ApplicationArgs 3
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:146
+    // @abimethod()
+    callsub setRates
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_setSettlementCurrency_route@4:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:136
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:136
+    // @abimethod()
+    callsub setSettlementCurrency
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_initialize_route@3:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:114
+    // @abimethod()
+    txn OnCompletion
+    !
+    assert // OnCompletion is not NoOp
+    txn ApplicationID
+    assert // can only call when not creating
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txna ApplicationArgs 1
+    btoi
+    txna ApplicationArgs 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:114
+    // @abimethod()
+    callsub initialize
+    bytec_2 // 0x00
+    intc_1 // 0
+    uncover 2
+    setbit
+    bytec_0 // 0x151f7c75
+    swap
+    concat
+    log
+    intc_0 // 1
+    return
+
+main_bare_routing@25:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:82
+    // export default class AtomicMarketplaceEscrowV5 extends Contract {
+    txn OnCompletion
+    bnz main_after_if_else@29
+    txn ApplicationID
+    !
+    assert // can only call when creating
+    intc_0 // 1
+    return
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.initialize(settlementAssetId: uint64, treasuryAddress: bytes) -> uint64:
+initialize:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:114-118
+    // @abimethod()
+    // public initialize(
+    //   settlementAssetId: uint64,
+    //   treasuryAddress: arc4.Address
+    // ): boolean {
+    proto 2 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:119
+    // assert(Txn.sender === Global.creatorAddress, 'Only creator can initialize')
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Only creator can initialize
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:98
+    // public nextTradeId = GlobalState<uint64>()
+    bytec 6 // "nextTradeId"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:121
+    // this.nextTradeId.value = 1
+    intc_0 // 1
+    app_global_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:99
+    // public platformTreasury = GlobalState<bytes>()
+    bytec 12 // "platformTreasury"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:122
+    // this.platformTreasury.value = treasuryAddress.bytes
+    frame_dig -1
+    app_global_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    bytec_1 // "settlementCurrency"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:123
+    // this.settlementCurrency.value = settlementAssetId  // 0 = ALGO, >0 = ASA
+    frame_dig -2
+    app_global_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:105
+    // public regulatorTaxRate = GlobalState<uint64>()
+    bytec 7 // "regulatorTaxRate"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:126
+    // this.regulatorTaxRate.value = 500      // 5.00%
+    pushint 500 // 500
+    app_global_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:106
+    // public regulatorRefundRate = GlobalState<uint64>()
+    bytec 8 // "regulatorRefundRate"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:127
+    // this.regulatorRefundRate.value = 200   // 2.00%
+    intc 4 // 200
+    app_global_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:107
+    // public marketplaceFeeRate = GlobalState<uint64>()
+    bytec 4 // "marketplaceFeeRate"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:128
+    // this.marketplaceFeeRate.value = 25     // 0.25%
+    pushint 25 // 25
+    app_global_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:130
+    // return true
+    intc_0 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.setSettlementCurrency(assetId: uint64) -> uint64:
+setSettlementCurrency:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:136-137
+    // @abimethod()
+    // public setSettlementCurrency(assetId: uint64): boolean {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:138
+    // assert(Txn.sender === Global.creatorAddress, 'Only creator can change settlement')
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Only creator can change settlement
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    bytec_1 // "settlementCurrency"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:139
+    // this.settlementCurrency.value = assetId
+    frame_dig -1
+    app_global_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:140
+    // return true
+    intc_0 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.setRates(taxRate: uint64, refundRate: uint64, feeRate: uint64) -> uint64:
+setRates:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:146-151
+    // @abimethod()
+    // public setRates(
+    //   taxRate: uint64,
+    //   refundRate: uint64,
+    //   feeRate: uint64
+    // ): boolean {
+    proto 3 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:152
+    // assert(Txn.sender === Global.creatorAddress, 'Only creator can set rates')
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Only creator can set rates
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:153
+    // assert(taxRate <= 1000, 'Tax rate too high')
+    frame_dig -3
+    pushint 1000 // 1000
+    <=
+    assert // Tax rate too high
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:154
+    // assert(refundRate <= 500, 'Refund rate too high')
+    frame_dig -2
+    pushint 500 // 500
+    <=
+    assert // Refund rate too high
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:155
+    // assert(feeRate <= 100, 'Fee rate too high')
+    frame_dig -1
+    pushint 100 // 100
+    <=
+    assert // Fee rate too high
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:105
+    // public regulatorTaxRate = GlobalState<uint64>()
+    bytec 7 // "regulatorTaxRate"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:157
+    // this.regulatorTaxRate.value = taxRate
+    frame_dig -3
+    app_global_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:106
+    // public regulatorRefundRate = GlobalState<uint64>()
+    bytec 8 // "regulatorRefundRate"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:158
+    // this.regulatorRefundRate.value = refundRate
+    frame_dig -2
+    app_global_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:107
+    // public marketplaceFeeRate = GlobalState<uint64>()
+    bytec 4 // "marketplaceFeeRate"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:159
+    // this.marketplaceFeeRate.value = feeRate
+    frame_dig -1
+    app_global_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:161
+    // return true
+    intc_0 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.verifyPaymentTxn(txn: uint64, amount: uint64, receiver: bytes, sender: bytes) -> void:
+verifyPaymentTxn:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:174-179
+    // private verifyPaymentTxn(
+    //   txn: gtxn.PaymentTxn,
+    //   amount: uint64,
+    //   receiver: bytes,
+    //   sender: bytes
+    // ): void {
+    proto 4 0
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:180
+    // assert(txn.receiver.bytes === receiver, 'Wrong receiver')
+    frame_dig -4
+    gtxns Receiver
+    frame_dig -2
+    ==
+    assert // Wrong receiver
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:181
+    // assert(txn.amount === amount, 'Wrong amount')
+    frame_dig -4
+    gtxns Amount
+    frame_dig -3
+    ==
+    assert // Wrong amount
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:182
+    // assert(txn.sender.bytes === sender, 'Wrong sender')
+    frame_dig -4
+    gtxns Sender
+    frame_dig -1
+    ==
+    assert // Wrong sender
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.verifyAssetTransferTxn(txn: uint64, amount: uint64, receiver: bytes, sender: bytes) -> void:
+verifyAssetTransferTxn:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:188-193
+    // private verifyAssetTransferTxn(
+    //   txn: gtxn.AssetTransferTxn,
+    //   amount: uint64,
+    //   receiver: bytes,
+    //   sender: bytes
+    // ): void {
+    proto 4 0
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:194
+    // assert(txn.assetReceiver.bytes === receiver, 'Wrong receiver')
+    frame_dig -4
+    gtxns AssetReceiver
+    frame_dig -2
+    ==
+    assert // Wrong receiver
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:195
+    // assert(txn.assetAmount === amount, 'Wrong amount')
+    frame_dig -4
+    gtxns AssetAmount
+    frame_dig -3
+    ==
+    assert // Wrong amount
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:196
+    // assert(txn.xferAsset === Asset(this.settlementCurrency.value), 'Wrong asset')
+    frame_dig -4
+    gtxns XferAsset
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:196
+    // assert(txn.xferAsset === Asset(this.settlementCurrency.value), 'Wrong asset')
+    ==
+    assert // Wrong asset
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:197
+    // assert(txn.sender.bytes === sender, 'Wrong sender')
+    frame_dig -4
+    gtxns Sender
+    frame_dig -1
+    ==
+    assert // Wrong sender
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.sendPayment(receiver: bytes, amount: uint64) -> void:
+sendPayment:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:203
+    // private sendPayment(receiver: bytes, amount: uint64): void {
+    proto 2 0
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:204
+    // if (this.isAlgoPayment()) {
+    bnz sendPayment_else_body@3
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:205-209
+    // itxn.payment({
+    //   receiver: receiver,
+    //   amount: amount,
+    //   fee: 0
+    // }).submit()
+    itxn_begin
+    frame_dig -1
+    itxn_field Amount
+    frame_dig -2
+    itxn_field Receiver
+    intc_0 // 1
+    itxn_field TypeEnum
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:208
+    // fee: 0
+    intc_1 // 0
+    itxn_field Fee
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:205-209
+    // itxn.payment({
+    //   receiver: receiver,
+    //   amount: amount,
+    //   fee: 0
+    // }).submit()
+    itxn_submit
+    retsub
+
+sendPayment_else_body@3:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:211-216
+    // itxn.assetTransfer({
+    //   xferAsset: Asset(this.settlementCurrency.value),
+    //   assetReceiver: receiver,
+    //   assetAmount: amount,
+    //   fee: 0
+    // }).submit()
+    itxn_begin
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    frame_dig -1
+    itxn_field AssetAmount
+    frame_dig -2
+    itxn_field AssetReceiver
+    itxn_field XferAsset
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:211-216
+    // itxn.assetTransfer({
+    //   xferAsset: Asset(this.settlementCurrency.value),
+    //   assetReceiver: receiver,
+    //   assetAmount: amount,
+    //   fee: 0
+    // }).submit()
+    pushint 4 // 4
+    itxn_field TypeEnum
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:215
+    // fee: 0
+    intc_1 // 0
+    itxn_field Fee
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:211-216
+    // itxn.assetTransfer({
+    //   xferAsset: Asset(this.settlementCurrency.value),
+    //   assetReceiver: receiver,
+    //   assetAmount: amount,
+    //   fee: 0
+    // }).submit()
+    itxn_submit
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.createTrade(sellerAddress: bytes, amount: uint64, productType: bytes, description: bytes, ipfsHash: bytes) -> uint64:
+createTrade:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:231-238
+    // @abimethod()
+    // public createTrade(
+    //   sellerAddress: arc4.Address,
+    //   amount: uint64,
+    //   productType: string,
+    //   description: string,
+    //   ipfsHash: string
+    // ): uint64 {
+    proto 5 1
+    intc_1 // 0
+    dup
+    pushbytes ""
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:98
+    // public nextTradeId = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 6 // "nextTradeId"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:240
+    // if (this.nextTradeId.value === 0) {
+    bnz createTrade_after_if_else@2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:98
+    // public nextTradeId = GlobalState<uint64>()
+    bytec 6 // "nextTradeId"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:241
+    // this.nextTradeId.value = 1
+    intc_0 // 1
+    app_global_put
+
+createTrade_after_if_else@2:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:244
+    // assert(sellerAddress.bytes !== Txn.sender.bytes, 'Cannot trade with yourself')
+    frame_dig -5
+    txn Sender
+    !=
+    assert // Cannot trade with yourself
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:245
+    // assert(amount > 0, 'Amount must be greater than 0')
+    frame_dig -4
+    assert // Amount must be greater than 0
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:98
+    // public nextTradeId = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 6 // "nextTradeId"
+    app_global_get_ex
+    swap
+    dup
+    cover 2
+    frame_bury 2
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:251
+    // tradeId: new arc4.UintN64(tradeId),
+    itob
+    dup
+    frame_bury 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:252
+    // buyer: new arc4.Address(Txn.sender),
+    txn Sender
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:254
+    // escrowProvider: new arc4.Address(Global.zeroAddress),
+    global ZeroAddress
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:255
+    // amount: new arc4.UintN64(amount),
+    frame_dig -4
+    itob
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:257
+    // createdAt: new arc4.UintN64(Global.latestTimestamp),
+    global LatestTimestamp
+    itob
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:263
+    // regulatorWallet: new arc4.Address(Global.zeroAddress),
+    global ZeroAddress
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:250-268
+    // const trade = new TradeEscrow({
+    //   tradeId: new arc4.UintN64(tradeId),
+    //   buyer: new arc4.Address(Txn.sender),
+    //   seller: sellerAddress,
+    //   escrowProvider: new arc4.Address(Global.zeroAddress),
+    //   amount: new arc4.UintN64(amount),
+    //   state: new arc4.UintN64(CREATED),
+    //   createdAt: new arc4.UintN64(Global.latestTimestamp),
+    // 
+    //   instrumentAssetId: new arc4.UintN64(0),
+    //   instrumentType: new arc4.UintN64(0),
+    //   instrumentValue: new arc4.UintN64(0),
+    // 
+    //   regulatorWallet: new arc4.Address(Global.zeroAddress),
+    //   regulatorTaxPaid: new arc4.UintN64(0),
+    //   regulatorRefundDue: new arc4.UintN64(0),
+    // 
+    //   marketplaceFee: new arc4.UintN64(0)
+    // })
+    dig 5
+    uncover 5
+    concat
+    frame_dig -5
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:256
+    // state: new arc4.UintN64(CREATED),
+    bytec 5 // 0x0000000000000000
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:250-268
+    // const trade = new TradeEscrow({
+    //   tradeId: new arc4.UintN64(tradeId),
+    //   buyer: new arc4.Address(Txn.sender),
+    //   seller: sellerAddress,
+    //   escrowProvider: new arc4.Address(Global.zeroAddress),
+    //   amount: new arc4.UintN64(amount),
+    //   state: new arc4.UintN64(CREATED),
+    //   createdAt: new arc4.UintN64(Global.latestTimestamp),
+    // 
+    //   instrumentAssetId: new arc4.UintN64(0),
+    //   instrumentType: new arc4.UintN64(0),
+    //   instrumentValue: new arc4.UintN64(0),
+    // 
+    //   regulatorWallet: new arc4.Address(Global.zeroAddress),
+    //   regulatorTaxPaid: new arc4.UintN64(0),
+    //   regulatorRefundDue: new arc4.UintN64(0),
+    // 
+    //   marketplaceFee: new arc4.UintN64(0)
+    // })
+    concat
+    uncover 2
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:259
+    // instrumentAssetId: new arc4.UintN64(0),
+    bytec 5 // 0x0000000000000000
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:250-268
+    // const trade = new TradeEscrow({
+    //   tradeId: new arc4.UintN64(tradeId),
+    //   buyer: new arc4.Address(Txn.sender),
+    //   seller: sellerAddress,
+    //   escrowProvider: new arc4.Address(Global.zeroAddress),
+    //   amount: new arc4.UintN64(amount),
+    //   state: new arc4.UintN64(CREATED),
+    //   createdAt: new arc4.UintN64(Global.latestTimestamp),
+    // 
+    //   instrumentAssetId: new arc4.UintN64(0),
+    //   instrumentType: new arc4.UintN64(0),
+    //   instrumentValue: new arc4.UintN64(0),
+    // 
+    //   regulatorWallet: new arc4.Address(Global.zeroAddress),
+    //   regulatorTaxPaid: new arc4.UintN64(0),
+    //   regulatorRefundDue: new arc4.UintN64(0),
+    // 
+    //   marketplaceFee: new arc4.UintN64(0)
+    // })
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:260
+    // instrumentType: new arc4.UintN64(0),
+    bytec 5 // 0x0000000000000000
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:250-268
+    // const trade = new TradeEscrow({
+    //   tradeId: new arc4.UintN64(tradeId),
+    //   buyer: new arc4.Address(Txn.sender),
+    //   seller: sellerAddress,
+    //   escrowProvider: new arc4.Address(Global.zeroAddress),
+    //   amount: new arc4.UintN64(amount),
+    //   state: new arc4.UintN64(CREATED),
+    //   createdAt: new arc4.UintN64(Global.latestTimestamp),
+    // 
+    //   instrumentAssetId: new arc4.UintN64(0),
+    //   instrumentType: new arc4.UintN64(0),
+    //   instrumentValue: new arc4.UintN64(0),
+    // 
+    //   regulatorWallet: new arc4.Address(Global.zeroAddress),
+    //   regulatorTaxPaid: new arc4.UintN64(0),
+    //   regulatorRefundDue: new arc4.UintN64(0),
+    // 
+    //   marketplaceFee: new arc4.UintN64(0)
+    // })
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:261
+    // instrumentValue: new arc4.UintN64(0),
+    bytec 5 // 0x0000000000000000
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:250-268
+    // const trade = new TradeEscrow({
+    //   tradeId: new arc4.UintN64(tradeId),
+    //   buyer: new arc4.Address(Txn.sender),
+    //   seller: sellerAddress,
+    //   escrowProvider: new arc4.Address(Global.zeroAddress),
+    //   amount: new arc4.UintN64(amount),
+    //   state: new arc4.UintN64(CREATED),
+    //   createdAt: new arc4.UintN64(Global.latestTimestamp),
+    // 
+    //   instrumentAssetId: new arc4.UintN64(0),
+    //   instrumentType: new arc4.UintN64(0),
+    //   instrumentValue: new arc4.UintN64(0),
+    // 
+    //   regulatorWallet: new arc4.Address(Global.zeroAddress),
+    //   regulatorTaxPaid: new arc4.UintN64(0),
+    //   regulatorRefundDue: new arc4.UintN64(0),
+    // 
+    //   marketplaceFee: new arc4.UintN64(0)
+    // })
+    concat
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:264
+    // regulatorTaxPaid: new arc4.UintN64(0),
+    bytec 5 // 0x0000000000000000
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:250-268
+    // const trade = new TradeEscrow({
+    //   tradeId: new arc4.UintN64(tradeId),
+    //   buyer: new arc4.Address(Txn.sender),
+    //   seller: sellerAddress,
+    //   escrowProvider: new arc4.Address(Global.zeroAddress),
+    //   amount: new arc4.UintN64(amount),
+    //   state: new arc4.UintN64(CREATED),
+    //   createdAt: new arc4.UintN64(Global.latestTimestamp),
+    // 
+    //   instrumentAssetId: new arc4.UintN64(0),
+    //   instrumentType: new arc4.UintN64(0),
+    //   instrumentValue: new arc4.UintN64(0),
+    // 
+    //   regulatorWallet: new arc4.Address(Global.zeroAddress),
+    //   regulatorTaxPaid: new arc4.UintN64(0),
+    //   regulatorRefundDue: new arc4.UintN64(0),
+    // 
+    //   marketplaceFee: new arc4.UintN64(0)
+    // })
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:265
+    // regulatorRefundDue: new arc4.UintN64(0),
+    bytec 5 // 0x0000000000000000
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:250-268
+    // const trade = new TradeEscrow({
+    //   tradeId: new arc4.UintN64(tradeId),
+    //   buyer: new arc4.Address(Txn.sender),
+    //   seller: sellerAddress,
+    //   escrowProvider: new arc4.Address(Global.zeroAddress),
+    //   amount: new arc4.UintN64(amount),
+    //   state: new arc4.UintN64(CREATED),
+    //   createdAt: new arc4.UintN64(Global.latestTimestamp),
+    // 
+    //   instrumentAssetId: new arc4.UintN64(0),
+    //   instrumentType: new arc4.UintN64(0),
+    //   instrumentValue: new arc4.UintN64(0),
+    // 
+    //   regulatorWallet: new arc4.Address(Global.zeroAddress),
+    //   regulatorTaxPaid: new arc4.UintN64(0),
+    //   regulatorRefundDue: new arc4.UintN64(0),
+    // 
+    //   marketplaceFee: new arc4.UintN64(0)
+    // })
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:267
+    // marketplaceFee: new arc4.UintN64(0)
+    bytec 5 // 0x0000000000000000
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:250-268
+    // const trade = new TradeEscrow({
+    //   tradeId: new arc4.UintN64(tradeId),
+    //   buyer: new arc4.Address(Txn.sender),
+    //   seller: sellerAddress,
+    //   escrowProvider: new arc4.Address(Global.zeroAddress),
+    //   amount: new arc4.UintN64(amount),
+    //   state: new arc4.UintN64(CREATED),
+    //   createdAt: new arc4.UintN64(Global.latestTimestamp),
+    // 
+    //   instrumentAssetId: new arc4.UintN64(0),
+    //   instrumentType: new arc4.UintN64(0),
+    //   instrumentValue: new arc4.UintN64(0),
+    // 
+    //   regulatorWallet: new arc4.Address(Global.zeroAddress),
+    //   regulatorTaxPaid: new arc4.UintN64(0),
+    //   regulatorRefundDue: new arc4.UintN64(0),
+    // 
+    //   marketplaceFee: new arc4.UintN64(0)
+    // })
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:272
+    // productType: new arc4.Str(productType),
+    frame_dig -3
+    len
+    itob
+    extract 6 2
+    frame_dig -3
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:273
+    // description: new arc4.Str(description),
+    frame_dig -2
+    len
+    itob
+    extract 6 2
+    frame_dig -2
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:274
+    // ipfsHash: new arc4.Str(ipfsHash),
+    frame_dig -1
+    len
+    itob
+    extract 6 2
+    frame_dig -1
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:271-278
+    // const meta = new TradeMetadata({
+    //   productType: new arc4.Str(productType),
+    //   description: new arc4.Str(description),
+    //   ipfsHash: new arc4.Str(ipfsHash),
+    //   leiId: new arc4.Str(''),
+    //   leiName: new arc4.Str(''),
+    //   instrumentNumber: new arc4.Str('')
+    // })
+    dig 2
+    len
+    pushint 12 // 12
+    +
+    dup
+    itob
+    extract 6 2
+    pushbytes 0x000c
+    swap
+    concat
+    dig 3
+    len
+    uncover 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 2
+    len
+    uncover 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    swap
+    intc_2 // 2
+    +
+    dup
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    swap
+    intc_2 // 2
+    +
+    itob
+    extract 6 2
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:275
+    // leiId: new arc4.Str(''),
+    bytec 9 // 0x0000
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:271-278
+    // const meta = new TradeMetadata({
+    //   productType: new arc4.Str(productType),
+    //   description: new arc4.Str(description),
+    //   ipfsHash: new arc4.Str(ipfsHash),
+    //   leiId: new arc4.Str(''),
+    //   leiName: new arc4.Str(''),
+    //   instrumentNumber: new arc4.Str('')
+    // })
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:276
+    // leiName: new arc4.Str(''),
+    bytec 9 // 0x0000
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:271-278
+    // const meta = new TradeMetadata({
+    //   productType: new arc4.Str(productType),
+    //   description: new arc4.Str(description),
+    //   ipfsHash: new arc4.Str(ipfsHash),
+    //   leiId: new arc4.Str(''),
+    //   leiName: new arc4.Str(''),
+    //   instrumentNumber: new arc4.Str('')
+    // })
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:277
+    // instrumentNumber: new arc4.Str('')
+    bytec 9 // 0x0000
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:271-278
+    // const meta = new TradeMetadata({
+    //   productType: new arc4.Str(productType),
+    //   description: new arc4.Str(description),
+    //   ipfsHash: new arc4.Str(ipfsHash),
+    //   leiId: new arc4.Str(''),
+    //   leiName: new arc4.Str(''),
+    //   instrumentNumber: new arc4.Str('')
+    // })
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:86
+    // public trades = BoxMap<uint64, TradeEscrow>({ keyPrefix: 'trades' })
+    bytec_3 // "trades"
+    dig 3
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:281
+    // this.trades(tradeId).value = trade.copy()
+    uncover 2
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:87
+    // public metadata = BoxMap<uint64, TradeMetadata>({ keyPrefix: 'metadata' })
+    bytec 10 // "metadata"
+    uncover 2
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:282
+    // this.metadata(tradeId).value = meta.copy()
+    dup
+    box_del
+    pop
+    swap
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:92
+    // public buyerTrades = BoxMap<arc4.Address, arc4.DynamicArray<arc4.UintN64>>({ keyPrefix: 'buyer' })
+    bytec 13 // "buyer"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:285
+    // this.addToBuyerTrades(new arc4.Address(Txn.sender), tradeId)
+    txn Sender
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:92
+    // public buyerTrades = BoxMap<arc4.Address, arc4.DynamicArray<arc4.UintN64>>({ keyPrefix: 'buyer' })
+    concat
+    dup
+    frame_bury 0
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:742
+    // if (this.buyerTrades(buyer).exists) {
+    box_len
+    bury 1
+    bz createTrade_else_body@5
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:743
+    // const trades = this.buyerTrades(buyer).value.copy()
+    frame_dig 0
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:744
+    // trades.push(new arc4.UintN64(tradeId))
+    extract 2 0
+    frame_dig 1
+    concat
+    dup
+    len
+    pushint 8 // 8
+    /
+    itob
+    extract 6 2
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:745
+    // this.buyerTrades(buyer).value = trades.copy()
+    dig 1
+    box_del
+    pop
+    box_put
+
+createTrade_after_if_else@6:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:93
+    // public sellerTrades = BoxMap<arc4.Address, arc4.DynamicArray<arc4.UintN64>>({ keyPrefix: 'seller' })
+    bytec 14 // "seller"
+    frame_dig -5
+    concat
+    dup
+    frame_bury 0
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:754
+    // if (this.sellerTrades(seller).exists) {
+    box_len
+    bury 1
+    bz createTrade_else_body@10
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:755
+    // const trades = this.sellerTrades(seller).value.copy()
+    frame_dig 0
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:756
+    // trades.push(new arc4.UintN64(tradeId))
+    extract 2 0
+    frame_dig 1
+    concat
+    dup
+    len
+    pushint 8 // 8
+    /
+    itob
+    extract 6 2
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:757
+    // this.sellerTrades(seller).value = trades.copy()
+    dig 1
+    box_del
+    pop
+    box_put
+
+createTrade_after_if_else@11:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:291
+    // this.nextTradeId.value = tradeId + 1
+    frame_dig 2
+    dup
+    intc_0 // 1
+    +
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:98
+    // public nextTradeId = GlobalState<uint64>()
+    bytec 6 // "nextTradeId"
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:291
+    // this.nextTradeId.value = tradeId + 1
+    swap
+    app_global_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:293
+    // return tradeId
+    frame_bury 0
+    retsub
+
+createTrade_else_body@10:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:760
+    // trades.push(new arc4.UintN64(tradeId))
+    bytec 15 // 0x0001
+    frame_dig 1
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:761
+    // this.sellerTrades(seller).value = trades.copy()
+    frame_dig 0
+    dup
+    box_del
+    pop
+    swap
+    box_put
+    b createTrade_after_if_else@11
+
+createTrade_else_body@5:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:748
+    // trades.push(new arc4.UintN64(tradeId))
+    bytec 15 // 0x0001
+    frame_dig 1
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:749
+    // this.buyerTrades(buyer).value = trades.copy()
+    frame_dig 0
+    dup
+    box_del
+    pop
+    swap
+    box_put
+    b createTrade_after_if_else@6
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.escrowTrade(paymentTxn: uint64, tradeId: uint64) -> uint64:
+escrowTrade:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:303-304
+    // @abimethod()
+    // public escrowTrade(paymentTxn: gtxn.PaymentTxn, tradeId: uint64): boolean {
+    proto 2 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:305
+    // const trade = this.trades(tradeId).value.copy()
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:86
+    // public trades = BoxMap<uint64, TradeEscrow>({ keyPrefix: 'trades' })
+    bytec_3 // "trades"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:305
+    // const trade = this.trades(tradeId).value.copy()
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:306
+    // assert(trade.state.native === CREATED, 'Trade not in CREATED state')
+    dup
+    pushint 112 // 112
+    extract_uint64
+    !
+    assert // Trade not in CREATED state
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:307
+    // assert(trade.buyer.bytes === Txn.sender.bytes, 'Only buyer can escrow')
+    dup
+    extract 8 32 // on error: Index access is out of bounds
+    txn Sender
+    ==
+    assert // Only buyer can escrow
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:309
+    // const marketplaceFee: uint64 = (trade.amount.native * this.marketplaceFeeRate.value) / 10000
+    dup
+    pushint 104 // 104
+    extract_uint64
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:107
+    // public marketplaceFeeRate = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 4 // "marketplaceFeeRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:309
+    // const marketplaceFee: uint64 = (trade.amount.native * this.marketplaceFeeRate.value) / 10000
+    dig 1
+    *
+    intc_3 // 10000
+    /
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:310
+    // const totalRequired: uint64 = trade.amount.native + marketplaceFee
+    swap
+    dig 1
+    +
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:312
+    // assert(Global.groupSize === 2, 'Must be group transaction')
+    global GroupSize
+    intc_2 // 2
+    ==
+    assert // Must be group transaction
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:168
+    // return this.settlementCurrency.value === 0
+    !
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:313
+    // assert(this.isAlgoPayment(), 'Must use ALGO payment for this method')
+    assert // Must use ALGO payment for this method
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:316
+    // this.verifyPaymentTxn(paymentTxn, totalRequired, Global.currentApplicationAddress.bytes, Txn.sender.bytes)
+    global CurrentApplicationAddress
+    txn Sender
+    frame_dig -2
+    cover 3
+    callsub verifyPaymentTxn
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:318
+    // trade.escrowProvider = new arc4.Address(Txn.sender)
+    txn Sender
+    uncover 2
+    swap
+    replace2 72
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:319
+    // trade.state = new arc4.UintN64(ESCROWED)
+    bytec 11 // 0x0000000000000001
+    replace2 112
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:320
+    // trade.marketplaceFee = new arc4.UintN64(marketplaceFee)
+    swap
+    itob
+    replace2 200
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:322
+    // this.trades(tradeId).value = trade.copy()
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:324
+    // return true
+    intc_0 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.escrowTradeWithAsset(assetTxn: uint64, tradeId: uint64) -> uint64:
+escrowTradeWithAsset:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:334-335
+    // @abimethod()
+    // public escrowTradeWithAsset(assetTxn: gtxn.AssetTransferTxn, tradeId: uint64): boolean {
+    proto 2 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:336
+    // const trade = this.trades(tradeId).value.copy()
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:86
+    // public trades = BoxMap<uint64, TradeEscrow>({ keyPrefix: 'trades' })
+    bytec_3 // "trades"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:336
+    // const trade = this.trades(tradeId).value.copy()
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:337
+    // assert(trade.state.native === CREATED, 'Trade not in CREATED state')
+    dup
+    pushint 112 // 112
+    extract_uint64
+    !
+    assert // Trade not in CREATED state
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:338
+    // assert(trade.buyer.bytes === Txn.sender.bytes, 'Only buyer can escrow')
+    dup
+    extract 8 32 // on error: Index access is out of bounds
+    txn Sender
+    ==
+    assert // Only buyer can escrow
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:340
+    // const marketplaceFee: uint64 = (trade.amount.native * this.marketplaceFeeRate.value) / 10000
+    dup
+    pushint 104 // 104
+    extract_uint64
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:107
+    // public marketplaceFeeRate = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 4 // "marketplaceFeeRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:340
+    // const marketplaceFee: uint64 = (trade.amount.native * this.marketplaceFeeRate.value) / 10000
+    dig 1
+    *
+    intc_3 // 10000
+    /
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:341
+    // const totalRequired: uint64 = trade.amount.native + marketplaceFee
+    swap
+    dig 1
+    +
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:343
+    // assert(Global.groupSize === 2, 'Must be group transaction')
+    global GroupSize
+    intc_2 // 2
+    ==
+    assert // Must be group transaction
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:168
+    // return this.settlementCurrency.value === 0
+    !
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:344
+    // assert(!this.isAlgoPayment(), 'Must use ASA payment for this method')
+    !
+    assert // Must use ASA payment for this method
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:347
+    // this.verifyAssetTransferTxn(assetTxn, totalRequired, Global.currentApplicationAddress.bytes, Txn.sender.bytes)
+    global CurrentApplicationAddress
+    txn Sender
+    frame_dig -2
+    cover 3
+    callsub verifyAssetTransferTxn
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:349
+    // trade.escrowProvider = new arc4.Address(Txn.sender)
+    txn Sender
+    uncover 2
+    swap
+    replace2 72
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:350
+    // trade.state = new arc4.UintN64(ESCROWED)
+    bytec 11 // 0x0000000000000001
+    replace2 112
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:351
+    // trade.marketplaceFee = new arc4.UintN64(marketplaceFee)
+    swap
+    itob
+    replace2 200
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:353
+    // this.trades(tradeId).value = trade.copy()
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:355
+    // return true
+    intc_0 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.escrowTradeAsFinancier(paymentTxn: uint64, tradeId: uint64) -> uint64:
+escrowTradeAsFinancier:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:365-366
+    // @abimethod()
+    // public escrowTradeAsFinancier(paymentTxn: gtxn.PaymentTxn, tradeId: uint64): boolean {
+    proto 2 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:367
+    // const trade = this.trades(tradeId).value.copy()
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:86
+    // public trades = BoxMap<uint64, TradeEscrow>({ keyPrefix: 'trades' })
+    bytec_3 // "trades"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:367
+    // const trade = this.trades(tradeId).value.copy()
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:368
+    // assert(trade.state.native === CREATED, 'Trade not in CREATED state')
+    dup
+    pushint 112 // 112
+    extract_uint64
+    !
+    assert // Trade not in CREATED state
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:369
+    // assert(Txn.sender.bytes !== trade.buyer.bytes, 'Buyer cannot be financier')
+    txn Sender
+    dig 1
+    extract 8 32 // on error: Index access is out of bounds
+    !=
+    assert // Buyer cannot be financier
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:370
+    // assert(Txn.sender.bytes !== trade.seller.bytes, 'Seller cannot be financier')
+    txn Sender
+    dig 1
+    extract 40 32 // on error: Index access is out of bounds
+    !=
+    assert // Seller cannot be financier
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:372
+    // const marketplaceFee: uint64 = (trade.amount.native * this.marketplaceFeeRate.value) / 10000
+    dup
+    pushint 104 // 104
+    extract_uint64
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:107
+    // public marketplaceFeeRate = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 4 // "marketplaceFeeRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:372
+    // const marketplaceFee: uint64 = (trade.amount.native * this.marketplaceFeeRate.value) / 10000
+    dig 1
+    *
+    intc_3 // 10000
+    /
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:373
+    // const totalRequired: uint64 = trade.amount.native + marketplaceFee
+    swap
+    dig 1
+    +
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:375
+    // assert(Global.groupSize === 2, 'Must be group transaction')
+    global GroupSize
+    intc_2 // 2
+    ==
+    assert // Must be group transaction
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:168
+    // return this.settlementCurrency.value === 0
+    !
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:376
+    // assert(this.isAlgoPayment(), 'Must use ALGO payment for this method')
+    assert // Must use ALGO payment for this method
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:379
+    // this.verifyPaymentTxn(paymentTxn, totalRequired, Global.currentApplicationAddress.bytes, Txn.sender.bytes)
+    global CurrentApplicationAddress
+    txn Sender
+    frame_dig -2
+    cover 3
+    callsub verifyPaymentTxn
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:381
+    // trade.escrowProvider = new arc4.Address(Txn.sender)
+    txn Sender
+    uncover 2
+    swap
+    replace2 72
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:382
+    // trade.state = new arc4.UintN64(ESCROWED)
+    bytec 11 // 0x0000000000000001
+    replace2 112
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:383
+    // trade.marketplaceFee = new arc4.UintN64(marketplaceFee)
+    swap
+    itob
+    replace2 200
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:385
+    // this.trades(tradeId).value = trade.copy()
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:387
+    // return true
+    intc_0 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.escrowTradeAsFinancierWithAsset(assetTxn: uint64, tradeId: uint64) -> uint64:
+escrowTradeAsFinancierWithAsset:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:397-398
+    // @abimethod()
+    // public escrowTradeAsFinancierWithAsset(assetTxn: gtxn.AssetTransferTxn, tradeId: uint64): boolean {
+    proto 2 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:399
+    // const trade = this.trades(tradeId).value.copy()
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:86
+    // public trades = BoxMap<uint64, TradeEscrow>({ keyPrefix: 'trades' })
+    bytec_3 // "trades"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:399
+    // const trade = this.trades(tradeId).value.copy()
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:400
+    // assert(trade.state.native === CREATED, 'Trade not in CREATED state')
+    dup
+    pushint 112 // 112
+    extract_uint64
+    !
+    assert // Trade not in CREATED state
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:401
+    // assert(Txn.sender.bytes !== trade.buyer.bytes, 'Buyer cannot be financier')
+    txn Sender
+    dig 1
+    extract 8 32 // on error: Index access is out of bounds
+    !=
+    assert // Buyer cannot be financier
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:402
+    // assert(Txn.sender.bytes !== trade.seller.bytes, 'Seller cannot be financier')
+    txn Sender
+    dig 1
+    extract 40 32 // on error: Index access is out of bounds
+    !=
+    assert // Seller cannot be financier
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:404
+    // const marketplaceFee: uint64 = (trade.amount.native * this.marketplaceFeeRate.value) / 10000
+    dup
+    pushint 104 // 104
+    extract_uint64
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:107
+    // public marketplaceFeeRate = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 4 // "marketplaceFeeRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:404
+    // const marketplaceFee: uint64 = (trade.amount.native * this.marketplaceFeeRate.value) / 10000
+    dig 1
+    *
+    intc_3 // 10000
+    /
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:405
+    // const totalRequired: uint64 = trade.amount.native + marketplaceFee
+    swap
+    dig 1
+    +
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:407
+    // assert(Global.groupSize === 2, 'Must be group transaction')
+    global GroupSize
+    intc_2 // 2
+    ==
+    assert // Must be group transaction
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:168
+    // return this.settlementCurrency.value === 0
+    !
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:408
+    // assert(!this.isAlgoPayment(), 'Must use ASA payment for this method')
+    !
+    assert // Must use ASA payment for this method
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:411
+    // this.verifyAssetTransferTxn(assetTxn, totalRequired, Global.currentApplicationAddress.bytes, Txn.sender.bytes)
+    global CurrentApplicationAddress
+    txn Sender
+    frame_dig -2
+    cover 3
+    callsub verifyAssetTransferTxn
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:413
+    // trade.escrowProvider = new arc4.Address(Txn.sender)
+    txn Sender
+    uncover 2
+    swap
+    replace2 72
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:414
+    // trade.state = new arc4.UintN64(ESCROWED)
+    bytec 11 // 0x0000000000000001
+    replace2 112
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:415
+    // trade.marketplaceFee = new arc4.UintN64(marketplaceFee)
+    swap
+    itob
+    replace2 200
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:417
+    // this.trades(tradeId).value = trade.copy()
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:419
+    // return true
+    intc_0 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.executeTrade(instrumentTxn: uint64, regulatorPayment: uint64, tradeId: uint64, instrumentAssetId: uint64, instrumentTypeNum: uint64, leiId: bytes, leiName: bytes, instrumentNumber: bytes, regulatorWallet: bytes) -> uint64:
+executeTrade:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:430-441
+    // @abimethod()
+    // public executeTrade(
+    //   instrumentTxn: gtxn.AssetTransferTxn,
+    //   regulatorPayment: gtxn.PaymentTxn,
+    //   tradeId: uint64,
+    //   instrumentAssetId: uint64,
+    //   instrumentTypeNum: uint64,
+    //   leiId: string,
+    //   leiName: string,
+    //   instrumentNumber: string,
+    //   regulatorWallet: arc4.Address
+    // ): boolean {
+    proto 9 1
+    intc_1 // 0
+    pushbytes ""
+    dupn 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:442
+    // const trade = this.trades(tradeId).value.copy()
+    frame_dig -7
+    itob
+    dup
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:86
+    // public trades = BoxMap<uint64, TradeEscrow>({ keyPrefix: 'trades' })
+    bytec_3 // "trades"
+    swap
+    concat
+    dup
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:442
+    // const trade = this.trades(tradeId).value.copy()
+    box_get
+    swap
+    dup
+    uncover 2
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:443
+    // assert(trade.state.native === ESCROWED, 'Trade not escrowed')
+    dup
+    pushint 112 // 112
+    extract_uint64
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:37
+    // const ESCROWED = 1 as uint64
+    intc_0 // 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:443
+    // assert(trade.state.native === ESCROWED, 'Trade not escrowed')
+    ==
+    assert // Trade not escrowed
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:444
+    // assert(trade.seller.bytes === Txn.sender.bytes, 'Only seller can execute')
+    extract 40 32 // on error: Index access is out of bounds
+    dup
+    txn Sender
+    ==
+    assert // Only seller can execute
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:445
+    // assert(regulatorWallet.bytes !== Global.zeroAddress.bytes, 'Invalid regulator address')
+    frame_dig -1
+    global ZeroAddress
+    !=
+    assert // Invalid regulator address
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:448-449
+    // instrumentTypeNum === BL ||
+    // instrumentTypeNum === WAREHOUSE_RECEIPT,
+    frame_dig -5
+    bz executeTrade_bool_true@2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:449
+    // instrumentTypeNum === WAREHOUSE_RECEIPT,
+    frame_dig -5
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:45
+    // const WAREHOUSE_RECEIPT = 1 as uint64
+    intc_0 // 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:449
+    // instrumentTypeNum === WAREHOUSE_RECEIPT,
+    ==
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:448-449
+    // instrumentTypeNum === BL ||
+    // instrumentTypeNum === WAREHOUSE_RECEIPT,
+    bz executeTrade_bool_false@3
+
+executeTrade_bool_true@2:
+    intc_0 // 1
+
+executeTrade_bool_merge@4:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:447-451
+    // assert(
+    //   instrumentTypeNum === BL ||
+    //   instrumentTypeNum === WAREHOUSE_RECEIPT,
+    //   'Invalid instrument type'
+    // )
+    assert // Invalid instrument type
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:453
+    // const regulatorTax: uint64 = (trade.amount.native * this.regulatorTaxRate.value) / 10000
+    frame_dig 6
+    dup
+    pushint 104 // 104
+    extract_uint64
+    dup
+    frame_bury 3
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:105
+    // public regulatorTaxRate = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 7 // "regulatorTaxRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:453
+    // const regulatorTax: uint64 = (trade.amount.native * this.regulatorTaxRate.value) / 10000
+    dig 1
+    *
+    intc_3 // 10000
+    /
+    frame_bury 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:106
+    // public regulatorRefundRate = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 8 // "regulatorRefundRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:454
+    // const regulatorRefund: uint64 = (trade.amount.native * this.regulatorRefundRate.value) / 10000
+    *
+    intc_3 // 10000
+    /
+    frame_bury 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:456
+    // assert(Global.groupSize === 3, 'Must be 3-transaction group')
+    global GroupSize
+    pushint 3 // 3
+    ==
+    assert // Must be 3-transaction group
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:168
+    // return this.settlementCurrency.value === 0
+    !
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:457
+    // assert(this.isAlgoPayment(), 'Must use ALGO payment for this method')
+    assert // Must use ALGO payment for this method
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:460
+    // assert(instrumentTxn.sender.bytes === Txn.sender.bytes, 'Instrument must come from seller')
+    frame_dig -9
+    gtxns Sender
+    txn Sender
+    ==
+    assert // Instrument must come from seller
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:461
+    // assert(instrumentTxn.xferAsset === Asset(instrumentAssetId), 'Wrong instrument asset')
+    frame_dig -9
+    gtxns XferAsset
+    frame_dig -6
+    ==
+    assert // Wrong instrument asset
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:462
+    // assert(instrumentTxn.assetAmount === 1, 'Must transfer 1 instrument NFT')
+    frame_dig -9
+    gtxns AssetAmount
+    intc_0 // 1
+    ==
+    assert // Must transfer 1 instrument NFT
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:465
+    // if (trade.escrowProvider.bytes === trade.buyer.bytes) {
+    dup
+    extract 72 32 // on error: Index access is out of bounds
+    swap
+    extract 8 32 // on error: Index access is out of bounds
+    dup
+    frame_bury 0
+    ==
+    bz executeTrade_else_body@6
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:466
+    // assert(instrumentTxn.assetReceiver.bytes === trade.buyer.bytes, 'Instrument must go to buyer')
+    frame_dig -9
+    gtxns AssetReceiver
+    frame_dig 0
+    ==
+    assert // Instrument must go to buyer
+
+executeTrade_after_if_else@7:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:472
+    // this.verifyPaymentTxn(regulatorPayment, regulatorTax, regulatorWallet.bytes, Txn.sender.bytes)
+    txn Sender
+    frame_dig -8
+    frame_dig 2
+    dup
+    cover 3
+    frame_dig -1
+    uncover 3
+    callsub verifyPaymentTxn
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:99
+    // public platformTreasury = GlobalState<bytes>()
+    intc_1 // 0
+    bytec 12 // "platformTreasury"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:475
+    // this.sendPayment(this.platformTreasury.value, trade.marketplaceFee.native)
+    frame_dig 6
+    dup
+    cover 2
+    intc 4 // 200
+    extract_uint64
+    callsub sendPayment
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:478
+    // this.sendPayment(trade.seller.bytes, trade.amount.native)
+    frame_dig 7
+    frame_dig 3
+    callsub sendPayment
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:481
+    // trade.state = new arc4.UintN64(EXECUTED)
+    bytec 16 // 0x0000000000000002
+    replace2 112
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:482
+    // trade.instrumentAssetId = new arc4.UintN64(instrumentAssetId)
+    frame_dig -6
+    itob
+    replace2 128
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:483
+    // trade.instrumentType = new arc4.UintN64(instrumentTypeNum)
+    frame_dig -5
+    itob
+    replace2 136
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:484
+    // trade.instrumentValue = new arc4.UintN64(trade.amount.native)
+    dup
+    pushint 104 // 104
+    extract_uint64
+    itob
+    replace2 144
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:485
+    // trade.regulatorWallet = regulatorWallet
+    frame_dig -1
+    replace2 152
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:486
+    // trade.regulatorTaxPaid = new arc4.UintN64(regulatorTax)
+    swap
+    itob
+    replace2 184
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:487
+    // trade.regulatorRefundDue = new arc4.UintN64(regulatorRefund)
+    frame_dig 1
+    itob
+    replace2 192
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:489
+    // this.trades(tradeId).value = trade.copy()
+    frame_dig 5
+    swap
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:87
+    // public metadata = BoxMap<uint64, TradeMetadata>({ keyPrefix: 'metadata' })
+    bytec 10 // "metadata"
+    frame_dig 4
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:492
+    // const meta = this.metadata(tradeId).value.copy()
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:493
+    // meta.leiId = new arc4.Str(leiId)
+    frame_dig -4
+    len
+    itob
+    extract 6 2
+    frame_dig -4
+    concat
+    dig 1
+    pushint 6 // 6
+    extract_uint16
+    dig 2
+    intc_1 // 0
+    dig 2
+    extract3
+    dig 3
+    pushint 8 // 8
+    extract_uint16
+    dig 4
+    len
+    uncover 5
+    dig 2
+    uncover 2
+    substring3
+    uncover 2
+    dig 4
+    concat
+    swap
+    concat
+    swap
+    uncover 2
+    -
+    uncover 2
+    len
+    dig 2
+    pushint 8 // 8
+    extract_uint16
+    dig 1
+    +
+    dig 2
+    -
+    itob
+    extract 6 2
+    uncover 3
+    swap
+    replace2 8
+    dup
+    pushint 10 // 10
+    extract_uint16
+    uncover 2
+    +
+    uncover 2
+    -
+    itob
+    extract 6 2
+    replace2 10
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:494
+    // meta.leiName = new arc4.Str(leiName)
+    frame_dig -3
+    len
+    itob
+    extract 6 2
+    frame_dig -3
+    concat
+    dig 1
+    pushint 8 // 8
+    extract_uint16
+    dig 2
+    intc_1 // 0
+    dig 2
+    extract3
+    dig 3
+    pushint 10 // 10
+    extract_uint16
+    dig 4
+    len
+    uncover 5
+    dig 2
+    uncover 2
+    substring3
+    uncover 2
+    dig 4
+    concat
+    swap
+    concat
+    swap
+    uncover 2
+    -
+    uncover 2
+    len
+    dig 2
+    pushint 10 // 10
+    extract_uint16
+    +
+    swap
+    -
+    itob
+    extract 6 2
+    replace2 10
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:495
+    // meta.instrumentNumber = new arc4.Str(instrumentNumber)
+    frame_dig -2
+    len
+    itob
+    extract 6 2
+    frame_dig -2
+    concat
+    dig 1
+    pushint 10 // 10
+    extract_uint16
+    uncover 2
+    intc_1 // 0
+    uncover 2
+    extract3
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:496
+    // this.metadata(tradeId).value = meta.copy()
+    dig 1
+    box_del
+    pop
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:498
+    // return true
+    intc_0 // 1
+    frame_bury 0
+    retsub
+
+executeTrade_else_body@6:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:468
+    // assert(instrumentTxn.assetReceiver.bytes === Global.currentApplicationAddress.bytes, 'Instrument must go to marketplace')
+    frame_dig -9
+    gtxns AssetReceiver
+    global CurrentApplicationAddress
+    ==
+    assert // Instrument must go to marketplace
+    b executeTrade_after_if_else@7
+
+executeTrade_bool_false@3:
+    intc_1 // 0
+    b executeTrade_bool_merge@4
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.executeTradeWithAsset(instrumentTxn: uint64, regulatorAssetPayment: uint64, tradeId: uint64, instrumentAssetId: uint64, instrumentTypeNum: uint64, leiId: bytes, leiName: bytes, instrumentNumber: bytes, regulatorWallet: bytes) -> uint64:
+executeTradeWithAsset:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:509-520
+    // @abimethod()
+    // public executeTradeWithAsset(
+    //   instrumentTxn: gtxn.AssetTransferTxn,
+    //   regulatorAssetPayment: gtxn.AssetTransferTxn,
+    //   tradeId: uint64,
+    //   instrumentAssetId: uint64,
+    //   instrumentTypeNum: uint64,
+    //   leiId: string,
+    //   leiName: string,
+    //   instrumentNumber: string,
+    //   regulatorWallet: arc4.Address
+    // ): boolean {
+    proto 9 1
+    intc_1 // 0
+    pushbytes ""
+    dupn 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:521
+    // const trade = this.trades(tradeId).value.copy()
+    frame_dig -7
+    itob
+    dup
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:86
+    // public trades = BoxMap<uint64, TradeEscrow>({ keyPrefix: 'trades' })
+    bytec_3 // "trades"
+    swap
+    concat
+    dup
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:521
+    // const trade = this.trades(tradeId).value.copy()
+    box_get
+    swap
+    dup
+    uncover 2
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:522
+    // assert(trade.state.native === ESCROWED, 'Trade not escrowed')
+    dup
+    pushint 112 // 112
+    extract_uint64
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:37
+    // const ESCROWED = 1 as uint64
+    intc_0 // 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:522
+    // assert(trade.state.native === ESCROWED, 'Trade not escrowed')
+    ==
+    assert // Trade not escrowed
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:523
+    // assert(trade.seller.bytes === Txn.sender.bytes, 'Only seller can execute')
+    extract 40 32 // on error: Index access is out of bounds
+    dup
+    txn Sender
+    ==
+    assert // Only seller can execute
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:524
+    // assert(regulatorWallet.bytes !== Global.zeroAddress.bytes, 'Invalid regulator address')
+    frame_dig -1
+    global ZeroAddress
+    !=
+    assert // Invalid regulator address
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:527-528
+    // instrumentTypeNum === BL ||
+    // instrumentTypeNum === WAREHOUSE_RECEIPT,
+    frame_dig -5
+    bz executeTradeWithAsset_bool_true@2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:528
+    // instrumentTypeNum === WAREHOUSE_RECEIPT,
+    frame_dig -5
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:45
+    // const WAREHOUSE_RECEIPT = 1 as uint64
+    intc_0 // 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:528
+    // instrumentTypeNum === WAREHOUSE_RECEIPT,
+    ==
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:527-528
+    // instrumentTypeNum === BL ||
+    // instrumentTypeNum === WAREHOUSE_RECEIPT,
+    bz executeTradeWithAsset_bool_false@3
+
+executeTradeWithAsset_bool_true@2:
+    intc_0 // 1
+
+executeTradeWithAsset_bool_merge@4:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:526-530
+    // assert(
+    //   instrumentTypeNum === BL ||
+    //   instrumentTypeNum === WAREHOUSE_RECEIPT,
+    //   'Invalid instrument type'
+    // )
+    assert // Invalid instrument type
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:532
+    // const regulatorTax: uint64 = (trade.amount.native * this.regulatorTaxRate.value) / 10000
+    frame_dig 6
+    dup
+    pushint 104 // 104
+    extract_uint64
+    dup
+    frame_bury 3
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:105
+    // public regulatorTaxRate = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 7 // "regulatorTaxRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:532
+    // const regulatorTax: uint64 = (trade.amount.native * this.regulatorTaxRate.value) / 10000
+    dig 1
+    *
+    intc_3 // 10000
+    /
+    frame_bury 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:106
+    // public regulatorRefundRate = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 8 // "regulatorRefundRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:533
+    // const regulatorRefund: uint64 = (trade.amount.native * this.regulatorRefundRate.value) / 10000
+    *
+    intc_3 // 10000
+    /
+    frame_bury 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:535
+    // assert(Global.groupSize === 3, 'Must be 3-transaction group')
+    global GroupSize
+    pushint 3 // 3
+    ==
+    assert // Must be 3-transaction group
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:168
+    // return this.settlementCurrency.value === 0
+    !
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:536
+    // assert(!this.isAlgoPayment(), 'Must use ASA payment for this method')
+    !
+    assert // Must use ASA payment for this method
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:539
+    // assert(instrumentTxn.sender.bytes === Txn.sender.bytes, 'Instrument must come from seller')
+    frame_dig -9
+    gtxns Sender
+    txn Sender
+    ==
+    assert // Instrument must come from seller
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:540
+    // assert(instrumentTxn.xferAsset === Asset(instrumentAssetId), 'Wrong instrument asset')
+    frame_dig -9
+    gtxns XferAsset
+    frame_dig -6
+    ==
+    assert // Wrong instrument asset
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:541
+    // assert(instrumentTxn.assetAmount === 1, 'Must transfer 1 instrument NFT')
+    frame_dig -9
+    gtxns AssetAmount
+    intc_0 // 1
+    ==
+    assert // Must transfer 1 instrument NFT
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:544
+    // if (trade.escrowProvider.bytes === trade.buyer.bytes) {
+    dup
+    extract 72 32 // on error: Index access is out of bounds
+    swap
+    extract 8 32 // on error: Index access is out of bounds
+    dup
+    frame_bury 0
+    ==
+    bz executeTradeWithAsset_else_body@6
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:545
+    // assert(instrumentTxn.assetReceiver.bytes === trade.buyer.bytes, 'Instrument must go to buyer')
+    frame_dig -9
+    gtxns AssetReceiver
+    frame_dig 0
+    ==
+    assert // Instrument must go to buyer
+
+executeTradeWithAsset_after_if_else@7:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:551
+    // this.verifyAssetTransferTxn(regulatorAssetPayment, regulatorTax, regulatorWallet.bytes, Txn.sender.bytes)
+    txn Sender
+    frame_dig -8
+    frame_dig 2
+    dup
+    cover 3
+    frame_dig -1
+    uncover 3
+    callsub verifyAssetTransferTxn
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:99
+    // public platformTreasury = GlobalState<bytes>()
+    intc_1 // 0
+    bytec 12 // "platformTreasury"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:554
+    // this.sendPayment(this.platformTreasury.value, trade.marketplaceFee.native)
+    frame_dig 6
+    dup
+    cover 2
+    intc 4 // 200
+    extract_uint64
+    callsub sendPayment
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:557
+    // this.sendPayment(trade.seller.bytes, trade.amount.native)
+    frame_dig 7
+    frame_dig 3
+    callsub sendPayment
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:560
+    // trade.state = new arc4.UintN64(EXECUTED)
+    bytec 16 // 0x0000000000000002
+    replace2 112
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:561
+    // trade.instrumentAssetId = new arc4.UintN64(instrumentAssetId)
+    frame_dig -6
+    itob
+    replace2 128
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:562
+    // trade.instrumentType = new arc4.UintN64(instrumentTypeNum)
+    frame_dig -5
+    itob
+    replace2 136
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:563
+    // trade.instrumentValue = new arc4.UintN64(trade.amount.native)
+    dup
+    pushint 104 // 104
+    extract_uint64
+    itob
+    replace2 144
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:564
+    // trade.regulatorWallet = regulatorWallet
+    frame_dig -1
+    replace2 152
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:565
+    // trade.regulatorTaxPaid = new arc4.UintN64(regulatorTax)
+    swap
+    itob
+    replace2 184
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:566
+    // trade.regulatorRefundDue = new arc4.UintN64(regulatorRefund)
+    frame_dig 1
+    itob
+    replace2 192
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:568
+    // this.trades(tradeId).value = trade.copy()
+    frame_dig 5
+    swap
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:87
+    // public metadata = BoxMap<uint64, TradeMetadata>({ keyPrefix: 'metadata' })
+    bytec 10 // "metadata"
+    frame_dig 4
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:571
+    // const meta = this.metadata(tradeId).value.copy()
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:572
+    // meta.leiId = new arc4.Str(leiId)
+    frame_dig -4
+    len
+    itob
+    extract 6 2
+    frame_dig -4
+    concat
+    dig 1
+    pushint 6 // 6
+    extract_uint16
+    dig 2
+    intc_1 // 0
+    dig 2
+    extract3
+    dig 3
+    pushint 8 // 8
+    extract_uint16
+    dig 4
+    len
+    uncover 5
+    dig 2
+    uncover 2
+    substring3
+    uncover 2
+    dig 4
+    concat
+    swap
+    concat
+    swap
+    uncover 2
+    -
+    uncover 2
+    len
+    dig 2
+    pushint 8 // 8
+    extract_uint16
+    dig 1
+    +
+    dig 2
+    -
+    itob
+    extract 6 2
+    uncover 3
+    swap
+    replace2 8
+    dup
+    pushint 10 // 10
+    extract_uint16
+    uncover 2
+    +
+    uncover 2
+    -
+    itob
+    extract 6 2
+    replace2 10
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:573
+    // meta.leiName = new arc4.Str(leiName)
+    frame_dig -3
+    len
+    itob
+    extract 6 2
+    frame_dig -3
+    concat
+    dig 1
+    pushint 8 // 8
+    extract_uint16
+    dig 2
+    intc_1 // 0
+    dig 2
+    extract3
+    dig 3
+    pushint 10 // 10
+    extract_uint16
+    dig 4
+    len
+    uncover 5
+    dig 2
+    uncover 2
+    substring3
+    uncover 2
+    dig 4
+    concat
+    swap
+    concat
+    swap
+    uncover 2
+    -
+    uncover 2
+    len
+    dig 2
+    pushint 10 // 10
+    extract_uint16
+    +
+    swap
+    -
+    itob
+    extract 6 2
+    replace2 10
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:574
+    // meta.instrumentNumber = new arc4.Str(instrumentNumber)
+    frame_dig -2
+    len
+    itob
+    extract 6 2
+    frame_dig -2
+    concat
+    dig 1
+    pushint 10 // 10
+    extract_uint16
+    uncover 2
+    intc_1 // 0
+    uncover 2
+    extract3
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:575
+    // this.metadata(tradeId).value = meta.copy()
+    dig 1
+    box_del
+    pop
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:577
+    // return true
+    intc_0 // 1
+    frame_bury 0
+    retsub
+
+executeTradeWithAsset_else_body@6:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:547
+    // assert(instrumentTxn.assetReceiver.bytes === Global.currentApplicationAddress.bytes, 'Instrument must go to marketplace')
+    frame_dig -9
+    gtxns AssetReceiver
+    global CurrentApplicationAddress
+    ==
+    assert // Instrument must go to marketplace
+    b executeTradeWithAsset_after_if_else@7
+
+executeTradeWithAsset_bool_false@3:
+    intc_1 // 0
+    b executeTradeWithAsset_bool_merge@4
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.acknowledgePayment(regulatorRefund: uint64, tradeId: uint64) -> uint64:
+acknowledgePayment:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:587-588
+    // @abimethod()
+    // public acknowledgePayment(regulatorRefund: gtxn.PaymentTxn, tradeId: uint64): boolean {
+    proto 2 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:589
+    // const trade = this.trades(tradeId).value.copy()
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:86
+    // public trades = BoxMap<uint64, TradeEscrow>({ keyPrefix: 'trades' })
+    bytec_3 // "trades"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:589
+    // const trade = this.trades(tradeId).value.copy()
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:590
+    // assert(trade.state.native === EXECUTED, 'Trade not executed')
+    dup
+    pushint 112 // 112
+    extract_uint64
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:38
+    // const EXECUTED = 2 as uint64
+    intc_2 // 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:590
+    // assert(trade.state.native === EXECUTED, 'Trade not executed')
+    ==
+    assert // Trade not executed
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:591
+    // assert(trade.seller.bytes === Txn.sender.bytes, 'Only seller can acknowledge')
+    dup
+    extract 40 32 // on error: Index access is out of bounds
+    dup
+    txn Sender
+    ==
+    assert // Only seller can acknowledge
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:593
+    // assert(Global.groupSize === 2, 'Must be group transaction')
+    global GroupSize
+    intc_2 // 2
+    ==
+    assert // Must be group transaction
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:168
+    // return this.settlementCurrency.value === 0
+    !
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:594
+    // assert(this.isAlgoPayment(), 'Must use ALGO payment for this method')
+    assert // Must use ALGO payment for this method
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:597
+    // this.verifyPaymentTxn(regulatorRefund, trade.regulatorRefundDue.native, trade.seller.bytes, trade.regulatorWallet.bytes)
+    dig 1
+    pushint 192 // 192
+    extract_uint64
+    dig 2
+    extract 152 32 // on error: Index access is out of bounds
+    frame_dig -2
+    uncover 2
+    uncover 3
+    uncover 3
+    callsub verifyPaymentTxn
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:599
+    // trade.state = new arc4.UintN64(PAYMENT_ACKNOWLEDGED)
+    bytec 17 // 0x0000000000000003
+    replace2 112
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:600
+    // this.trades(tradeId).value = trade.copy()
+    dup2
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:603
+    // trade.state = new arc4.UintN64(COMPLETED)
+    bytec 18 // 0x0000000000000005
+    replace2 112
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:604
+    // this.trades(tradeId).value = trade.copy()
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:606
+    // return true
+    intc_0 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.acknowledgePaymentWithAsset(regulatorRefund: uint64, tradeId: uint64) -> uint64:
+acknowledgePaymentWithAsset:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:616-617
+    // @abimethod()
+    // public acknowledgePaymentWithAsset(regulatorRefund: gtxn.AssetTransferTxn, tradeId: uint64): boolean {
+    proto 2 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:618
+    // const trade = this.trades(tradeId).value.copy()
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:86
+    // public trades = BoxMap<uint64, TradeEscrow>({ keyPrefix: 'trades' })
+    bytec_3 // "trades"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:618
+    // const trade = this.trades(tradeId).value.copy()
+    dup
+    box_get
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:619
+    // assert(trade.state.native === EXECUTED, 'Trade not executed')
+    dup
+    pushint 112 // 112
+    extract_uint64
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:38
+    // const EXECUTED = 2 as uint64
+    intc_2 // 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:619
+    // assert(trade.state.native === EXECUTED, 'Trade not executed')
+    ==
+    assert // Trade not executed
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:620
+    // assert(trade.seller.bytes === Txn.sender.bytes, 'Only seller can acknowledge')
+    dup
+    extract 40 32 // on error: Index access is out of bounds
+    dup
+    txn Sender
+    ==
+    assert // Only seller can acknowledge
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:622
+    // assert(Global.groupSize === 2, 'Must be group transaction')
+    global GroupSize
+    intc_2 // 2
+    ==
+    assert // Must be group transaction
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:168
+    // return this.settlementCurrency.value === 0
+    !
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:623
+    // assert(!this.isAlgoPayment(), 'Must use ASA payment for this method')
+    !
+    assert // Must use ASA payment for this method
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:626
+    // this.verifyAssetTransferTxn(regulatorRefund, trade.regulatorRefundDue.native, trade.seller.bytes, trade.regulatorWallet.bytes)
+    dig 1
+    pushint 192 // 192
+    extract_uint64
+    dig 2
+    extract 152 32 // on error: Index access is out of bounds
+    frame_dig -2
+    uncover 2
+    uncover 3
+    uncover 3
+    callsub verifyAssetTransferTxn
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:628
+    // trade.state = new arc4.UintN64(PAYMENT_ACKNOWLEDGED)
+    bytec 17 // 0x0000000000000003
+    replace2 112
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:629
+    // this.trades(tradeId).value = trade.copy()
+    dup2
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:632
+    // trade.state = new arc4.UintN64(COMPLETED)
+    bytec 18 // 0x0000000000000005
+    replace2 112
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:633
+    // this.trades(tradeId).value = trade.copy()
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:635
+    // return true
+    intc_0 // 1
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.expireTrade(tradeId: uint64) -> uint64:
+expireTrade:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:641-642
+    // @abimethod()
+    // public expireTrade(tradeId: uint64): boolean {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:643
+    // assert(Txn.sender === Global.creatorAddress, 'Only creator can expire trades')
+    txn Sender
+    global CreatorAddress
+    ==
+    assert // Only creator can expire trades
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:645
+    // const trade = this.trades(tradeId).value.copy()
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:86
+    // public trades = BoxMap<uint64, TradeEscrow>({ keyPrefix: 'trades' })
+    bytec_3 // "trades"
+    swap
+    concat
+    dup
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:645
+    // const trade = this.trades(tradeId).value.copy()
+    box_get
+    swap
+    dup
+    uncover 2
+    assert // Box must have value
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:647
+    // trade.state.native === CREATED ||
+    pushint 112 // 112
+    extract_uint64
+    dup
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:647-648
+    // trade.state.native === CREATED ||
+    // trade.state.native === ESCROWED ||
+    bz expireTrade_bool_true@3
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:648
+    // trade.state.native === ESCROWED ||
+    frame_dig 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:37
+    // const ESCROWED = 1 as uint64
+    intc_0 // 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:648
+    // trade.state.native === ESCROWED ||
+    ==
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:647-648
+    // trade.state.native === CREATED ||
+    // trade.state.native === ESCROWED ||
+    bnz expireTrade_bool_true@3
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:649
+    // trade.state.native === EXECUTED,
+    frame_dig 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:38
+    // const EXECUTED = 2 as uint64
+    intc_2 // 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:649
+    // trade.state.native === EXECUTED,
+    ==
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:647-649
+    // trade.state.native === CREATED ||
+    // trade.state.native === ESCROWED ||
+    // trade.state.native === EXECUTED,
+    bz expireTrade_bool_false@4
+
+expireTrade_bool_true@3:
+    intc_0 // 1
+
+expireTrade_bool_merge@5:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:646-651
+    // assert(
+    //   trade.state.native === CREATED ||
+    //   trade.state.native === ESCROWED ||
+    //   trade.state.native === EXECUTED,
+    //   'Cannot expire trade in current state'
+    // )
+    assert // Cannot expire trade in current state
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:654
+    // if (trade.state.native === ESCROWED) {
+    frame_dig 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:37
+    // const ESCROWED = 1 as uint64
+    intc_0 // 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:654
+    // if (trade.state.native === ESCROWED) {
+    ==
+    bz expireTrade_after_if_else@7
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:655
+    // const refundAmount: uint64 = trade.amount.native + trade.marketplaceFee.native
+    frame_dig 1
+    dup
+    pushint 104 // 104
+    extract_uint64
+    dig 1
+    intc 4 // 200
+    extract_uint64
+    +
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:658
+    // this.sendPayment(trade.escrowProvider.bytes, refundAmount)
+    swap
+    extract 72 32 // on error: Index access is out of bounds
+    swap
+    callsub sendPayment
+
+expireTrade_after_if_else@7:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:661
+    // trade.state = new arc4.UintN64(EXPIRED)
+    frame_dig 1
+    pushbytes 0x0000000000000004
+    replace2 112
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:662
+    // this.trades(tradeId).value = trade.copy()
+    frame_dig 0
+    swap
+    box_put
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:664
+    // return true
+    intc_0 // 1
+    frame_bury 0
+    retsub
+
+expireTrade_bool_false@4:
+    intc_1 // 0
+    b expireTrade_bool_merge@5
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.getTrade(tradeId: uint64) -> bytes:
+getTrade:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:672-673
+    // @abimethod({ readonly: true })
+    // public getTrade(tradeId: uint64): TradeEscrow {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:674
+    // return this.trades(tradeId).value
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:86
+    // public trades = BoxMap<uint64, TradeEscrow>({ keyPrefix: 'trades' })
+    bytec_3 // "trades"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:674
+    // return this.trades(tradeId).value
+    box_get
+    assert // Box must have value
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.getTradeMetadata(tradeId: uint64) -> bytes:
+getTradeMetadata:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:680-681
+    // @abimethod({ readonly: true })
+    // public getTradeMetadata(tradeId: uint64): TradeMetadata {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:682
+    // return this.metadata(tradeId).value
+    frame_dig -1
+    itob
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:87
+    // public metadata = BoxMap<uint64, TradeMetadata>({ keyPrefix: 'metadata' })
+    bytec 10 // "metadata"
+    swap
+    concat
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:682
+    // return this.metadata(tradeId).value
+    box_get
+    assert // Box must have value
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.getTradesByBuyer(buyer: bytes) -> bytes:
+getTradesByBuyer:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:688-689
+    // @abimethod({ readonly: true })
+    // public getTradesByBuyer(buyer: arc4.Address): arc4.DynamicArray<arc4.UintN64> {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:92
+    // public buyerTrades = BoxMap<arc4.Address, arc4.DynamicArray<arc4.UintN64>>({ keyPrefix: 'buyer' })
+    bytec 13 // "buyer"
+    frame_dig -1
+    concat
+    dup
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:690
+    // if (this.buyerTrades(buyer).exists) {
+    box_len
+    bury 1
+    bz getTradesByBuyer_after_if_else@2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:691
+    // return this.buyerTrades(buyer).value
+    frame_dig 0
+    box_get
+    assert // Box must have value
+    swap
+    retsub
+
+getTradesByBuyer_after_if_else@2:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:693
+    // return new arc4.DynamicArray<arc4.UintN64>()
+    bytec 9 // 0x0000
+    swap
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.getTradesBySeller(seller: bytes) -> bytes:
+getTradesBySeller:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:699-700
+    // @abimethod({ readonly: true })
+    // public getTradesBySeller(seller: arc4.Address): arc4.DynamicArray<arc4.UintN64> {
+    proto 1 1
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:93
+    // public sellerTrades = BoxMap<arc4.Address, arc4.DynamicArray<arc4.UintN64>>({ keyPrefix: 'seller' })
+    bytec 14 // "seller"
+    frame_dig -1
+    concat
+    dup
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:701
+    // if (this.sellerTrades(seller).exists) {
+    box_len
+    bury 1
+    bz getTradesBySeller_after_if_else@2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:702
+    // return this.sellerTrades(seller).value
+    frame_dig 0
+    box_get
+    assert // Box must have value
+    swap
+    retsub
+
+getTradesBySeller_after_if_else@2:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:704
+    // return new arc4.DynamicArray<arc4.UintN64>()
+    bytec 9 // 0x0000
+    swap
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.calculateEscrowCost(amount: uint64) -> uint64, uint64:
+calculateEscrowCost:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:710-711
+    // @abimethod({ readonly: true })
+    // public calculateEscrowCost(amount: uint64): [uint64, uint64] {
+    proto 1 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:107
+    // public marketplaceFeeRate = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 4 // "marketplaceFeeRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:712
+    // const fee: uint64 = (amount * this.marketplaceFeeRate.value) / 10000
+    frame_dig -1
+    *
+    intc_3 // 10000
+    /
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:713
+    // const totalCost: uint64 = amount + fee
+    frame_dig -1
+    dig 1
+    +
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:715
+    // return [totalCost, fee]
+    swap
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.calculateRegulatorCosts(amount: uint64) -> uint64, uint64:
+calculateRegulatorCosts:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:721-722
+    // @abimethod({ readonly: true })
+    // public calculateRegulatorCosts(amount: uint64): [uint64, uint64] {
+    proto 1 2
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:105
+    // public regulatorTaxRate = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 7 // "regulatorTaxRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:723
+    // const taxAmount: uint64 = (amount * this.regulatorTaxRate.value) / 10000
+    frame_dig -1
+    *
+    intc_3 // 10000
+    /
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:106
+    // public regulatorRefundRate = GlobalState<uint64>()
+    intc_1 // 0
+    bytec 8 // "regulatorRefundRate"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:724
+    // const refundAmount: uint64 = (amount * this.regulatorRefundRate.value) / 10000
+    frame_dig -1
+    *
+    intc_3 // 10000
+    /
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:726
+    // return [taxAmount, refundAmount]
+    retsub
+
+
+// smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts::AtomicMarketplaceEscrowV5.getPaymentConfig() -> uint64, uint64:
+getPaymentConfig:
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:734
+    // const isAlgo = this.settlementCurrency.value === 0
+    !
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:100
+    // public settlementCurrency = GlobalState<uint64>()  // 0 = ALGO, ASA ID = that asset
+    intc_1 // 0
+    bytec_1 // "settlementCurrency"
+    app_global_get_ex
+    assert // check GlobalState exists
+    // smart_contracts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV4.algo.ts:736
+    // return [this.settlementCurrency.value, isAlgo]
+    swap
+    retsub

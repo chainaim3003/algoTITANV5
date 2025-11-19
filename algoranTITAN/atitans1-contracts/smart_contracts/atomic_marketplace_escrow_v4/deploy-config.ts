@@ -1,0 +1,193 @@
+import { AlgorandClient } from '@algorandfoundation/algokit-utils'
+import { AtomicMarketplaceEscrowV5Factory } from '../artifacts/atomic_marketplace_escrow_v4/AtomicMarketplaceEscrowV5Client'
+import * as fs from 'node:fs'
+import * as path from 'node:path'
+
+export async function deploy() {
+  console.log('====================================')
+  console.log('🚀 Deploying Atomic Marketplace Escrow V5...')
+  console.log('====================================')
+  
+  const algorand = AlgorandClient.fromEnvironment()
+  const deployer = await algorand.account.fromEnvironment('DEPLOYER')
+  
+  console.log(`📝 Deployer: ${deployer.addr}`)
+  
+  const treasuryAddress = deployer.addr
+  const settlementAssetId = 0  // ALGO
+  
+  console.log(`💵 Settlement: ${settlementAssetId === 0 ? 'ALGO (native)' : `Asset ${settlementAssetId}`}`)
+  console.log(`💰 Treasury: ${treasuryAddress}`)
+  
+  try {
+    // Use exact same pattern as V3 - this works
+    const factory = algorand.client.getTypedAppFactory(AtomicMarketplaceEscrowV5Factory, {
+      defaultSender: deployer.addr,
+    })
+    
+    console.log('📦 Deploying contract...')
+    
+    const { appClient, result } = await factory.deploy({
+      onUpdate: 'append',
+      onSchemaBreak: 'append',
+    })
+    
+    const appId = appClient.appClient.appId
+    const appAddress = appClient.appAddress
+    
+    console.log(`✅ Contract deployed!`)
+    console.log(`📍 App ID: ${appId}`)
+    console.log(`📍 App Address: ${appAddress}`)
+    console.log(`📍 Operation: ${result.operationPerformed}`)
+    
+    // Check initialization
+    let needsInit = false
+    
+    if (['create', 'replace'].includes(result.operationPerformed)) {
+      needsInit = true
+      console.log('🆕 New deployment - initialization required')
+    } else {
+      console.log('🔍 Checking if contract is already initialized...')
+      try {
+        const appInfo = await algorand.client.algod.getApplicationByID(appId).do()
+        const globalState = appInfo.params['global-state'] || []
+        
+        const hasSettlement = globalState.some((item: any) => 
+          Buffer.from(item.key, 'base64').toString() === 'settlement_asset_id'
+        )
+        const hasTreasury = globalState.some((item: any) => 
+          Buffer.from(item.key, 'base64').toString() === 'treasury_address'
+        )
+        
+        if (!hasSettlement || !hasTreasury) {
+          console.log('⚠️  Contract exists but is NOT initialized')
+          needsInit = true
+        } else {
+          console.log('✅ Contract is already initialized')
+        }
+      } catch (error) {
+        console.warn('⚠️  Could not verify initialization, assuming needs init')
+        needsInit = true
+      }
+    }
+    
+    // Initialize if needed - using EXACT pattern from V3
+    if (needsInit) {
+      console.log('')
+      console.log('⚙️  Initializing contract...')
+      
+      // Fund app account FIRST
+      console.log('💰 Funding app account for box storage...')
+      await algorand.send.payment({
+        amount: (2).algo(),
+        sender: deployer.addr,
+        receiver: appAddress,
+      })
+      console.log(`✅ App account funded with 2 ALGO`)
+      
+      // Call initialize using AlgoKit typed client pattern
+      console.log('🔧 Calling initialize method...')
+      const initResult = await appClient.send.initialize({
+        settlementAssetId: BigInt(settlementAssetId),
+        treasuryAddress: treasuryAddress,
+      }, {
+        sendParams: {
+          fee: (2000).microAlgo(),
+        },
+      })
+      
+      console.log(`✅ Contract initialized!`)
+      console.log(`📍 Txn ID: ${initResult.transaction.txID()}`)
+      
+      // Verify
+      console.log('🔍 Verifying initialization...')
+      const verifyInfo = await algorand.client.algod.getApplicationByID(appId).do()
+      const verifyState = verifyInfo.params['global-state'] || []
+      
+      const settlementSet = verifyState.some((item: any) => 
+        Buffer.from(item.key, 'base64').toString() === 'settlement_asset_id'
+      )
+      const treasurySet = verifyState.some((item: any) => 
+        Buffer.from(item.key, 'base64').toString() === 'treasury_address'
+      )
+      
+      if (settlementSet && treasurySet) {
+        console.log('✅ Initialization verified!')
+      } else {
+        console.warn('⚠️  Warning: Some global state values may not be set')
+      }
+    }
+    
+    console.log('')
+    console.log('====================================')
+    console.log('✅ AtomicMarketplaceEscrowV5 READY!')
+    console.log('====================================')
+    console.log(`📍 App ID: ${appId}`)
+    console.log(`📍 App Address: ${appAddress}`)
+    console.log(`💵 Settlement: ${settlementAssetId === 0 ? 'ALGO (native)' : `Asset ${settlementAssetId}`}`)
+    console.log(`💰 Treasury: ${treasuryAddress}`)
+    console.log(`⚖️  Default Rates:`)
+    console.log(`   - Regulator Tax: 5.00%`)
+    console.log(`   - Regulator Refund: 2.00%`)
+    console.log(`   - Marketplace Fee: 0.25%`)
+    console.log('')
+    console.log(`🔗 Explorer: https://testnet.explorer.perawallet.app/application/${appId}`)
+    
+    // Auto-update contracts.json
+    if (needsInit || result.operationPerformed === 'create' || result.operationPerformed === 'replace') {
+      console.log('')
+      console.log('📝 Auto-updating contract registry...')
+      
+      try {
+        const contractsJsonPath = path.resolve(__dirname, '../../../atitans1-frontend/src/config/contracts.json')
+        
+        if (fs.existsSync(contractsJsonPath)) {
+          const contractsData = JSON.parse(fs.readFileSync(contractsJsonPath, 'utf8'))
+          
+          contractsData.active.ESCROW_V5 = {
+            appId: appId,
+            appAddress: appAddress,
+            network: 'testnet',
+            version: '5.0.0',
+            deployedAt: new Date().toISOString().split('T')[0],
+            status: 'active',
+            description: 'Fully initialized and ready for trades',
+            contractName: 'AtomicMarketplaceEscrowV5'
+          }
+          
+          if (contractsData.active.ESCROW_V4) {
+            if (!contractsData.deprecated) contractsData.deprecated = {}
+            contractsData.deprecated.ESCROW_V4 = {
+              ...contractsData.active.ESCROW_V4,
+              deprecatedAt: new Date().toISOString().split('T')[0],
+              status: 'deprecated',
+              reason: 'Replaced by V5'
+            }
+            delete contractsData.active.ESCROW_V4
+          }
+          
+          fs.writeFileSync(contractsJsonPath, JSON.stringify(contractsData, null, 2))
+          console.log('✅ contracts.json updated!')
+        }
+      } catch (error: any) {
+        console.warn('⚠️  Auto-update failed:', error.message)
+      }
+    }
+    
+    console.log('')
+    console.log('🎉 DEPLOYMENT COMPLETE!')
+    console.log('')
+    
+    return {
+      appId,
+      appAddress,
+      operationPerformed: result.operationPerformed,
+      settlementAssetId,
+      treasuryAddress,
+      initialized: needsInit,
+    }
+  } catch (error) {
+    console.error('❌ Deployment failed:', error)
+    throw error
+  }
+}

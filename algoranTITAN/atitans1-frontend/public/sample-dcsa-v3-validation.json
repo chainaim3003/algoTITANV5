@@ -1,0 +1,110 @@
+{
+  "dcsaVersion": "3.0.0",
+  "transportDocument": {
+    "transportDocumentReference": "BL-SAMPLE-001",
+    "transportDocumentStatus": "DRAFT",
+    "transportDocumentTypeCode": "BOL",
+    "transportDocumentCreatedDateTime": "2025-01-15T10:30:00Z",
+    "carrierBookingReference": "CBR-2025-001",
+    "shipper": {
+      "partyName": "SREE PALANI ANDAVAR AGROS PRIVATE LIMITED",
+      "identifyingCodes": [
+        {
+          "DCSAResponsibleAgencyCode": "LEI",
+          "partyCode": "894500Q32QG6KKGMMI95",
+          "codeListName": "LEI"
+        }
+      ],
+      "partyContactDetails": [
+        {
+          "name": "Export Manager",
+          "email": "export@sreepalaniagros.com",
+          "phone": "+91-44-2634-5678"
+        }
+      ]
+    },
+    "consignee": {
+      "partyName": "Rotterdam Import Corporation",
+      "partyContactDetails": [
+        {
+          "name": "Import Manager",
+          "email": "import@rotterdamimport.nl",
+          "phone": "+31-10-123-4567"
+        }
+      ]
+    },
+    "consignmentItems": [
+      {
+        "carrierBookingReference": "CBR-2025-001",
+        "descriptionOfGoods": [
+          "Premium Spices and Agricultural Products from Tamil Nadu"
+        ],
+        "HSCodes": [
+          "0904.11.10"
+        ],
+        "cargoItems": [
+          {
+            "equipmentReference": "CONT001",
+            "cargoGrossWeight": {
+              "value": 2500,
+              "unit": "KGM"
+            },
+            "cargoNetWeight": {
+              "value": 2350,
+              "unit": "KGM"
+            },
+            "outerPackaging": {
+              "numberOfPackages": 100,
+              "packageCode": "BG",
+              "description": "PP Bags"
+            }
+          }
+        ]
+      }
+    ],
+    "transports": {
+      "portOfLoading": {
+        "portCode": "INMAA",
+        "portName": "Chennai Port"
+      },
+      "portOfDischarge": {
+        "portCode": "NLRTM",
+        "portName": "Port of Rotterdam"
+      },
+      "vesselVoyages": [
+        {
+          "vesselName": "MV CHENNAI EXPRESS",
+          "vesselIMONumber": "IMO1234567"
+        }
+      ]
+    },
+    "declaredValue": {
+      "amount": 85000,
+      "currency": "USD"
+    },
+    "termsAndConditions": {
+      "incoterms": "FOB",
+      "contractTerms": "Standard DCSA v3 terms apply"
+    }
+  },
+  "metadata": {
+    "dcsaVersion": "3.0.0",
+    "generatedDateTime": "2025-01-15T10:30:00Z",
+    "complianceDocuments": [
+      "legalProof",
+      "certificateOfOrigin",
+      "exportLicense"
+    ],
+    "zkProof": {
+      "system": "ZK-PRET",
+      "version": "2.1.0",
+      "proofHash": "0x1a2b3c4d5e6f7890abcdef1234567890",
+      "verified": true
+    },
+    "algorandBoxStorage": {
+      "enabled": true,
+      "boxAppId": 12345678,
+      "storageType": "DCSA_V3_eBL"
+    }
+  }
+}

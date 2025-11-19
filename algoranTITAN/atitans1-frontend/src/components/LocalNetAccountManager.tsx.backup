@@ -1,0 +1,236 @@
+import React, { useState, useEffect } from 'react';
+import { useWallet } from '@txnlab/use-wallet-react';
+import { getAlgodConfigFromViteEnvironment } from '../utils/network/getAlgoClientConfigs';
+
+interface LocalNetAccount {
+  address: string;
+  role: string;
+  nickname: string;
+  balance: number;
+}
+
+// Pre-defined roles for LocalNet accounts
+const LOCALNET_ROLES = [
+  { role: 'CARRIER', nickname: '🚢 Carrier (Maersk Line)', color: 'bg-blue-100 text-blue-800' },
+  { role: 'EXPORTER', nickname: '📦 Exporter (Tirupur Textiles)', color: 'bg-green-100 text-green-800' },
+  { role: 'INVESTOR_SMALL_1', nickname: '💰 Investor Small 1', color: 'bg-purple-100 text-purple-800' },
+  { role: 'INVESTOR_SMALL_2', nickname: '💰 Investor Small 2', color: 'bg-purple-100 text-purple-800' },
+  { role: 'INVESTOR_SMALL_3', nickname: '💰 Investor Small 3', color: 'bg-purple-100 text-purple-800' },
+  { role: 'INVESTOR_SMALL_4', nickname: '💰 Investor Small 4', color: 'bg-purple-100 text-purple-800' },
+  { role: 'INVESTOR_SMALL_5', nickname: '💰 Investor Small 5', color: 'bg-purple-100 text-purple-800' },
+  { role: 'INVESTOR_LARGE_1', nickname: '🏛️ Investor Large 1', color: 'bg-indigo-100 text-indigo-800' },
+  { role: 'INVESTOR_LARGE_2', nickname: '🏛️ Investor Large 2', color: 'bg-indigo-100 text-indigo-800' },
+  { role: 'BUYER_1', nickname: '🛒 Buyer 1', color: 'bg-orange-100 text-orange-800' },
+  { role: 'BUYER_2', nickname: '🛒 Buyer 2', color: 'bg-orange-100 text-orange-800' },
+  { role: 'BANK', nickname: '🏦 Trade Finance Bank', color: 'bg-yellow-100 text-yellow-800' },
+  { role: 'REGULATOR', nickname: '🏛️ Customs Authority', color: 'bg-red-100 text-red-800' },
+];
+
+export function LocalNetAccountManager() {
+  const { activeAddress, wallets } = useWallet();
+  const [accounts, setAccounts] = useState<LocalNetAccount[]>([]);
+  const [currentRole, setCurrentRole] = useState<string>('');
+  const algoConfig = getAlgodConfigFromViteEnvironment();
+
+  // Check if we're on LocalNet
+  const isLocalNet = algoConfig.network === 'localnet';
+
+  useEffect(() => {
+    if (isLocalNet && activeAddress) {
+      // Get the current role based on address
+      const savedRole = localStorage.getItem(`localnet_role_${activeAddress}`);
+      if (savedRole) {
+        setCurrentRole(savedRole);
+      }
+    }
+  }, [activeAddress, isLocalNet]);
+
+  const assignRole = (role: string, nickname: string) => {
+    if (activeAddress) {
+      localStorage.setItem(`localnet_role_${activeAddress}`, role);
+      localStorage.setItem(`localnet_nickname_${activeAddress}`, nickname);
+      setCurrentRole(role);
+    }
+  };
+
+  const getCurrentRoleInfo = () => {
+    if (!activeAddress) return null;
+    
+    const savedRole = localStorage.getItem(`localnet_role_${activeAddress}`);
+    const savedNickname = localStorage.getItem(`localnet_nickname_${activeAddress}`);
+    
+    if (savedRole && savedNickname) {
+      const roleInfo = LOCALNET_ROLES.find(r => 
+        r.role === savedRole && r.nickname === savedNickname
+      );
+      return roleInfo || { role: savedRole, nickname: savedNickname, color: 'bg-gray-100 text-gray-800' };
+    }
+    
+    return null;
+  };
+
+  const switchToNewAccount = async () => {
+    try {
+      // Disconnect current wallet
+      const activeWallet = wallets?.find(w => w.isActive);
+      if (activeWallet) {
+        await activeWallet.disconnect();
+        // Force reconnect to get a new account
+        setTimeout(() => {
+          activeWallet.connect();
+        }, 1000);
+      }
+    } catch (error) {
+      console.error('Error switching account:', error);
+    }
+  };
+
+  const clearRoleAssignments = () => {
+    // Clear all role assignments for fresh start
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith('localnet_role_') || key.startsWith('localnet_nickname_')) {
+        localStorage.removeItem(key);
+      }
+    });
+    setCurrentRole('');
+    window.location.reload();
+  };
+
+  if (!isLocalNet) {
+    return null; // Only show on LocalNet
+  }
+
+  const currentRoleInfo = getCurrentRoleInfo();
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6 mb-6 border-l-4 border-blue-500">
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        🏠 LocalNet Account Manager
+      </h3>
+
+      {/* Current Account Info */}
+      <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+        <div className="text-sm text-gray-600">Current Address:</div>
+        <div className="font-mono text-sm">{activeAddress || 'Not connected'}</div>
+        
+        {currentRoleInfo && (
+          <div className="mt-2">
+            <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${currentRoleInfo.color}`}>
+              {currentRoleInfo.nickname}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Role Assignment */}
+      {activeAddress && !currentRoleInfo && (
+        <div className="mb-4">
+          <h4 className="text-md font-medium text-gray-900 mb-3">
+            Assign Role to Current Address:
+          </h4>
+          
+          {/* Core Roles */}
+          <div className="mb-4">
+            <h5 className="text-sm font-semibold text-gray-700 mb-2">Core Roles</h5>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {LOCALNET_ROLES.filter(r => ['CARRIER', 'EXPORTER', 'BANK', 'REGULATOR'].includes(r.role)).map((roleInfo, index) => (
+                <button
+                  key={`${roleInfo.role}-${index}`}
+                  onClick={() => assignRole(roleInfo.role, roleInfo.nickname)}
+                  className={`p-2 rounded border border-gray-300 hover:border-gray-400 text-left text-sm ${roleInfo.color}`}
+                >
+                  {roleInfo.nickname}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Small Investors */}
+          <div className="mb-4">
+            <h5 className="text-sm font-semibold text-gray-700 mb-2">Small Investors</h5>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+              {LOCALNET_ROLES.filter(r => r.role.startsWith('INVESTOR_SMALL')).map((roleInfo, index) => (
+                <button
+                  key={`${roleInfo.role}-${index}`}
+                  onClick={() => assignRole(roleInfo.role, roleInfo.nickname)}
+                  className={`p-2 rounded border border-gray-300 hover:border-gray-400 text-center text-sm ${roleInfo.color}`}
+                >
+                  {roleInfo.nickname}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Large Investors */}
+          <div className="mb-4">
+            <h5 className="text-sm font-semibold text-gray-700 mb-2">Large Investors</h5>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {LOCALNET_ROLES.filter(r => r.role.startsWith('INVESTOR_LARGE')).map((roleInfo, index) => (
+                <button
+                  key={`${roleInfo.role}-${index}`}
+                  onClick={() => assignRole(roleInfo.role, roleInfo.nickname)}
+                  className={`p-2 rounded border border-gray-300 hover:border-gray-400 text-left text-sm ${roleInfo.color}`}
+                >
+                  {roleInfo.nickname}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Buyers */}
+          <div className="mb-4">
+            <h5 className="text-sm font-semibold text-gray-700 mb-2">Buyers</h5>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {LOCALNET_ROLES.filter(r => r.role.startsWith('BUYER')).map((roleInfo, index) => (
+                <button
+                  key={`${roleInfo.role}-${index}`}
+                  onClick={() => assignRole(roleInfo.role, roleInfo.nickname)}
+                  className={`p-2 rounded border border-gray-300 hover:border-gray-400 text-left text-sm ${roleInfo.color}`}
+                >
+                  {roleInfo.nickname}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Account Actions */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={switchToNewAccount}
+          className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+        >
+          🔄 Switch to New Account
+        </button>
+        
+        <button
+          onClick={clearRoleAssignments}
+          className="px-3 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 text-sm"
+        >
+          🗑️ Clear All Roles
+        </button>
+      </div>
+
+      {/* Quick Role Reference */}
+      <div className="mt-4 p-3 bg-blue-50 rounded border">
+        <h5 className="font-medium text-blue-900 mb-2">💡 LocalNet Testing Strategy:</h5>
+        <div className="text-sm text-blue-800 space-y-1">
+          <div>1. <strong>Connect to LocalNet Wallet</strong> - Get your first address</div>
+          <div>2. <strong>Assign Role</strong> - Choose from Core, Small/Large Investors, or Buyers</div>
+          <div>3. <strong>Switch Account</strong> - Disconnect and reconnect for new address</div>
+          <div>4. <strong>Test Investment Scenarios</strong>:</div>
+          <div className="ml-4 space-y-1">
+            <div>• Create BL as Carrier</div>
+            <div>• Tokenize as Exporter</div>
+            <div>• Small Investors (1-5): Buy small amounts</div>
+            <div>• Large Investors (1-2): Buy large amounts</div>
+            <div>• Buyers (1-2): Purchase from secondary market</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default LocalNetAccountManager;

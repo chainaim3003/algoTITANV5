@@ -1,0 +1,1305 @@
+{
+  "version": 3,
+  "sources": [
+    "C:/SATHYA/CHAINAIM3003/mcp-servers/altry/atry2/atitans1/projects/atitans1-contracts/smart_contracts/negotiable_bl/contract.algo.ts"
+  ],
+  "mappings": ";;;;;;;;;;;;;;;;;AAMA;;AAAA;;;AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;;;AAAA;;;;;;;;;;;;AAAA;;;AAgCE;;AAAA;AAAA;AAAA;;AAAA;AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;;AAPA;;AAAA;AAAA;AAAA;;AAAA;AAzBF;;;AAAA;;;AAAA;;;AAAA;;;AAyBE;;;AAAA;AAAA;AAAA;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAPA;;AAAA;AAAA;AAAA;;AAAA;AAlBF;;;AAAA;;;AAAA;;;AAAA;;;AAkBE;;;AAAA;AAAA;AAAA;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAPA;;AAAA;AAAA;AAAA;;AAAA;AAXF;;;AAAA;;;AAAA;;;AAAA;;;AAWE;;;AAAA;AAAA;AAAA;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAPA;;AAAA;AAAA;AAAA;;AAAA;AAJF;;;AAAA;;;AAIE;;;AAAA;AAAA;AAAA;AAAA;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;;AAJF;;AAAA;;;AAAA;;AAAA;AAAA;AAAA;;AAIE;;;AACS;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;;AAAA;AAAA;;;AAAA;AAAP;AAMF;;;AACS;;;;;;;;;;;;;;AAAA;;AAAA;AAAA;;;;;;;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAP;AAMF;;;AACS;;;;;;;;;;;;AAAA;;AAAA;AAAA;;;;;;;;;;;;;;;AAAA;AAAA;;AAAA;AAAA;AAAA;AAAP;AAMF;;;AACS;;;;;;;;;;;;;;;;;AAAA;;AAAA;AAAA;;;;;;AAAA;AAAA;;AAAA;AAAP",
+  "op_pc_offset": 0,
+  "pc_events": {
+    "1": {
+      "subroutine": "@algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram",
+      "params": {},
+      "block": "main",
+      "stack_in": [],
+      "op": "intcblock 1"
+    },
+    "4": {
+      "op": "bytecblock 0x151f7c75 \" ALGO\""
+    },
+    "17": {
+      "op": "txn NumAppArgs",
+      "defined_out": [
+        "tmp%0#1"
+      ],
+      "stack_out": [
+        "tmp%0#1"
+      ]
+    },
+    "19": {
+      "op": "bz main_bare_routing@10",
+      "stack_out": []
+    },
+    "22": {
+      "op": "pushbytess 0x02bece11 0xcd68bb6f 0x125e1490 0x760a62d1 0x3d0802a3 // method \"hello(string)string\", method \"createBL(string,string)string\", method \"listBL(string,string)string\", method \"transferBL(string,string)string\", method \"getInfo()string\"",
+      "defined_out": [
+        "Method(createBL(string,string)string)",
+        "Method(getInfo()string)",
+        "Method(hello(string)string)",
+        "Method(listBL(string,string)string)",
+        "Method(transferBL(string,string)string)"
+      ],
+      "stack_out": [
+        "Method(hello(string)string)",
+        "Method(createBL(string,string)string)",
+        "Method(listBL(string,string)string)",
+        "Method(transferBL(string,string)string)",
+        "Method(getInfo()string)"
+      ]
+    },
+    "49": {
+      "op": "txna ApplicationArgs 0",
+      "defined_out": [
+        "Method(createBL(string,string)string)",
+        "Method(getInfo()string)",
+        "Method(hello(string)string)",
+        "Method(listBL(string,string)string)",
+        "Method(transferBL(string,string)string)",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "Method(hello(string)string)",
+        "Method(createBL(string,string)string)",
+        "Method(listBL(string,string)string)",
+        "Method(transferBL(string,string)string)",
+        "Method(getInfo()string)",
+        "tmp%2#0"
+      ]
+    },
+    "52": {
+      "op": "match main_hello_route@3 main_createBL_route@4 main_listBL_route@5 main_transferBL_route@6 main_getInfo_route@7",
+      "stack_out": []
+    },
+    "64": {
+      "block": "main_after_if_else@14",
+      "stack_in": [],
+      "op": "pushint 0 // 0",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "66": {
+      "op": "return",
+      "stack_out": []
+    },
+    "67": {
+      "block": "main_getInfo_route@7",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%37#0"
+      ],
+      "stack_out": [
+        "tmp%37#0"
+      ]
+    },
+    "69": {
+      "op": "!",
+      "defined_out": [
+        "tmp%38#0"
+      ],
+      "stack_out": [
+        "tmp%38#0"
+      ]
+    },
+    "70": {
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
+    },
+    "71": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%39#0"
+      ],
+      "stack_out": [
+        "tmp%39#0"
+      ]
+    },
+    "73": {
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
+      "stack_out": []
+    },
+    "74": {
+      "op": "pushbytes 0x151f7c750033416c676f544954414e53204e65676f746961626c652042696c6c73206f66204c6164696e6720436f6e74726163742076312e30",
+      "defined_out": [
+        "0x151f7c750033416c676f544954414e53204e65676f746961626c652042696c6c73206f66204c6164696e6720436f6e74726163742076312e30"
+      ],
+      "stack_out": [
+        "0x151f7c750033416c676f544954414e53204e65676f746961626c652042696c6c73206f66204c6164696e6720436f6e74726163742076312e30"
+      ]
+    },
+    "133": {
+      "op": "log",
+      "stack_out": []
+    },
+    "134": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "135": {
+      "op": "return",
+      "stack_out": []
+    },
+    "136": {
+      "block": "main_transferBL_route@6",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%28#0"
+      ],
+      "stack_out": [
+        "tmp%28#0"
+      ]
+    },
+    "138": {
+      "op": "!",
+      "defined_out": [
+        "tmp%29#0"
+      ],
+      "stack_out": [
+        "tmp%29#0"
+      ]
+    },
+    "139": {
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
+    },
+    "140": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%30#0"
+      ],
+      "stack_out": [
+        "tmp%30#0"
+      ]
+    },
+    "142": {
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
+      "stack_out": []
+    },
+    "143": {
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "tmp%32#0"
+      ],
+      "stack_out": [
+        "tmp%32#0"
+      ]
+    },
+    "146": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "tmp%33#0"
+      ],
+      "stack_out": [
+        "tmp%33#0"
+      ]
+    },
+    "149": {
+      "op": "txna ApplicationArgs 2",
+      "defined_out": [
+        "tmp%33#0",
+        "tmp%34#0"
+      ],
+      "stack_out": [
+        "tmp%33#0",
+        "tmp%34#0"
+      ]
+    },
+    "152": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "tmp%33#0",
+        "tmp%35#0"
+      ],
+      "stack_out": [
+        "tmp%33#0",
+        "tmp%35#0"
+      ]
+    },
+    "155": {
+      "callsub": "smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.transferBL",
+      "op": "callsub transferBL",
+      "defined_out": [
+        "to_encode%3#0"
+      ],
+      "stack_out": [
+        "to_encode%3#0"
+      ]
+    },
+    "158": {
+      "op": "dup",
+      "defined_out": [
+        "to_encode%3#0",
+        "to_encode%3#0 (copy)"
+      ],
+      "stack_out": [
+        "to_encode%3#0",
+        "to_encode%3#0 (copy)"
+      ]
+    },
+    "159": {
+      "op": "len",
+      "defined_out": [
+        "length%3#0",
+        "to_encode%3#0"
+      ],
+      "stack_out": [
+        "to_encode%3#0",
+        "length%3#0"
+      ]
+    },
+    "160": {
+      "op": "itob",
+      "defined_out": [
+        "as_bytes%3#0",
+        "to_encode%3#0"
+      ],
+      "stack_out": [
+        "to_encode%3#0",
+        "as_bytes%3#0"
+      ]
+    },
+    "161": {
+      "op": "extract 6 2",
+      "defined_out": [
+        "length_uint16%3#0",
+        "to_encode%3#0"
+      ],
+      "stack_out": [
+        "to_encode%3#0",
+        "length_uint16%3#0"
+      ]
+    },
+    "164": {
+      "op": "swap",
+      "stack_out": [
+        "length_uint16%3#0",
+        "to_encode%3#0"
+      ]
+    },
+    "165": {
+      "op": "concat",
+      "defined_out": [
+        "encoded_value%3#0"
+      ],
+      "stack_out": [
+        "encoded_value%3#0"
+      ]
+    },
+    "166": {
+      "op": "bytec_0 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "encoded_value%3#0"
+      ],
+      "stack_out": [
+        "encoded_value%3#0",
+        "0x151f7c75"
+      ]
+    },
+    "167": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "encoded_value%3#0"
+      ]
+    },
+    "168": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%36#0"
+      ],
+      "stack_out": [
+        "tmp%36#0"
+      ]
+    },
+    "169": {
+      "op": "log",
+      "stack_out": []
+    },
+    "170": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "171": {
+      "op": "return",
+      "stack_out": []
+    },
+    "172": {
+      "block": "main_listBL_route@5",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%19#0"
+      ],
+      "stack_out": [
+        "tmp%19#0"
+      ]
+    },
+    "174": {
+      "op": "!",
+      "defined_out": [
+        "tmp%20#0"
+      ],
+      "stack_out": [
+        "tmp%20#0"
+      ]
+    },
+    "175": {
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
+    },
+    "176": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%21#0"
+      ],
+      "stack_out": [
+        "tmp%21#0"
+      ]
+    },
+    "178": {
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
+      "stack_out": []
+    },
+    "179": {
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "tmp%23#0"
+      ],
+      "stack_out": [
+        "tmp%23#0"
+      ]
+    },
+    "182": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "tmp%24#0"
+      ],
+      "stack_out": [
+        "tmp%24#0"
+      ]
+    },
+    "185": {
+      "op": "txna ApplicationArgs 2",
+      "defined_out": [
+        "tmp%24#0",
+        "tmp%25#0"
+      ],
+      "stack_out": [
+        "tmp%24#0",
+        "tmp%25#0"
+      ]
+    },
+    "188": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "tmp%24#0",
+        "tmp%26#0"
+      ],
+      "stack_out": [
+        "tmp%24#0",
+        "tmp%26#0"
+      ]
+    },
+    "191": {
+      "callsub": "smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.listBL",
+      "op": "callsub listBL",
+      "defined_out": [
+        "to_encode%2#0"
+      ],
+      "stack_out": [
+        "to_encode%2#0"
+      ]
+    },
+    "194": {
+      "op": "dup",
+      "defined_out": [
+        "to_encode%2#0",
+        "to_encode%2#0 (copy)"
+      ],
+      "stack_out": [
+        "to_encode%2#0",
+        "to_encode%2#0 (copy)"
+      ]
+    },
+    "195": {
+      "op": "len",
+      "defined_out": [
+        "length%2#0",
+        "to_encode%2#0"
+      ],
+      "stack_out": [
+        "to_encode%2#0",
+        "length%2#0"
+      ]
+    },
+    "196": {
+      "op": "itob",
+      "defined_out": [
+        "as_bytes%2#0",
+        "to_encode%2#0"
+      ],
+      "stack_out": [
+        "to_encode%2#0",
+        "as_bytes%2#0"
+      ]
+    },
+    "197": {
+      "op": "extract 6 2",
+      "defined_out": [
+        "length_uint16%2#0",
+        "to_encode%2#0"
+      ],
+      "stack_out": [
+        "to_encode%2#0",
+        "length_uint16%2#0"
+      ]
+    },
+    "200": {
+      "op": "swap",
+      "stack_out": [
+        "length_uint16%2#0",
+        "to_encode%2#0"
+      ]
+    },
+    "201": {
+      "op": "concat",
+      "defined_out": [
+        "encoded_value%2#0"
+      ],
+      "stack_out": [
+        "encoded_value%2#0"
+      ]
+    },
+    "202": {
+      "op": "bytec_0 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "encoded_value%2#0"
+      ],
+      "stack_out": [
+        "encoded_value%2#0",
+        "0x151f7c75"
+      ]
+    },
+    "203": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "encoded_value%2#0"
+      ]
+    },
+    "204": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%27#0"
+      ],
+      "stack_out": [
+        "tmp%27#0"
+      ]
+    },
+    "205": {
+      "op": "log",
+      "stack_out": []
+    },
+    "206": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "207": {
+      "op": "return",
+      "stack_out": []
+    },
+    "208": {
+      "block": "main_createBL_route@4",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%10#0"
+      ],
+      "stack_out": [
+        "tmp%10#0"
+      ]
+    },
+    "210": {
+      "op": "!",
+      "defined_out": [
+        "tmp%11#0"
+      ],
+      "stack_out": [
+        "tmp%11#0"
+      ]
+    },
+    "211": {
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
+    },
+    "212": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%12#0"
+      ],
+      "stack_out": [
+        "tmp%12#0"
+      ]
+    },
+    "214": {
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
+      "stack_out": []
+    },
+    "215": {
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "tmp%14#0"
+      ],
+      "stack_out": [
+        "tmp%14#0"
+      ]
+    },
+    "218": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "tmp%15#0"
+      ],
+      "stack_out": [
+        "tmp%15#0"
+      ]
+    },
+    "221": {
+      "op": "txna ApplicationArgs 2",
+      "defined_out": [
+        "tmp%15#0",
+        "tmp%16#0"
+      ],
+      "stack_out": [
+        "tmp%15#0",
+        "tmp%16#0"
+      ]
+    },
+    "224": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "tmp%15#0",
+        "tmp%17#0"
+      ],
+      "stack_out": [
+        "tmp%15#0",
+        "tmp%17#0"
+      ]
+    },
+    "227": {
+      "callsub": "smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.createBL",
+      "op": "callsub createBL",
+      "defined_out": [
+        "to_encode%1#0"
+      ],
+      "stack_out": [
+        "to_encode%1#0"
+      ]
+    },
+    "230": {
+      "op": "dup",
+      "defined_out": [
+        "to_encode%1#0",
+        "to_encode%1#0 (copy)"
+      ],
+      "stack_out": [
+        "to_encode%1#0",
+        "to_encode%1#0 (copy)"
+      ]
+    },
+    "231": {
+      "op": "len",
+      "defined_out": [
+        "length%1#0",
+        "to_encode%1#0"
+      ],
+      "stack_out": [
+        "to_encode%1#0",
+        "length%1#0"
+      ]
+    },
+    "232": {
+      "op": "itob",
+      "defined_out": [
+        "as_bytes%1#0",
+        "to_encode%1#0"
+      ],
+      "stack_out": [
+        "to_encode%1#0",
+        "as_bytes%1#0"
+      ]
+    },
+    "233": {
+      "op": "extract 6 2",
+      "defined_out": [
+        "length_uint16%1#0",
+        "to_encode%1#0"
+      ],
+      "stack_out": [
+        "to_encode%1#0",
+        "length_uint16%1#0"
+      ]
+    },
+    "236": {
+      "op": "swap",
+      "stack_out": [
+        "length_uint16%1#0",
+        "to_encode%1#0"
+      ]
+    },
+    "237": {
+      "op": "concat",
+      "defined_out": [
+        "encoded_value%1#0"
+      ],
+      "stack_out": [
+        "encoded_value%1#0"
+      ]
+    },
+    "238": {
+      "op": "bytec_0 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "encoded_value%1#0"
+      ],
+      "stack_out": [
+        "encoded_value%1#0",
+        "0x151f7c75"
+      ]
+    },
+    "239": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "encoded_value%1#0"
+      ]
+    },
+    "240": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%18#0"
+      ],
+      "stack_out": [
+        "tmp%18#0"
+      ]
+    },
+    "241": {
+      "op": "log",
+      "stack_out": []
+    },
+    "242": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "243": {
+      "op": "return",
+      "stack_out": []
+    },
+    "244": {
+      "block": "main_hello_route@3",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "tmp%3#0"
+      ]
+    },
+    "246": {
+      "op": "!",
+      "defined_out": [
+        "tmp%4#0"
+      ],
+      "stack_out": [
+        "tmp%4#0"
+      ]
+    },
+    "247": {
+      "error": "OnCompletion is not NoOp",
+      "op": "assert // OnCompletion is not NoOp",
+      "stack_out": []
+    },
+    "248": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%5#0"
+      ],
+      "stack_out": [
+        "tmp%5#0"
+      ]
+    },
+    "250": {
+      "error": "can only call when not creating",
+      "op": "assert // can only call when not creating",
+      "stack_out": []
+    },
+    "251": {
+      "op": "txna ApplicationArgs 1",
+      "defined_out": [
+        "tmp%7#0"
+      ],
+      "stack_out": [
+        "tmp%7#0"
+      ]
+    },
+    "254": {
+      "op": "extract 2 0",
+      "defined_out": [
+        "tmp%8#0"
+      ],
+      "stack_out": [
+        "tmp%8#0"
+      ]
+    },
+    "257": {
+      "callsub": "smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.hello",
+      "op": "callsub hello",
+      "defined_out": [
+        "to_encode%0#0"
+      ],
+      "stack_out": [
+        "to_encode%0#0"
+      ]
+    },
+    "260": {
+      "op": "dup",
+      "defined_out": [
+        "to_encode%0#0",
+        "to_encode%0#0 (copy)"
+      ],
+      "stack_out": [
+        "to_encode%0#0",
+        "to_encode%0#0 (copy)"
+      ]
+    },
+    "261": {
+      "op": "len",
+      "defined_out": [
+        "length%0#0",
+        "to_encode%0#0"
+      ],
+      "stack_out": [
+        "to_encode%0#0",
+        "length%0#0"
+      ]
+    },
+    "262": {
+      "op": "itob",
+      "defined_out": [
+        "as_bytes%0#0",
+        "to_encode%0#0"
+      ],
+      "stack_out": [
+        "to_encode%0#0",
+        "as_bytes%0#0"
+      ]
+    },
+    "263": {
+      "op": "extract 6 2",
+      "defined_out": [
+        "length_uint16%0#0",
+        "to_encode%0#0"
+      ],
+      "stack_out": [
+        "to_encode%0#0",
+        "length_uint16%0#0"
+      ]
+    },
+    "266": {
+      "op": "swap",
+      "stack_out": [
+        "length_uint16%0#0",
+        "to_encode%0#0"
+      ]
+    },
+    "267": {
+      "op": "concat",
+      "defined_out": [
+        "encoded_value%0#0"
+      ],
+      "stack_out": [
+        "encoded_value%0#0"
+      ]
+    },
+    "268": {
+      "op": "bytec_0 // 0x151f7c75",
+      "defined_out": [
+        "0x151f7c75",
+        "encoded_value%0#0"
+      ],
+      "stack_out": [
+        "encoded_value%0#0",
+        "0x151f7c75"
+      ]
+    },
+    "269": {
+      "op": "swap",
+      "stack_out": [
+        "0x151f7c75",
+        "encoded_value%0#0"
+      ]
+    },
+    "270": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%9#0"
+      ],
+      "stack_out": [
+        "tmp%9#0"
+      ]
+    },
+    "271": {
+      "op": "log",
+      "stack_out": []
+    },
+    "272": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "273": {
+      "op": "return",
+      "stack_out": []
+    },
+    "274": {
+      "block": "main_bare_routing@10",
+      "stack_in": [],
+      "op": "txn OnCompletion",
+      "defined_out": [
+        "tmp%42#0"
+      ],
+      "stack_out": [
+        "tmp%42#0"
+      ]
+    },
+    "276": {
+      "op": "bnz main_after_if_else@14",
+      "stack_out": []
+    },
+    "279": {
+      "op": "txn ApplicationID",
+      "defined_out": [
+        "tmp%43#0"
+      ],
+      "stack_out": [
+        "tmp%43#0"
+      ]
+    },
+    "281": {
+      "op": "!",
+      "defined_out": [
+        "tmp%44#0"
+      ],
+      "stack_out": [
+        "tmp%44#0"
+      ]
+    },
+    "282": {
+      "error": "can only call when creating",
+      "op": "assert // can only call when creating",
+      "stack_out": []
+    },
+    "283": {
+      "op": "intc_0 // 1",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "284": {
+      "op": "return",
+      "stack_out": []
+    },
+    "285": {
+      "subroutine": "smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.hello",
+      "params": {
+        "name#0": "bytes"
+      },
+      "block": "hello",
+      "stack_in": [],
+      "op": "proto 1 1"
+    },
+    "288": {
+      "op": "pushbytes \"Hello from AlgoTITANS, \"",
+      "defined_out": [
+        "\"Hello from AlgoTITANS, \""
+      ],
+      "stack_out": [
+        "\"Hello from AlgoTITANS, \""
+      ]
+    },
+    "313": {
+      "op": "frame_dig -1",
+      "defined_out": [
+        "\"Hello from AlgoTITANS, \"",
+        "name#0 (copy)"
+      ],
+      "stack_out": [
+        "\"Hello from AlgoTITANS, \"",
+        "name#0 (copy)"
+      ]
+    },
+    "315": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "316": {
+      "op": "pushbytes \"!\"",
+      "defined_out": [
+        "\"!\"",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "\"!\""
+      ]
+    },
+    "319": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "tmp%1#0"
+      ]
+    },
+    "320": {
+      "retsub": true,
+      "op": "retsub"
+    },
+    "321": {
+      "subroutine": "smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.createBL",
+      "params": {
+        "description#0": "bytes",
+        "price#0": "bytes"
+      },
+      "block": "createBL",
+      "stack_in": [],
+      "op": "proto 2 1"
+    },
+    "324": {
+      "op": "pushbytes \"Created BL: \"",
+      "defined_out": [
+        "\"Created BL: \""
+      ],
+      "stack_out": [
+        "\"Created BL: \""
+      ]
+    },
+    "338": {
+      "op": "frame_dig -2",
+      "defined_out": [
+        "\"Created BL: \"",
+        "description#0 (copy)"
+      ],
+      "stack_out": [
+        "\"Created BL: \"",
+        "description#0 (copy)"
+      ]
+    },
+    "340": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "341": {
+      "op": "pushbytes \" for \"",
+      "defined_out": [
+        "\" for \"",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "\" for \""
+      ]
+    },
+    "348": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "tmp%1#0"
+      ]
+    },
+    "349": {
+      "op": "frame_dig -1",
+      "defined_out": [
+        "price#0 (copy)",
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "tmp%1#0",
+        "price#0 (copy)"
+      ]
+    },
+    "351": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "tmp%2#0"
+      ]
+    },
+    "352": {
+      "op": "bytec_1 // \" ALGO\"",
+      "defined_out": [
+        "\" ALGO\"",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "tmp%2#0",
+        "\" ALGO\""
+      ]
+    },
+    "353": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "tmp%3#0"
+      ]
+    },
+    "354": {
+      "retsub": true,
+      "op": "retsub"
+    },
+    "355": {
+      "subroutine": "smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.listBL",
+      "params": {
+        "blId#0": "bytes",
+        "price#0": "bytes"
+      },
+      "block": "listBL",
+      "stack_in": [],
+      "op": "proto 2 1"
+    },
+    "358": {
+      "op": "pushbytes \"Listed BL \"",
+      "defined_out": [
+        "\"Listed BL \""
+      ],
+      "stack_out": [
+        "\"Listed BL \""
+      ]
+    },
+    "370": {
+      "op": "frame_dig -2",
+      "defined_out": [
+        "\"Listed BL \"",
+        "blId#0 (copy)"
+      ],
+      "stack_out": [
+        "\"Listed BL \"",
+        "blId#0 (copy)"
+      ]
+    },
+    "372": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "373": {
+      "op": "pushbytes \" for sale at \"",
+      "defined_out": [
+        "\" for sale at \"",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "\" for sale at \""
+      ]
+    },
+    "388": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "tmp%1#0"
+      ]
+    },
+    "389": {
+      "op": "frame_dig -1",
+      "defined_out": [
+        "price#0 (copy)",
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "tmp%1#0",
+        "price#0 (copy)"
+      ]
+    },
+    "391": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "tmp%2#0"
+      ]
+    },
+    "392": {
+      "op": "bytec_1 // \" ALGO\"",
+      "defined_out": [
+        "\" ALGO\"",
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "tmp%2#0",
+        "\" ALGO\""
+      ]
+    },
+    "393": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%3#0"
+      ],
+      "stack_out": [
+        "tmp%3#0"
+      ]
+    },
+    "394": {
+      "retsub": true,
+      "op": "retsub"
+    },
+    "395": {
+      "subroutine": "smart_contracts/negotiable_bl/contract.algo.ts::NegotiableBL.transferBL",
+      "params": {
+        "blId#0": "bytes",
+        "newOwner#0": "bytes"
+      },
+      "block": "transferBL",
+      "stack_in": [],
+      "op": "proto 2 1"
+    },
+    "398": {
+      "op": "pushbytes \"Transferred BL \"",
+      "defined_out": [
+        "\"Transferred BL \""
+      ],
+      "stack_out": [
+        "\"Transferred BL \""
+      ]
+    },
+    "415": {
+      "op": "frame_dig -2",
+      "defined_out": [
+        "\"Transferred BL \"",
+        "blId#0 (copy)"
+      ],
+      "stack_out": [
+        "\"Transferred BL \"",
+        "blId#0 (copy)"
+      ]
+    },
+    "417": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0"
+      ]
+    },
+    "418": {
+      "op": "pushbytes \" to \"",
+      "defined_out": [
+        "\" to \"",
+        "tmp%0#0"
+      ],
+      "stack_out": [
+        "tmp%0#0",
+        "\" to \""
+      ]
+    },
+    "424": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "tmp%1#0"
+      ]
+    },
+    "425": {
+      "op": "frame_dig -1",
+      "defined_out": [
+        "newOwner#0 (copy)",
+        "tmp%1#0"
+      ],
+      "stack_out": [
+        "tmp%1#0",
+        "newOwner#0 (copy)"
+      ]
+    },
+    "427": {
+      "op": "concat",
+      "defined_out": [
+        "tmp%2#0"
+      ],
+      "stack_out": [
+        "tmp%2#0"
+      ]
+    },
+    "428": {
+      "retsub": true,
+      "op": "retsub"
+    }
+  }
+}

@@ -1,0 +1,749 @@
+{
+  "$schema": "https://chainaim.io/schemas/warehouse-receipt/v1.0",
+  "_disclaimer": "This warehouse receipt is based on UNCITRAL Warehouse Receipts Legal Framework (2018) and UCC Article 7 requirements. There is NO official UN/CEFACT warehouse receipt standard. This structure follows international best practices from UNCITRAL report, national warehouse receipt laws documented therein, and maintains consistency with the UN/CEFACT Commercial Invoice structure.",
+  "_legalBasis": [
+    "UNCITRAL Warehouse Receipts Report (2018)",
+    "UCC Article 7 - Warehouse Receipts, Bills of Lading and Other Documents of Title",
+    "UNCITRAL Model Law on Electronic Transferable Records (MLETR)",
+    "International best practices from France, Mexico, Philippines, UAE systems documented in UNCITRAL report"
+  ],
+  
+  "warehouseReceiptContext": {
+    "guidelineSpecifiedDocumentContextParameter": {
+      "id": "urn:uncitral:warehouse-receipts:2018",
+      "name": "UNCITRAL Warehouse Receipts Legal Framework"
+    },
+    "businessProcessSpecifiedDocumentContextParameter": {
+      "id": "WR1",
+      "description": "Warehouse Storage with Pledge Capability"
+    },
+    "regulatoryContext": {
+      "applicableLaw": "Indian Warehousing Act and UNCITRAL Principles",
+      "jurisdiction": "Tamil Nadu, India",
+      "regulatorAuthority": "Tamil Nadu Warehousing Corporation"
+    }
+  },
+  
+  "warehouseReceiptDocument": {
+    "id": "WR-2025-TIRUPUR-001",
+    "typeCode": "720",
+    "_typeCodeDescription": "Negotiable Warehouse Receipt",
+    "issueDateTime": {
+      "dateTimeString": {
+        "value": "2025-01-20T10:00:00Z",
+        "format": "205"
+      }
+    },
+    "sequentialNumber": "001/2025",
+    "receiptType": "DOUBLE_RECEIPT",
+    "_receiptTypeNote": "Issued as Certificate of Title + Pledge Bond (Warrant) following French/Mexican model documented in UNCITRAL report",
+    "negotiable": true,
+    "duplicateIssued": false,
+    "includedNote": [
+      {
+        "content": "Negotiable Warehouse Receipt for Organic Cotton Fabric stored for export",
+        "contentCode": "AAI",
+        "subjectCode": "REG"
+      },
+      {
+        "content": "This receipt consists of Certificate of Title and Pledge Bond (Warrant)",
+        "contentCode": "WHS"
+      },
+      {
+        "content": "Goods may be pledged as collateral by endorsing Pledge Bond separately",
+        "contentCode": "PMT"
+      },
+      {
+        "content": "Transfer by endorsement and delivery - Both parts or separately",
+        "contentCode": "TRF"
+      }
+    ],
+    "referencedDocuments": [
+      {
+        "issuerAssignedId": "PO-2025-001-MSME",
+        "typeCode": "105",
+        "_typeDescription": "Purchase Order",
+        "formattedIssueDateTime": {
+          "dateTimeString": {
+            "value": "2025-01-15",
+            "format": "102"
+          }
+        }
+      },
+      {
+        "issuerAssignedId": "INV-2025-TIRUPUR-001",
+        "typeCode": "380",
+        "_typeDescription": "Commercial Invoice",
+        "formattedIssueDateTime": {
+          "dateTimeString": {
+            "value": "2025-03-20",
+            "format": "102"
+          }
+        }
+      },
+      {
+        "issuerAssignedId": "BL-2025-TIRUPUR-001",
+        "typeCode": "705",
+        "_typeDescription": "Bill of Lading",
+        "formattedIssueDateTime": {
+          "dateTimeString": {
+            "value": "2025-03-15",
+            "format": "102"
+          }
+        }
+      }
+    ]
+  },
+  
+  "warehouseReceiptTransaction": {
+    "warehouseOperatorTradeParty": {
+      "id": [
+        {
+          "value": "WH-TIRUPUR-EXPORT-001",
+          "schemeId": "WAREHOUSE_LICENSE"
+        }
+      ],
+      "globalId": [
+        {
+          "value": "984500WAREHOUSE2025TIRUPUR",
+          "schemeId": "0088",
+          "_note": "LEI or equivalent identifier"
+        }
+      ],
+      "name": "Tirupur Export Warehouse Pvt Ltd",
+      "description": "Licensed bonded warehouse for export goods",
+      "postboxTradeAddress": {
+        "postcode": "641604",
+        "lineOne": "Plot 15, SIPCOT Industrial Park",
+        "lineTwo": "Export Processing Zone",
+        "cityName": "Tirupur",
+        "countrySubDivisionName": "Tamil Nadu",
+        "countryId": "IN",
+        "countryName": "India"
+      },
+      "specifiedLegalOrganization": {
+        "id": {
+          "value": "984500WAREHOUSE2025TIRUPUR",
+          "schemeId": "LEI"
+        },
+        "tradingBusinessName": "TEW Storage Solutions"
+      },
+      "specifiedTaxRegistration": [
+        {
+          "id": {
+            "value": "33AABCW1234F1Z5",
+            "schemeId": "VA"
+          }
+        },
+        {
+          "id": {
+            "value": "AAACW1234F",
+            "schemeId": "FC"
+          }
+        }
+      ],
+      "definedTradeContact": {
+        "personName": "Vijay Anand",
+        "departmentName": "Warehouse Operations",
+        "telephoneUniversalCommunication": {
+          "completeNumber": "+91-421-2234567"
+        },
+        "emailURIUniversalCommunication": {
+          "uriId": "operations@tewstorage.in"
+        }
+      },
+      "warehouseLicensing": {
+        "licenseNumber": "WH-TN-2024-0123",
+        "licensingAuthority": "Tamil Nadu Warehousing Corporation",
+        "licenseIssueDate": "2024-01-01",
+        "licenseExpiryDate": "2026-12-31",
+        "licenseType": "Bonded Warehouse - Export Goods",
+        "regulatoryCompliance": [
+          "UNCITRAL Warehouse Receipts Principles",
+          "Indian Warehousing Act",
+          "FSSAI Licensed (for food products)",
+          "Customs Bonded Warehouse Approved"
+        ]
+      },
+      "insuranceAndBonding": {
+        "performanceBond": {
+          "amount": {
+            "value": 5000000,
+            "currencyId": "INR"
+          },
+          "bondProvider": "ICICI Lombard General Insurance",
+          "bondNumber": "BOND-WH-2024-001",
+          "validUntil": "2026-12-31"
+        },
+        "warehouseInsurance": {
+          "coverageTypes": [
+            "Fire",
+            "Flood",
+            "Theft",
+            "Natural Disasters"
+          ],
+          "insurer": "New India Assurance Co Ltd",
+          "policyNumber": "POL-WH-TN-2024-789",
+          "coverageAmount": {
+            "value": 50000000,
+            "currencyId": "INR"
+          },
+          "validUntil": "2025-12-31"
+        },
+        "goodsInsurance": {
+          "insured": true,
+          "insurer": "HDFC ERGO General Insurance",
+          "policyNumber": "GOODS-INS-2025-COTTON-001",
+          "coverageAmount": {
+            "value": 150000,
+            "currencyId": "USD"
+          },
+          "coverageTypes": [
+            "Fire",
+            "Water Damage",
+            "Theft"
+          ],
+          "validUntil": "2025-04-30"
+        }
+      }
+    },
+    
+    "depositorTradeParty": {
+      "id": [
+        {
+          "value": "DEPOSITOR-TIRUPUR-TEXTILE-001",
+          "schemeId": "INTERNAL"
+        }
+      ],
+      "globalId": [
+        {
+          "value": "984500D87AB1CF2D6E73",
+          "schemeId": "0088"
+        }
+      ],
+      "name": "Tirupur Textiles Manufacturing Ltd",
+      "description": "Depositor and Owner of Goods",
+      "postboxTradeAddress": {
+        "postcode": "641601",
+        "lineOne": "123 Textile Avenue",
+        "lineTwo": "Industrial Area, Phase II",
+        "cityName": "Tirupur",
+        "countrySubDivisionName": "Tamil Nadu",
+        "countryId": "IN",
+        "countryName": "India"
+      },
+      "specifiedTaxRegistration": [
+        {
+          "id": {
+            "value": "33AABCT1234F1Z5",
+            "schemeId": "VA"
+          }
+        },
+        {
+          "id": {
+            "value": "IEC0518012345",
+            "schemeId": "IEC",
+            "_schemeDescription": "Import Export Code"
+          }
+        }
+      ],
+      "definedTradeContact": {
+        "personName": "Arjun Patel",
+        "departmentName": "Export Operations",
+        "telephoneUniversalCommunication": {
+          "completeNumber": "+91-421-2345678"
+        },
+        "emailURIUniversalCommunication": {
+          "uriId": "arjun@tirupur-textiles.in"
+        }
+      }
+    },
+    
+    "storedGoodsLineItems": [
+      {
+        "associatedDocumentLineDocument": {
+          "lineId": "1",
+          "includedNote": [
+            {
+              "content": "100% Organic Cotton Fabric - GOTS Certified - Export Quality",
+              "contentCode": "AAI"
+            },
+            {
+              "content": "Goods segregated and NOT commingled per depositor request",
+              "contentCode": "SEG"
+            }
+          ]
+        },
+        "specifiedTradeProduct": {
+          "id": [
+            {
+              "value": "COTTON-ORGANIC-WHITE-100S",
+              "schemeId": "DEPOSITOR"
+            },
+            {
+              "value": "WH-STORAGE-LOT-2025-001",
+              "schemeId": "WAREHOUSE"
+            }
+          ],
+          "globalId": [
+            {
+              "value": "5201001000",
+              "schemeId": "HS"
+            }
+          ],
+          "name": "Organic Cotton Fabric - Pure White",
+          "description": "100% Organic Cotton Plain Weave Fabric, 100s Count, GOTS Certified, Export Grade",
+          "designatedProductClassification": [
+            {
+              "classCode": {
+                "value": "5201001000",
+                "listId": "HS",
+                "listVersionId": "2022"
+              },
+              "className": "Cotton, not carded or combed"
+            }
+          ],
+          "applicableProductCharacteristic": [
+            {
+              "description": "Material",
+              "value": "100% Organic Cotton"
+            },
+            {
+              "description": "Thread Count",
+              "value": "100s"
+            },
+            {
+              "description": "Color",
+              "value": "Pure White"
+            },
+            {
+              "description": "Certification",
+              "value": "GOTS Certified"
+            },
+            {
+              "description": "Quality Grade",
+              "value": "Export Quality - First Grade"
+            },
+            {
+              "description": "Batch Number",
+              "value": "TT-2025-JAN-BATCH-001"
+            },
+            {
+              "description": "Production Date",
+              "value": "2025-01-05"
+            }
+          ],
+          "originTradeCountry": {
+            "id": "IN",
+            "name": "India"
+          },
+          "manufacturer": {
+            "name": "Tirupur Textiles Manufacturing Ltd",
+            "location": "Tirupur, Tamil Nadu, India"
+          }
+        },
+        "physicalCharacteristics": {
+          "segregationStatus": "SEGREGATED",
+          "_segregationNote": "Goods stored separately and shall NOT be commingled with other goods per Article 231 UNCITRAL principles",
+          "commingling": {
+            "allowed": false,
+            "reason": "Depositor requirement - maintain product identity"
+          },
+          "storageConditions": {
+            "temperatureRange": {
+              "min": 15,
+              "max": 25,
+              "unit": "CELSIUS"
+            },
+            "humidityRange": {
+              "min": 40,
+              "max": 60,
+              "unit": "PERCENT"
+            },
+            "specialRequirements": [
+              "Dry storage",
+              "Protected from direct sunlight",
+              "Regular ventilation",
+              "Pest control measures in place"
+            ]
+          },
+          "storageLocation": {
+            "warehouseSection": "Section A - Export Goods",
+            "rackNumber": "A-15 to A-20",
+            "binNumbers": ["A-15-01", "A-15-02", "A-16-01", "A-16-02", "A-17-01"],
+            "gpsCoordinates": {
+              "latitude": 11.1085,
+              "longitude": 77.3411
+            }
+          }
+        },
+        "quantityAndPackaging": {
+          "storedQuantity": {
+            "value": 10000,
+            "unitCode": "MTR",
+            "_unitDescription": "Meters"
+          },
+          "packagingDetails": {
+            "numberOfPackages": 50,
+            "packageType": "Roll",
+            "_packageTypeCode": "RO",
+            "packageMarks": "TT-EXPORT-COTTON-001 to TT-EXPORT-COTTON-050",
+            "seals": {
+              "sealed": true,
+              "sealType": "Warehouse Official Seal",
+              "sealNumbers": ["SEAL-001-2025", "SEAL-002-2025", "...SEAL-050-2025"]
+            },
+            "grossWeight": {
+              "value": 5200,
+              "unitCode": "KGM"
+            },
+            "netWeight": {
+              "value": 5000,
+              "unitCode": "KGM"
+            },
+            "tareWeight": {
+              "value": 200,
+              "unitCode": "KGM"
+            },
+            "volumetricDetails": {
+              "totalVolume": {
+                "value": 12,
+                "unitCode": "MTQ"
+              }
+            }
+          }
+        },
+        "qualityAndInspection": {
+          "qualityGrade": "Export Quality - Grade A",
+          "inspectionCertificate": {
+            "certificateNumber": "QC-2025-COTTON-001",
+            "inspectionDate": "2025-01-18",
+            "inspectorName": "Quality Control Team - TEW",
+            "inspectionResult": "PASSED",
+            "defects": "None observed"
+          },
+          "certifications": [
+            {
+              "type": "GOTS",
+              "number": "GOTS-CERT-2024-001",
+              "issuedBy": "Control Union Certifications",
+              "validUntil": "2025-12-31"
+            }
+          ]
+        },
+        "valuationAndOwnership": {
+          "declaredValue": {
+            "amount": {
+              "value": 125000,
+              "currencyId": "USD"
+            },
+            "valuationMethod": "CIF Value",
+            "valuationDate": "2025-01-20",
+            "valuedBy": "Depositor Declaration"
+          },
+          "ownership": {
+            "ownerName": "Tirupur Textiles Manufacturing Ltd",
+            "ownerLEI": "984500D87AB1CF2D6E73",
+            "ownershipType": "SOLE",
+            "ownershipEvidence": "Invoice INV-2025-TIRUPUR-001"
+          },
+          "taxAndDutyStatus": {
+            "customsStatus": "Duty Paid - Export Eligible",
+            "taxStatus": "Zero-rated VAT for Export",
+            "bondedStatus": true
+          }
+        }
+      }
+    ],
+    
+    "storageTermsAndConditions": {
+      "depositDetails": {
+        "depositDate": "2025-01-20",
+        "depositTime": "10:00:00",
+        "receivedBy": "Vijay Anand - Warehouse Manager",
+        "receiptAcknowledgement": "Goods received in good condition and quantity as declared"
+      },
+      "storagePeriod": {
+        "startDate": "2025-01-20",
+        "endDate": "2025-04-20",
+        "durationDays": 90,
+        "extensionAllowed": true,
+        "extensionTerms": "Additional storage available at prevailing rates with 7 days notice"
+      },
+      "deliveryTerms": {
+        "deliveryCondition": "Goods shall be delivered to holder of both Certificate of Title and Pledge Bond, or holder of Certificate of Title upon satisfaction of obligations under Pledge Bond",
+        "deliveryLocation": "Warehouse premises or designated delivery point",
+        "deliveryNotice": "24 hours advance notice required",
+        "partialDelivery": {
+          "allowed": true,
+          "minimumQuantity": {
+            "value": 1000,
+            "unitCode": "MTR"
+          },
+          "conditions": "Proportionate storage fees must be paid"
+        }
+      },
+      "storageCharges": {
+        "storageFee": {
+          "amount": {
+            "value": 500,
+            "currencyId": "USD"
+          },
+          "chargeType": "FLAT_RATE",
+          "period": "90_DAYS",
+          "paymentStatus": "PAID",
+          "paymentDate": "2025-01-20",
+          "receiptNumber": "PAY-WH-2025-001"
+        },
+        "handlingCharges": {
+          "inboundHandling": {
+            "value": 200,
+            "currencyId": "USD"
+          },
+          "outboundHandling": {
+            "value": 200,
+            "currencyId": "USD",
+            "paymentStatus": "DUE_ON_WITHDRAWAL"
+          }
+        },
+        "additionalCharges": {
+          "insuranceFee": {
+            "value": 150,
+            "currencyId": "USD",
+            "paymentStatus": "PAID"
+          }
+        },
+        "unpaidCharges": {
+          "total": {
+            "value": 200,
+            "currencyId": "USD"
+          },
+          "description": "Outbound handling charges due upon withdrawal"
+        }
+      },
+      "warehouseLien": {
+        "lienExists": true,
+        "lienAmount": {
+          "value": 200,
+          "currencyId": "USD"
+        },
+        "lienDescription": "Warehouse lien for unpaid outbound handling charges",
+        "lienPriority": "SUPER_PRIORITY",
+        "_lienNote": "Per UNCITRAL principles - warehouse lien has priority over all other claims including pledges"
+      }
+    },
+    
+    "transferAndPledgeRights": {
+      "transferMechanism": {
+        "negotiabilityStatus": "NEGOTIABLE",
+        "transferMethod": "ENDORSEMENT_AND_DELIVERY",
+        "_transferNote": "Per UCC Article 7 and UNCITRAL Model ETR Law",
+        "endorsementRequired": true,
+        "endorsementType": "IN_BLANK_OR_TO_ORDER",
+        "dueNegotiation": {
+          "requiresGoodFaith": true,
+          "requiresValue": true,
+          "requiresNoNoticeOfDefects": true
+        }
+      },
+      "doubleReceiptSystem": {
+        "certificateOfTitle": {
+          "documentPart": "PART_1",
+          "represents": "Ownership rights to goods",
+          "transferable": true,
+          "canTransferSeparately": true
+        },
+        "pledgeBond": {
+          "documentPart": "PART_2",
+          "represents": "Security right in goods",
+          "transferable": true,
+          "canTransferSeparately": true,
+          "_pledgeNote": "Following French/Mexican double receipt model per UNCITRAL report"
+        },
+        "separateTransferRules": {
+          "bothTogether": "Transfer of full ownership",
+          "certificateAlone": "Transfer ownership subject to existing pledge",
+          "pledgeBondAlone": "Transfer/creation of security right",
+          "firstSeparateTransferRequiresWarehouse": true
+        }
+      },
+      "pledgeAsCollateral": {
+        "pledgeAllowed": true,
+        "pledgeMethod": "ENDORSEMENT_OF_PLEDGE_BOND",
+        "pledgeRegistration": {
+          "registrationRequired": true,
+          "registryName": "Warehouse Internal Pledge Registry",
+          "registryMaintainedBy": "Tirupur Export Warehouse Pvt Ltd"
+        },
+        "pledgeTerms": {
+          "maxPledgeAmount": {
+            "value": 100000,
+            "currencyId": "USD",
+            "_note": "Typically 80% of declared value"
+          },
+          "pledgeDuration": "Cannot exceed storage period end date",
+          "defaultRemedies": {
+            "enforcement": "PUBLIC_AUCTION",
+            "noticePeriod": "8_DAYS",
+            "_enforcementNote": "Per UNCITRAL principles and French/Mexican models"
+          }
+        }
+      }
+    },
+    
+    "regulatoryAndCompliance": {
+      "regulatoryRequirements": {
+        "warehouseRegistry": {
+          "registryMaintained": true,
+          "registryType": "INTERNAL_WAREHOUSE_REGISTRY",
+          "entryNumber": "REG-2025-001",
+          "entryDate": "2025-01-20",
+          "_registryNote": "Per UNCITRAL requirement - all deposits and receipts must be registered"
+        },
+        "supervision": {
+          "supervisoryAuthority": "Tamil Nadu Warehousing Corporation",
+          "lastInspectionDate": "2024-12-15",
+          "nextInspectionDue": "2025-06-15",
+          "inspectionResult": "COMPLIANT"
+        }
+      },
+      "customsAndTrade": {
+        "customsStatus": "BONDED_FOR_EXPORT",
+        "customsAuthority": "Chennai Customs - Tirupur Division",
+        "bondNumber": "BOND-EXPORT-2025-001",
+        "exportEligible": true,
+        "destinationCountry": "DE",
+        "exportDocumentation": {
+          "billOfLading": "BL-2025-TIRUPUR-001",
+          "commercialInvoice": "INV-2025-TIRUPUR-001",
+          "packingList": "PL-2025-TIRUPUR-001"
+        }
+      },
+      "electronicTransferability": {
+        "mletrCompliant": true,
+        "_mletrNote": "Structure compliant with UNCITRAL Model Law on Electronic Transferable Records",
+        "electronicEquivalent": true,
+        "controlMechanism": "BLOCKCHAIN_BASED_REGISTRY",
+        "reliabilityAssurance": "CRYPTOGRAPHIC_SIGNATURES"
+      }
+    },
+    
+    "liabilityAndInsurance": {
+      "warehouseOperatorLiability": {
+        "liableFor": [
+          "Loss or damage to goods while in custody",
+          "Shortage in quantity versus warehouse receipt",
+          "Failure to deliver goods to rightful holder",
+          "Breach of storage conditions"
+        ],
+        "limitations": {
+          "forceМajeure": "Not liable for acts of God, war, civil unrest beyond reasonable control",
+          "declaredValueLimit": "Liability limited to declared value unless warehouse negligence proven"
+        }
+      },
+      "depositorWarranties": {
+        "warranties": [
+          "Depositor warrants legal ownership of goods",
+          "Goods free from any liens or encumbrances not disclosed",
+          "Goods properly described and valued",
+          "Goods comply with all safety and regulatory requirements"
+        ]
+      }
+    }
+  },
+  
+  "endorsements": [
+    {
+      "endorsementId": "END-WR-001",
+      "timestamp": "2025-01-20T10:00:00Z",
+      "endorsementType": "ISSUANCE",
+      "publicData": {
+        "signerDID": "did:lei:984500WAREHOUSE2025TIRUPUR:officer:manager",
+        "signerName": "Vijay Anand",
+        "signerRole": "Warehouse Manager",
+        "companyLEI": "984500WAREHOUSE2025TIRUPUR",
+        "companyName": "Tirupur Export Warehouse Pvt Ltd",
+        "roleLevel": "MANAGER",
+        "hasSigningAuthority": true,
+        "signingAuthorityScope": "Warehouse Receipt Issuance",
+        "credentialsValid": true
+      },
+      "privateDataReference": {
+        "ipfsHash": "QmWarehouseReceipt2025TirupurCottonHash789",
+        "encryptionMethod": "AES-256-GCM",
+        "dataCommitment": "0xwr45e67dceea189a7a58dedd6bea3654",
+        "accessControl": [
+          "did:lei:984500D87AB1CF2D6E73",
+          "did:lei:CUSTOMS_AUTHORITY_IN",
+          "did:lei:BANKING_AUTHORITY_PLEDGEE",
+          "did:lei:REGULATOR_WAREHOUSE_TN"
+        ],
+        "_accessNote": "Depositor, customs, potential pledge holders, and regulators can decrypt"
+      },
+      "vLEIProof": {
+        "credentialChainHash": "0x9c0d1e2f3g4h5i6j7k8l9m0n1o2p3q4r",
+        "gleifVerificationEndpoint": "https://api.gleif.org/verify/984500WAREHOUSE2025TIRUPUR",
+        "credentialType": "OrganizationalRole",
+        "roleCredentialHash": "0xrole567890abcdef1234567890abcdef"
+      },
+      "algorandTransaction": {
+        "walletAddress": "WAREHOUSE5TIRUPUR6EXPORT7MANAGER8OFFICIAL9WALLET",
+        "signature": "0xwr4056033200c3d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9",
+        "transactionId": "TXWR2025012067890HIJKLMNOPQRSTUVWXYZ123",
+        "blockNumber": 45123456,
+        "timestamp": "2025-01-20T10:00:05Z",
+        "networkId": "mainnet"
+      }
+    },
+    {
+      "endorsementId": "END-WR-002",
+      "timestamp": "2025-01-20T10:05:00Z",
+      "endorsementType": "DEPOSITOR_ACKNOWLEDGMENT",
+      "publicData": {
+        "signerDID": "did:lei:984500D87AB1CF2D6E73:officer:export_manager",
+        "signerName": "Arjun Patel",
+        "signerRole": "Export Manager",
+        "companyLEI": "984500D87AB1CF2D6E73",
+        "companyName": "Tirupur Textiles Manufacturing Ltd",
+        "roleLevel": "MANAGER",
+        "hasSigningAuthority": true,
+        "signingAuthorityScope": "Warehouse Receipt Acceptance",
+        "credentialsValid": true
+      },
+      "acknowledgment": {
+        "goodsReceivedConfirmed": true,
+        "quantityConfirmed": true,
+        "qualityConfirmed": true,
+        "termsAccepted": true
+      },
+      "vLEIProof": {
+        "credentialChainHash": "0x7b8c9d0e1f2g3h4i5j6k7l8m9n0o1p2q",
+        "gleifVerificationEndpoint": "https://api.gleif.org/verify/984500D87AB1CF2D6E73"
+      },
+      "algorandTransaction": {
+        "walletAddress": "TIRUPUR3TEXTILES4EXPORT5MANAGER6OFFICIAL7WALLET",
+        "signature": "0xdep5067044311d4e6f7g8h9i0j1k2l3m4n5o6p7q8",
+        "transactionId": "TXDEP202501206890MNOPQRSTUVWXYZ456789ABC",
+        "blockNumber": 45123478,
+        "timestamp": "2025-01-20T10:05:05Z"
+      }
+    }
+  ],
+  
+  "privacyMetadata": {
+    "privacyLevel": "ENHANCED",
+    "complianceMode": "REGULATORY_ACCESSIBLE",
+    "publiclyVerifiable": true,
+    "gdprCompliant": true,
+    "mletrCompliant": true,
+    "notes": [
+      "Warehouse receipt encrypted and stored off-chain per MLETR principles",
+      "Public can verify: valid signature, valid credentials, authorized warehouse operator",
+      "Depositor, customs authorities, pledge holders, and regulators can decrypt full details",
+      "Blockchain signature ensures non-repudiation and electronic transferability",
+      "Compliant with UNCITRAL Warehouse Receipts Legal Framework (2018)",
+      "Double receipt system following French/Mexican model documented in UNCITRAL report",
+      "Warehouse receipt linked to Commercial Invoice INV-2025-TIRUPUR-001 and Bill of Lading BL-2025-TIRUPUR-001"
+    ]
+  }
+}
