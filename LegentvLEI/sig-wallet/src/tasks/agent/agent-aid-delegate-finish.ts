@@ -275,8 +275,9 @@ async function finishAgentDelegation(
         throw error;
     }
 
-    // Step 3: Extract and verify agent AID
+    // Step 3: Verify agent identifier exists in KERIA
     console.log(`[3/5] Extracting and verifying agent AID...`);
+    
     const agentPre = agentIcpOpName.split('.')[1];
     console.log(`  Extracted prefix from operation: ${agentPre}`);
 
@@ -290,19 +291,20 @@ async function finishAgentDelegation(
 
     if (!kelExists) {
         throw new Error(
-            `CRITICAL: Agent KEL was not created in KERIA after 15 attempts (30 seconds). ` +
-            `The delegation may have failed. Check KERIA logs for errors.`
+            `Agent KEL was not created in KERIA after 15 attempts (30 seconds). ` +
+            `Delegation may have failed or witness receipts not propagating.`
         );
     }
     console.log(`✓ Step 3 complete: Agent KEL verified in KERIA\n`);
 
-    // Step 4: Add endpoint role
+    // Step 4: Add endpoint role for agent
     console.log(`[4/5] Adding endpoint role for agent...`);
     console.log(`This makes the agent discoverable via OOBIs.`);
     
     try {
         const endRoleOp = await agentClient.identifiers()
             .addEndRole(agentName, 'agent', agentClient!.agent!.pre);
+        
         await waitOperationWithTimeout(
             agentClient,
             await endRoleOp.op(),
