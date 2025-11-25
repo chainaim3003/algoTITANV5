@@ -39,57 +39,6 @@ async function waitOperationWithTimeout<T = any>(
 }
 
 /**
- * CRITICAL FIX: Resolve OOBI with retries
- * 
- * According to vLEI training (102_05_KERIA_Signify.md):
- * - Each Signify client session requires OOBI resolution to establish contact
- * - Without OOBI resolution, key state queries will timeout
- */
-async function resolveOobiWithRetries(
-    client: SignifyClient,
-    oobi: string,
-    alias: string,
-    maxRetries: number = 3,
-    retryDelayMs: number = 2000
-): Promise<void> {
-    console.log(`Resolving OOBI for ${alias}...`);
-    console.log(`  OOBI: ${oobi}`);
-    console.log(`  Max retries: ${maxRetries}`);
-    
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-            console.log(`  Attempt ${attempt}/${maxRetries}...`);
-            const op = await client.oobis().resolve(oobi, alias);
-            
-            // Wait for OOBI resolution with 30 second timeout per attempt
-            await waitOperationWithTimeout(
-                client,
-                op,
-                30000,
-                `OOBI resolution (attempt ${attempt})`
-            );
-            
-            console.log(`✓ OOBI resolved for ${alias}`);
-            return;
-            
-        } catch (error: any) {
-            console.log(`  Attempt ${attempt}/${maxRetries} failed: ${error.message}`);
-            
-            if (attempt < maxRetries) {
-                console.log(`  Waiting ${retryDelayMs}ms before retry...`);
-                await new Promise(resolve => setTimeout(resolve, retryDelayMs));
-            } else {
-                throw new Error(
-                    `Failed to resolve OOBI after ${maxRetries} attempts. ` +
-                    `Check: (1) OOR holder service is running, ` +
-                    `(2) KERIA has network access to witnesses`
-                );
-            }
-        }
-    }
-}
-
-/**
  * Query key state with retries and diagnostic information
  */
 async function queryKeyStateWithRetries(
@@ -177,50 +126,20 @@ async function verifyIdentifierExists(
 
 /**
  * Main delegation finish function with comprehensive diagnostics
- * FIXED: Now includes OOBI resolution as Step 0
  */
 async function finishAgentDelegation(
     agentClient: SignifyClient,
     oorHolderPre: string,
-    oorHolderOobi: string,
-    oorHolderName: string,
     agentName: string,
     agentIcpOpName: string,
 ): Promise<any> {
     console.log(`\n${'='.repeat(70)}`);
-    console.log(`FINISHING AGENT DELEGATION (WITH OOBI FIX)`);
+    console.log(`FINISHING AGENT DELEGATION`);
     console.log(`${'='.repeat(70)}`);
     console.log(`Agent name: ${agentName}`);
-    console.log(`OOR Holder name: ${oorHolderName}`);
     console.log(`OOR Holder prefix: ${oorHolderPre}`);
-    console.log(`OOR Holder OOBI: ${oorHolderOobi}`);
     console.log(`Inception operation: ${agentIcpOpName}`);
     console.log(`${'='.repeat(70)}\n`);
-
-    // ═══════════════════════════════════════════════════════════════════════
-    // STEP 0: CRITICAL FIX - Resolve OOR Holder's OOBI first
-    // Without this, the agent client can't reach the OOR holder to query
-    // their key state and find the delegation anchor
-    // ═══════════════════════════════════════════════════════════════════════
-    console.log(`[0/5] RESOLVING OOR HOLDER'S OOBI (CRITICAL)`);
-    console.log(`This step is REQUIRED before querying key state.`);
-    console.log(`Without OOBI resolution, the agent doesn't know how to reach`);
-    console.log(`the OOR holder to verify the delegation anchor.\n`);
-    
-    try {
-        await resolveOobiWithRetries(
-            agentClient,
-            oorHolderOobi,
-            oorHolderName,
-            3,
-            2000
-        );
-        console.log(`✓ Step 0 complete: OOR Holder OOBI resolved\n`);
-    } catch (error: any) {
-        console.error(`\n✗ CRITICAL ERROR in Step 0: ${error.message}`);
-        console.error(`Without OOBI resolution, delegation cannot complete.`);
-        throw error;
-    }
 
     // Step 1: Query OOR Holder key state to discover delegation anchor
     console.log(`[1/5] Querying OOR Holder key state to find delegation anchor...`);
@@ -235,41 +154,23 @@ async function finishAgentDelegation(
         throw error;
     }
 
-    // Step 2: Wait for delegation to propagate (operation query often 404s because it completes instantly)
-    console.log(`[2/5] Waiting for delegation to propagate through the network...`);
-    console.log(`Note: Delegation operations complete very quickly with witnesses (toad=1).`);
-    console.log(`The operation may already be cleared from the queue, which is normal.\n`);
+    // Step 2: Wait for agent inception operation to complete
+    console.log(`[2/5] Waiting for agent inception operation to complete...`);
+    console.log(`This step waits for KERIA to finish processing the delegation.`);
     
     try {
-        // Try to get the operation, but don't fail if it 404s
-        try {
-            const agentOp: any = await agentClient.operations().get(agentIcpOpName);
-            console.log(`  Operation still in queue: ${agentOp.name}`);
-            console.log(`  Operation done: ${agentOp.done}`);
-            
-            if (!agentOp.done) {
-                console.log(`  Waiting for operation to complete...`);
-                await waitOperationWithTimeout(
-                    agentClient,
-                    agentOp,
-                    60000,  // 1 minute
-                    "Agent inception operation"
-                );
-            }
-        } catch (opError: any) {
-            if (opError.message.includes('404')) {
-                console.log(`  Operation already cleared from queue (404) - this is normal`);
-                console.log(`  Proceeding with verification...`);
-            } else {
-                throw opError;
-            }
-        }
+        const agentOp: any = await agentClient.operations().get(agentIcpOpName);
+        console.log(`Inception operation status:`);
+        console.log(`  Name: ${agentOp.name}`);
+        console.log(`  Done: ${agentOp.done}`);
         
-        // Wait for propagation regardless of operation status
-        console.log(`  Waiting 5 seconds for KEL propagation...`);
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        
-        console.log(`✓ Step 2 complete: Delegation propagation wait finished\n`);
+        await waitOperationWithTimeout(
+            agentClient,
+            agentOp,
+            180000,  // 3 minutes
+            "Agent inception operation"
+        );
+        console.log(`✓ Step 2 complete: Inception operation finished\n`);
     } catch (error: any) {
         console.error(`\n✗ CRITICAL ERROR in Step 2: ${error.message}\n`);
         throw error;
@@ -350,7 +251,7 @@ async function finishAgentDelegation(
 // ============================================================================
 
 console.log(`\n${'='.repeat(70)}`);
-console.log(`AGENT DELEGATION FINISH SCRIPT (WITH OOBI FIX)`);
+console.log(`AGENT DELEGATION FINISH SCRIPT (ENHANCED)`);
 console.log(`${'='.repeat(70)}`);
 console.log(`Environment: ${env}`);
 console.log(`Agent name: ${agentAidName}`);
@@ -374,8 +275,7 @@ try {
     }
     const oorHolderInfo = JSON.parse(fs.readFileSync(oorHolderInfoPath, 'utf-8'));
     console.log(`✓ OOR Holder info loaded`);
-    console.log(`  AID: ${oorHolderInfo.aid}`);
-    console.log(`  OOBI: ${oorHolderInfo.oobi}\n`);
+    console.log(`  AID: ${oorHolderInfo.aid}\n`);
 
     // Read agent inception info
     console.log(`Reading agent inception info from ${agentInceptionInfoPath}...`);
@@ -387,16 +287,10 @@ try {
     console.log(`  AID: ${agentIcpInfo.aid}`);
     console.log(`  Operation: ${agentIcpInfo.icpOpName}\n`);
 
-    // Extract OOR holder name from info path
-    // Format: /task-data/Jupiter_Chief_Sales_Officer-info.json
-    const oorHolderName = oorHolderInfoPath.split('/').pop()?.replace('-info.json', '') || 'oor-holder';
-
-    // Finish delegation with OOBI resolution fix
+    // Finish delegation with enhanced diagnostics
     const agentDelegationInfo: any = await finishAgentDelegation(
         agentClient, 
-        oorHolderInfo.aid,
-        oorHolderInfo.oobi,
-        oorHolderName,
+        oorHolderInfo.aid, 
         agentAidName, 
         agentIcpInfo.icpOpName
     );

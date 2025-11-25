@@ -1,0 +1,235 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║  📍 WHEN & WHERE TO RUN INVESTIGATION                            ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────┐
+│ 🖥️  WHERE: In WSL Terminal                                       │
+└──────────────────────────────────────────────────────────────────┘
+
+  cd ~/projects/LegentvLEI
+  bash /mnt/c/SATHYA/.../run-investigation.sh
+
+┌──────────────────────────────────────────────────────────────────┐
+│ ⏰ WHEN: RIGHT NOW (don't wait!)                                 │
+└──────────────────────────────────────────────────────────────────┘
+
+  ✅ CAN run now because:
+     • Delegation already failed
+     • System still running
+     • OOR Holder AID exists
+     • No restart needed
+  
+  ❌ DON'T need to:
+     • Stop services
+     • Restart Docker
+     • Re-run delegation first
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║  🚫 MAKING WITNESSES OPTIONAL - SHOULD YOU?                      ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────┐
+│ ❌ NO - USE toad=1 INSTEAD                                       │
+└──────────────────────────────────────────────────────────────────┘
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ SPEED COMPARISON
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  toad=1 (WITH witnesses):    10-30 seconds   ← RECOMMENDED ✅
+  toad=0 (NO witnesses):      < 5 seconds     ← NOT RECOMMENDED ❌
+  
+  DIFFERENCE: Only ~25 seconds saved!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ WHAT YOU LOSE WITH toad=0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ❌ No duplicity detection
+  ❌ Anyone can fork your KEL
+  ❌ No event validation
+  ❌ Doesn't test real KERI
+  ❌ Won't work in production
+  ❌ NO SECURITY
+  
+  ⚡ Saves ~25 seconds
+  
+  VERDICT: NOT WORTH IT!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ WHAT YOU GET WITH toad=1
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✅ Duplicity detection works
+  ✅ KEL integrity protected
+  ✅ Events validated by witness
+  ✅ Tests real KERI protocol
+  ✅ Works in production (with toad=3)
+  ✅ Good security
+  
+  ⚡ Only 10-30 seconds per delegation
+  
+  VERDICT: PERFECT FOR DEV/TEST!
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║  🎯 RECOMMENDED CONFIGURATION                                    ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                ┃
+┃  Configuration: 6 witnesses, toad=1                            ┃
+┃                                                                ┃
+┃  Speed:         10-30 seconds per delegation ⚡                ┃
+┃  Security:      ⭐⭐⭐ Good (1 witness validates)              ┃
+┃  Use Case:      Development & Testing                          ┃
+┃                                                                ┃
+┃  How to Apply:  ./fix-person-witness-config.sh                 ┃
+┃                 Choose option 3 (Fast - toad=1)                ┃
+┃                                                                ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║  📊 ALL OPTIONS COMPARED                                         ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+┌─────────┬────────────┬──────────┬────────────────────────────┐
+│ toad    │ Speed      │ Security │ When to Use                │
+├─────────┼────────────┼──────────┼────────────────────────────┤
+│ 3       │ 60-180s    │ ⭐⭐⭐⭐⭐ │ Production systems         │
+│ 2       │ 30-90s     │ ⭐⭐⭐⭐   │ Staging/pre-production     │
+│ 1 ✅    │ 10-30s     │ ⭐⭐⭐     │ Development/testing        │
+│ 0 ❌    │ < 5s       │ ❌        │ NEVER (no security!)       │
+└─────────┴────────────┴──────────┴────────────────────────────┘
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║  🚀 STEP-BY-STEP: WHAT TO DO RIGHT NOW                          ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+  ┌─────────────────────────────────────────────────────────────┐
+  │ STEP 1: Run Investigation (30 seconds)                      │
+  └─────────────────────────────────────────────────────────────┘
+  
+    cd ~/projects/LegentvLEI
+    bash /mnt/c/SATHYA/.../run-investigation.sh
+    
+    → This will show you EXACTLY what's wrong
+  
+
+  ┌─────────────────────────────────────────────────────────────┐
+  │ STEP 2: Run Automated Fix (10 minutes)                      │
+  └─────────────────────────────────────────────────────────────┘
+  
+    ./complete-witness-fix-workflow.sh
+    
+    → When prompted: Choose option 3 (toad=1)
+    → This rebuilds & redeploys with fix
+  
+
+  ┌─────────────────────────────────────────────────────────────┐
+  │ STEP 3: Run Delegation Again (2-3 minutes)                  │
+  └─────────────────────────────────────────────────────────────┘
+  
+    ./run-all-buyerseller-2C-with-agents.sh
+    
+    → Should complete successfully!
+  
+
+  ┌─────────────────────────────────────────────────────────────┐
+  │ STEP 4: Verify Success                                      │
+  └─────────────────────────────────────────────────────────────┘
+  
+    ./verify-complete-delegation-chain.sh
+    
+    → Confirms entire vLEI chain works
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║  ✅ SUCCESS INDICATORS                                           ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+  After fix, you'll see:
+  
+    [1/5] Querying OOR Holder key state...
+      Attempt 1/5...
+      ✓ Key state query successful on attempt 1
+    
+    [2/5] Waiting for agent inception...
+      ✓ Agent inception operation completed
+    
+    [3/5] Extracting agent AID...
+      ✓ Agent KEL verified in KERIA
+    
+    [4/5] Adding endpoint role...
+      ✓ Endpoint role added
+    
+    [5/5] Getting OOBI...
+      ✓ Agent fully configured
+    
+    ✓✓✓ AGENT DELEGATION SUCCESSFULLY COMPLETED ✓✓✓
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║  📝 QUICK REFERENCE                                              ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+  Investigation:
+    cd ~/projects/LegentvLEI
+    bash /mnt/c/SATHYA/.../run-investigation.sh
+
+  Fix with toad=1 (RECOMMENDED):
+    ./complete-witness-fix-workflow.sh
+    → Choose: 3
+
+  Fix with toad=0 (NOT RECOMMENDED):
+    ./make-witnesses-optional.sh
+    → Will warn you multiple times!
+
+  Monitor delegation:
+    watch -n 2 './check-delegation-now.sh'
+
+  Verify after success:
+    ./verify-complete-delegation-chain.sh
+
+
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║  ⚡ TL;DR                                                        ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+  1. Run investigation RIGHT NOW in WSL
+  2. Use toad=1 (NOT toad=0)
+  3. Only saves ~25 seconds but you keep security
+  4. Follow automated fix workflow
+  5. Delegation completes in 10-30 seconds
+  
+  DO NOT make witnesses optional!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+For detailed explanations, see:
+  • WHEN-WHERE-HOW-GUIDE.md
+  • WITNESS-FIX-TOOLS-README.md
+  • QUICK-START-WITNESS-FIX.md

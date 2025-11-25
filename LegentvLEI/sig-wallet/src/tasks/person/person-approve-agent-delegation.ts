@@ -47,3 +47,42 @@ const oorHolderClient = await getOrCreateClient(oorHolderPasscode, env);
 const approved = await approveDelegation(oorHolderClient, oorHolderName, agentInfo.aid);
 
 console.log(`OOR Holder ${oorHolderName} approved delegation of agent ${agentInfo.aid}: ${approved}`);
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FIX: Verify interaction event was created and wait for witness receipts
+// ═══════════════════════════════════════════════════════════════════════════
+console.log('⏳ Verifying interaction event creation...');
+
+// Poll for sequence number to increment from 0 to 1
+let sequenceUpdated = false;
+for (let i = 0; i < 30; i++) {  // Try for 30 seconds
+    try {
+        // Get the identifier info which includes state
+        const identifiers = await oorHolderClient.identifiers().get(oorHolderName);
+        
+        if (!identifiers || !identifiers.state) {
+            console.log(`  Sequence check ${i + 1}/30: No state available yet`);
+        } else {
+            const currentSeq = identifiers.state.s ? parseInt(identifiers.state.s, 10) : 0;
+            console.log(`  Sequence check ${i + 1}/30: s=${currentSeq}`);
+            
+            if (currentSeq >= 1) {
+                console.log('✓ Interaction event created! Sequence number incremented to 1');
+                sequenceUpdated = true;
+                break;
+            }
+        }
+    } catch (error: any) {
+        console.log(`  Sequence check ${i + 1}/30: Error - ${error.message}`);
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 1000));  // Wait 1 second
+}
+
+if (!sequenceUpdated) {
+    throw new Error('Interaction event was not created after 30 seconds. Delegation approval may have failed.');
+}
+
+console.log('⏳ Waiting for witness receipts (10 seconds)...');
+await new Promise(resolve => setTimeout(resolve, 10000));
+console.log('✓ Witness receipt wait complete');

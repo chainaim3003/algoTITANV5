@@ -1,0 +1,150 @@
+#!/bin/bash
+################################################################################
+# COMPLETE FRESH SETUP GUIDE
+# Copy project from Windows to WSL and deploy with fix
+################################################################################
+
+# This guide assumes you're starting fresh in WSL
+
+echo "======================================================================"
+echo "FRESH WSL SETUP - COMPLETE GUIDE"
+echo "======================================================================"
+echo ""
+
+# STEP 1: Clean up old WSL directory (if exists)
+echo "[STEP 1] Cleaning up old WSL directory..."
+echo ""
+echo "Run these commands:"
+echo "  cd ~"
+echo "  rm -rf ~/projects/LegentvLEI"
+echo "  mkdir -p ~/projects"
+echo ""
+
+# STEP 2: Copy entire project from Windows to WSL
+echo "[STEP 2] Copy entire project from Windows to WSL..."
+echo ""
+echo "Run this command:"
+echo "  cp -r /mnt/c/SATHYA/CHAINAIM3003/mcp-servers/stellarboston/LegentAlgoTitanV51/algoTITANV5/LegentvLEI ~/projects/"
+echo ""
+echo "This will copy:"
+echo "  • All source code"
+echo "  • All scripts (including the fix)"
+echo "  • Docker configuration"
+echo "  • Everything needed"
+echo ""
+
+# STEP 3: Navigate and verify
+echo "[STEP 3] Navigate to project and verify files..."
+echo ""
+echo "Run these commands:"
+echo "  cd ~/projects/LegentvLEI"
+echo "  ls -la"
+echo ""
+echo "You should see:"
+echo "  • docker-compose.yml"
+echo "  • sync-and-fix.sh"
+echo "  • fix-agent-delegation-timeout.sh"
+echo "  • run-all-buyerseller-2C-with-agents.sh"
+echo "  • sig-wallet/ directory"
+echo ""
+
+# STEP 4: Run setup script
+echo "[STEP 4] Run setup script (converts line endings)..."
+echo ""
+echo "Run this command:"
+echo "  ./setup.sh"
+echo ""
+echo "This converts Windows line endings (CRLF) to Unix (LF)"
+echo ""
+
+# STEP 5: Verify the FIXED file exists
+echo "[STEP 5] Verify the FIXED delegation file exists..."
+echo ""
+echo "Run this command:"
+echo "  ls -la ./sig-wallet/src/tasks/agent/agent-aid-delegate-finish-FIXED.ts"
+echo ""
+echo "You should see the file listed"
+echo ""
+
+# STEP 6: Build Docker images
+echo "[STEP 6] Build Docker images..."
+echo ""
+echo "Run this command:"
+echo "  docker compose build --no-cache"
+echo ""
+echo "This builds:"
+echo "  • tsx-shell (with ALL your TypeScript code including the fix)"
+echo "  • vlei-verification"
+echo ""
+
+# STEP 7: Deploy services
+echo "[STEP 7] Deploy all Docker services..."
+echo ""
+echo "Run this command:"
+echo "  ./deploy.sh"
+echo ""
+echo "This starts:"
+echo "  • KERIA (key management)"
+echo "  • Witnesses (6 witness nodes)"
+echo "  • Verifier (Sally)"
+echo "  • Schema server"
+echo "  • tsx-shell (your execution environment)"
+echo ""
+
+# STEP 8: Apply the delegation fix (optional - it's already in the code)
+echo "[STEP 8] OPTIONAL: Explicitly apply delegation fix..."
+echo ""
+echo "If you want to be extra sure, run:"
+echo "  chmod +x sync-and-fix.sh"
+echo "  ./sync-and-fix.sh"
+echo ""
+echo "This ensures the FIXED version is active"
+echo ""
+
+# STEP 9: Run the delegation script
+echo "[STEP 9] Run the complete delegation script..."
+echo ""
+echo "Run this command:"
+echo "  ./run-all-buyerseller-2C-with-agents.sh"
+echo ""
+echo "This will:"
+echo "  • Create GEDA (root authority)"
+echo "  • Create QVI (qualified issuer)"
+echo "  • Create Organization LEs"
+echo "  • Create Person AIDs"
+echo "  • Issue OOR credentials"
+echo "  • Create and delegate agents (WITH THE FIX)"
+echo ""
+
+# STEP 10: Monitor progress
+echo "[STEP 10] Monitor progress..."
+echo ""
+echo "Watch for detailed diagnostic output:"
+echo "  ======================================================================"
+echo "  FINISHING AGENT DELEGATION"
+echo "  ======================================================================"
+echo "  [1/5] Querying OOR Holder key state..."
+echo "    Attempt 1/5..."
+echo ""
+echo "If you see this detailed output, the fix is working!"
+echo ""
+
+echo "======================================================================"
+echo "END OF GUIDE"
+echo "======================================================================"
+echo ""
+echo "Summary of commands to run in order:"
+echo ""
+echo "1.  cd ~"
+echo "2.  rm -rf ~/projects/LegentvLEI"
+echo "3.  mkdir -p ~/projects"
+echo "4.  cp -r /mnt/c/SATHYA/.../LegentvLEI ~/projects/"
+echo "5.  cd ~/projects/LegentvLEI"
+echo "6.  ./setup.sh"
+echo "7.  ls -la ./sig-wallet/src/tasks/agent/agent-aid-delegate-finish-FIXED.ts"
+echo "8.  docker compose build --no-cache"
+echo "9.  ./deploy.sh"
+echo "10. ./run-all-buyerseller-2C-with-agents.sh"
+echo ""
+echo "Total time: ~5-10 minutes"
+echo ""

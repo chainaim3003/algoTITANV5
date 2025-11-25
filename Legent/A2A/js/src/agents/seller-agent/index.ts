@@ -13,7 +13,10 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '.env') });
 
 import { A2AClient } from "@a2a-js/sdk/client";
-import type { InvoiceSchema, InvoiceMessage } from '../../types/invoice.js';
+import type { InvoiceSchema, InvoiceMessage, SignedMessage } from '../../types/invoice.js';
+import { KERISigner } from '../../auth/keri-signer.js';
+import { createSignedInvoice, generateNonce } from '../../utils/keria-security.js';
+import { SECURITY_CONFIG, validateSecurityConfig } from '../../config/security-config.js';
 
 
 import {
@@ -37,6 +40,29 @@ import { A2AExpressApp } from "@a2a-js/sdk/server/express";
  */
 class SellerAgentExecutor implements AgentExecutor {
   private cancelledTasks = new Set<string>();
+  private keriSigner: KERISigner;
+
+  constructor(agentName: string, agentAID: string) {
+    // Initialize KERI signer with OOR holder authentication
+    const oorHolderBran = process.env.OOR_HOLDER_BRAN;
+    const oorHolderAlias = process.env.OOR_HOLDER_ALIAS || 'Jupiter_Chief_Sales_Officer';
+    
+    if (!oorHolderBran) {
+      throw new Error('OOR_HOLDER_BRAN environment variable is required for signing');
+    }
+    
+    this.keriSigner = new KERISigner({
+      keriaUrl: process.env.KERIA_URL || SECURITY_CONFIG.KERIA_DEFAULT_URL,
+      agentName: agentName,
+      agentAID: agentAID,
+      oorHolderBran: oorHolderBran,
+      oorHolderAlias: oorHolderAlias
+    });
+    console.log(`[SellerAgent] KERI Signer initialized`);
+    console.log(`[SellerAgent] Agent: ${agentName}`);
+    console.log(`[SellerAgent] Agent AID: ${agentAID}`);
+    console.log(`[SellerAgent] OOR Holder: ${oorHolderAlias}`);
+  }
 
   public cancelTask = async (
     taskId: string,
@@ -131,11 +157,17 @@ class SellerAgentExecutor implements AgentExecutor {
             }
           },
           timestamp: new Date().toISOString(),
+          nonce: generateNonce(), // Add nonce for replay protection
           senderAgent: {
             name: jupiterAgentCard.name,
             agentAID: jupiterAgentCard.extensions?.keriIdentifiers?.agentAID || 'UNKNOWN'
           }
         };
+
+        // SAFE MUTUAL AUTH: Sign the invoice with KERIA
+        console.log('[SellerAgent] Signing invoice with KERIA...');
+        const signedInvoice = await createSignedInvoice(invoice, this.keriSigner);
+        console.log('[SellerAgent] ✅ Invoice signed successfully');
 
         // Send invoice to buyer agent
         try {
@@ -149,13 +181,14 @@ class SellerAgentExecutor implements AgentExecutor {
           console.log(`[SellerAgent] Connected to buyer agent`);
           console.log(`[SellerAgent] Sending invoice to buyer...`);
 
-          // Create message to send
+          // Create message to send (with signed invoice)
+          console.log('[SellerAgent] Sending signed invoice to buyer...');
           const stream = buyerClient.sendMessageStream({
             message: {
               kind: "message",
               role: "agent",
               messageId: uuidv4(),
-              parts: [{ kind: "data", data: invoice }],
+              parts: [{ kind: "data", data: signedInvoice }],
             },
           });
 
@@ -270,7 +303,9 @@ const jupiterCardPath = path.resolve(
 
   // "C:/CHAINAIM3003/mcp-servers/LegentUI/A2A/agent-cards/jupiterSellerAgent-card.json"
 
-  "C:/CHAINAIM3003/mcp-servers/Legent3/Legent/A2A/agent-cards/jupiterSellerAgent-card.json"
+  //"C:/CHAINAIM3003/mcp-servers/Legent3/Legent/A2A/agent-cards/jupiterSellerAgent-card.json"
+
+  "C:/SATHYA/CHAINAIM3003/mcp-servers/stellarboston/LegentAlgoTitanV51/algoTITANV5/Legent/A2A/agent-cards/jupiterSellerAgent-card.json"
 
 );
 const jupiterAgentCard: AgentCard = JSON.parse(
@@ -278,6 +313,10 @@ const jupiterAgentCard: AgentCard = JSON.parse(
 );
 
 async function main() {
+  // Validate security configuration
+  validateSecurityConfig();
+  console.log('');
+
   // Validate environment variables
   if (!process.env.SELLER_ADDRESS) {
     console.error('❌ ERROR: SELLER_ADDRESS not set in .env file');
@@ -296,8 +335,13 @@ async function main() {
   // 1. Create TaskStore
   const taskStore: TaskStore = new InMemoryTaskStore();
 
-  // 2. Create AgentExecutor
-  const agentExecutor: AgentExecutor = new SellerAgentExecutor();
+  // 2. Create AgentExecutor with agent AID from card
+  const agentAID = jupiterAgentCard.extensions?.keriIdentifiers?.agentAID || '';
+  if (!agentAID) {
+    console.error('❌ ERROR: Agent AID not found in agent card');
+    process.exit(1);
+  }
+  const agentExecutor: AgentExecutor = new SellerAgentExecutor(jupiterAgentCard.name, agentAID);
 
   // 3. Create DefaultRequestHandler
   const requestHandler = new DefaultRequestHandler(

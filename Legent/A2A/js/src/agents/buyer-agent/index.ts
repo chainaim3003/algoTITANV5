@@ -32,7 +32,10 @@ import { A2AExpressApp } from "@a2a-js/sdk/server/express";
 import { A2AClient } from "@a2a-js/sdk/client";
 
 // NOTE: NodeNext requires .js extension for local imports in TS sources
-import type { InvoiceMessage } from "../../types/invoice.js";
+import type { InvoiceMessage, SignedMessage, PaymentConfirmation } from "../../types/invoice.js";
+import { KERISigner } from '../../auth/keri-signer.js';
+import { verifySignedMessage, createSignedPaymentConfirmation, generateNonce } from '../../utils/keria-security.js';
+import { SECURITY_CONFIG, validateSecurityConfig } from '../../config/security-config.js';
 
 /**
  * REAL WORKING ALGORAND PAYMENT FUNCTION
@@ -117,6 +120,29 @@ class BuyerAgentExecutor implements AgentExecutor {
   private executingTasks = new Set<string>();
   // 🔧 VERIFICATION ENDPOINT VARIABLE - flip this to true/false to simulate result
   private verificationEndpointResult: boolean = true; // <-- Change for testing
+  private keriSigner: KERISigner;
+
+  constructor(agentName: string, agentAID: string) {
+    // Initialize KERI signer with OOR holder authentication
+    const oorHolderBran = process.env.OOR_HOLDER_BRAN;
+    const oorHolderAlias = process.env.OOR_HOLDER_ALIAS || 'Tommy_Chief_Procurement_Officer';
+    
+    if (!oorHolderBran) {
+      throw new Error('OOR_HOLDER_BRAN environment variable is required for signing');
+    }
+    
+    this.keriSigner = new KERISigner({
+      keriaUrl: process.env.KERIA_URL || SECURITY_CONFIG.KERIA_DEFAULT_URL,
+      agentName: agentName,
+      agentAID: agentAID,
+      oorHolderBran: oorHolderBran,
+      oorHolderAlias: oorHolderAlias
+    });
+    console.log(`[BuyerAgent] KERI Signer initialized`);
+    console.log(`[BuyerAgent] Agent: ${agentName}`);
+    console.log(`[BuyerAgent] Agent AID: ${agentAID}`);
+    console.log(`[BuyerAgent] OOR Holder: ${oorHolderAlias}`);
+  }
 
   public cancelTask = async (
     taskId: string,
@@ -216,9 +242,23 @@ class BuyerAgentExecutor implements AgentExecutor {
         } as TaskStatusUpdateEvent);
 
         try {
-          const invoiceData = (dataParts[0] as any).data as InvoiceMessage;
+          // SAFE MUTUAL AUTH: Verify signed invoice
+          const signedInvoice = (dataParts[0] as any).data as SignedMessage<InvoiceMessage>;
+          
+          console.log('[BuyerAgent] Received signed invoice, verifying signature...');
+          const verificationResult = await verifySignedMessage(signedInvoice, this.keriSigner);
+          
+          if (!verificationResult.valid) {
+            throw new Error(`Signature verification failed: ${verificationResult.error}`);
+          }
+          
+          console.log('[BuyerAgent] ✅ Signature verified successfully');
+          
+          // Extract verified invoice data
+          const invoiceData = verificationResult.data!;
           console.log(`[BuyerAgent] Invoice ID: ${invoiceData.invoiceId}`);
           console.log(`[BuyerAgent] Amount: ${invoiceData.invoice.amount} ${invoiceData.invoice.currency}`);
+          console.log(`[BuyerAgent] Sender AID: ${signedInvoice.signingAID.substring(0, 12)}...`);
           console.log(`[BuyerAgent] Full invoice data:`, JSON.stringify(invoiceData, null, 2));
 
           // STEP 1: Fetch Seller Agent Card
@@ -428,9 +468,33 @@ class BuyerAgentExecutor implements AgentExecutor {
             console.log(`[BuyerAgent]   - Explorer: https://testnet.explorer.perawallet.app/tx/${payment.txId}`);
             console.log(`[BuyerAgent] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
 
-            // STEP 6: Notify seller agent of successful payment
+            // STEP 6: Create and sign payment confirmation
+            console.log('[BuyerAgent] Creating signed payment confirmation...');
+            
+            const paymentConfirmation: PaymentConfirmation = {
+              type: 'PAYMENT_CONFIRMATION',
+              invoiceId: invoiceData.invoiceId,
+              txId: payment.txId,
+              confirmedRound: payment.confirmedRound,
+              amount: invoiceData.invoice.amount,
+              currency: invoiceData.invoice.currency,
+              timestamp: new Date().toISOString(),
+              nonce: generateNonce(),
+              buyerAgent: {
+                name: tommyHilfigerAgentCard.name,
+                agentAID: tommyHilfigerAgentCard.extensions?.keriIdentifiers?.agentAID || 'UNKNOWN'
+              }
+            };
+            
+            const signedPaymentConfirmation = await createSignedPaymentConfirmation(
+              paymentConfirmation,
+              this.keriSigner
+            );
+            console.log('[BuyerAgent] ✅ Payment confirmation signed');
+            
+            // STEP 7: Notify seller agent of successful payment
             try {
-              const paymentNotification = `💳 PAYMENT COMPLETED\n\nInvoice ID: ${invoiceData.invoiceId}\nAmount: ${invoiceData.invoice.amount} ${invoiceData.invoice.currency}\n\n🔗 Transaction Details:\n  - Network: Algorand TestNet\n  - Transaction ID: ${payment.txId}\n  - Block: ${payment.confirmedRound}\n  - Timestamp: ${new Date().toISOString()}\n\n🔍 View on Explorer:\n  https://testnet.explorer.perawallet.app/tx/${payment.txId}\n\n✅ Payment has been confirmed on the blockchain.`;
+              const paymentNotification = `💳 PAYMENT COMPLETED\n\nInvoice ID: ${invoiceData.invoiceId}\nAmount: ${invoiceData.invoice.amount} ${invoiceData.invoice.currency}\n\n🔗 Transaction Details:\n  - Network: Algorand TestNet\n  - Transaction ID: ${payment.txId}\n  - Block: ${payment.confirmedRound}\n  - Timestamp: ${new Date().toISOString()}\n\n🔍 View on Explorer:\n  https://testnet.explorer.perawallet.app/tx/${payment.txId}\n\n✅ Payment has been confirmed on the blockchain.\n\n🔒 SIGNATURE VERIFIED: Payment confirmation cryptographically signed`;
 
               const sellerClientForPayment = new A2AClient(sellerAgentUrl);
               await sellerClientForPayment.sendMessage({
@@ -439,11 +503,15 @@ class BuyerAgentExecutor implements AgentExecutor {
                   {
                     kind: "text",
                     text: paymentNotification
+                  },
+                  {
+                    kind: "data",
+                    data: signedPaymentConfirmation
                   }
                 ]
               });
 
-              console.log(`[BuyerAgent] ✅ Payment confirmation sent to seller agent`);
+              console.log(`[BuyerAgent] ✅ Signed payment confirmation sent to seller agent`);
             } catch (notifyError: any) {
               console.error(`[BuyerAgent] ⚠️ Failed to notify seller of payment:`, notifyError.message);
               // Payment was successful, notification failure is not critical
@@ -679,7 +747,11 @@ I can help you discover and connect with seller agents!
 // Tommy Hilfiger Buyer Agent Card
 const tommyCardPath = path.resolve(
   //"C:/CHAINAIM3003/mcp-servers/LegentUI/A2A/agent-cards/tommyBuyerAgent-card.json"
-  "C:/CHAINAIM3003/mcp-servers/Legent3/Legent/A2A/agent-cards/tommyBuyerAgent-card.json"
+  //"C:/CHAINAIM3003/mcp-servers/Legent3/Legent/A2A/agent-cards/tommyBuyerAgent-card.json"
+
+  "C:/SATHYA/CHAINAIM3003/mcp-servers/stellarboston/LegentAlgoTitanV51/algoTITANV5/Legent/A2A/agent-cards/tommyBuyerAgent-card.json"
+
+  //"../../../../../tommyBuyerAgent-card.json"
 );
 
 const tommyHilfigerAgentCard: AgentCard = JSON.parse(
@@ -687,11 +759,20 @@ const tommyHilfigerAgentCard: AgentCard = JSON.parse(
 );
 
 async function main() {
+  // Validate security configuration
+  validateSecurityConfig();
+  console.log('');
+
   // 1. Create TaskStore
   const taskStore: TaskStore = new InMemoryTaskStore();
 
-  // 2. Create AgentExecutor
-  const agentExecutor: AgentExecutor = new BuyerAgentExecutor();
+  // 2. Create AgentExecutor with agent AID from card
+  const agentAID = tommyHilfigerAgentCard.extensions?.keriIdentifiers?.agentAID || '';
+  if (!agentAID) {
+    console.error('❌ ERROR: Agent AID not found in agent card');
+    process.exit(1);
+  }
+  const agentExecutor: AgentExecutor = new BuyerAgentExecutor(tommyHilfigerAgentCard.name, agentAID);
 
   // 3. Create DefaultRequestHandler
   const requestHandler = new DefaultRequestHandler(

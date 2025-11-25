@@ -1,6 +1,30 @@
+/**
+ * Agent Delegation Finish Script v2 - WITH OOBI RESOLUTION FIX
+ * 
+ * This script completes the agent delegation process by:
+ * 1. CRITICAL FIX: Resolving the OOR holder's OOBI first
+ * 2. Querying the OOR holder's key state (to get the delegation anchor)
+ * 3. Waiting for the agent inception operation to complete
+ * 4. Adding endpoint role for the agent
+ * 5. Getting the agent's OOBI
+ * 
+ * The key insight from vLEI training (101_47_Delegated_AIDs.md):
+ * - Delegation is a COOPERATIVE process
+ * - The delegate (agent) needs to query the delegator's (OOR holder) KEL
+ *   to find the anchoring interaction event that approves the delegation
+ * - To query another AID's key state, you MUST first resolve their OOBI
+ * 
+ * From KERIA/Signify docs (102_05_KERIA_Signify.md):
+ * - Each Signify client connects to KERIA with its own session
+ * - OOBIs must be resolved in each session to establish contact
+ * 
+ * Usage:
+ *   tsx agent-aid-delegate-finish-v2.ts <env> <passcode> <agentName> <oorHolderInfoPath> <agentInceptionInfoPath> <outputPath>
+ */
+
 import fs from 'fs';
 import {getOrCreateClient} from "../../client/identifiers.js";
-import {waitOperation} from "../../client/operations.js";
+import {resolveOobi} from "../../client/oobis.js";
 import {SignifyClient} from "signify-ts";
 
 const args = process.argv.slice(2);
@@ -11,13 +35,17 @@ const oorHolderInfoPath = args[3];
 const agentInceptionInfoPath = args[4];
 const agentOutputPath = args[5];
 
+// ============================================================================
+// ENHANCED HELPER FUNCTIONS
+// ============================================================================
+
 /**
- * Enhanced wait operation with custom timeout and better error messages
+ * Wait for operation with configurable timeout and detailed logging
  */
-async function waitOperationWithTimeout<T = any>(
+async function waitOperationWithTimeout(
     client: SignifyClient,
     op: any,
-    timeoutMs: number = 180000,  // Increased to 3 minutes
+    timeoutMs: number = 180000,
     operationName: string = "operation"
 ): Promise<any> {
     console.log(`  Waiting for ${operationName} (timeout: ${timeoutMs/1000}s)...`);
@@ -32,17 +60,17 @@ async function waitOperationWithTimeout<T = any>(
             console.error(`  ✗ ${operationName} timed out after ${timeoutMs/1000}s`);
             console.error(`  Operation name: ${op.name}`);
             console.error(`  Operation done: ${op.done}`);
-            throw new Error(`${operationName} timed out - witness receipts may not be propagating properly`);
+            throw new Error(`${operationName} timed out - witness receipts may not be propagating`);
         }
         throw error;
     }
 }
 
 /**
- * CRITICAL FIX: Resolve OOBI with retries
+ * CRITICAL FIX: Resolve OOBI with retries and detailed logging
  * 
- * According to vLEI training (102_05_KERIA_Signify.md):
- * - Each Signify client session requires OOBI resolution to establish contact
+ * According to KERIA/Signify documentation:
+ * - OOBIs must be resolved to establish contact with another AID
  * - Without OOBI resolution, key state queries will timeout
  */
 async function resolveOobiWithRetries(
@@ -52,7 +80,7 @@ async function resolveOobiWithRetries(
     maxRetries: number = 3,
     retryDelayMs: number = 2000
 ): Promise<void> {
-    console.log(`Resolving OOBI for ${alias}...`);
+    console.log(`\nResolving OOBI for ${alias}...`);
     console.log(`  OOBI: ${oobi}`);
     console.log(`  Max retries: ${maxRetries}`);
     
@@ -90,31 +118,35 @@ async function resolveOobiWithRetries(
 }
 
 /**
- * Query key state with retries and diagnostic information
+ * Query key state with retries
+ * 
+ * According to vLEI training (101_47_Delegated_AIDs.md):
+ * - The delegate needs to query the delegator's KEL to find the anchor
+ * - This anchor contains the seal proving delegation approval
  */
 async function queryKeyStateWithRetries(
     client: SignifyClient,
     prefix: string,
+    sn: string = '1',
     maxRetries: number = 5,
     retryDelayMs: number = 3000
 ): Promise<any> {
-    console.log(`Querying key state for ${prefix}...`);
-    console.log(`  Max retries: ${maxRetries}, Delay between retries: ${retryDelayMs}ms`);
+    console.log(`\nQuerying key state for ${prefix} at sequence ${sn}...`);
+    console.log(`  Max retries: ${maxRetries}, Delay: ${retryDelayMs}ms`);
     
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
             console.log(`  Attempt ${attempt}/${maxRetries}...`);
             
-            // Query the key state
-            const op: any = await client.keyStates().query(prefix, '1');
-            console.log(`  Query operation created: ${op.name}`);
+            const op: any = await client.keyStates().query(prefix, sn);
+            console.log(`  Query operation: ${op.name}`);
             console.log(`  Operation done: ${op.done}`);
             
-            // Wait for the operation with increased timeout (60s per attempt)
+            // 60 seconds per attempt
             const result = await waitOperationWithTimeout(
                 client,
                 op,
-                60000,  // 60 seconds per attempt
+                60000,
                 `Key state query (attempt ${attempt}/${maxRetries})`
             );
             
@@ -128,12 +160,10 @@ async function queryKeyStateWithRetries(
                 console.log(`  Waiting ${retryDelayMs}ms before retry...`);
                 await new Promise(resolve => setTimeout(resolve, retryDelayMs));
             } else {
-                console.error(`✗ All ${maxRetries} attempts failed`);
                 throw new Error(
                     `Failed to query key state after ${maxRetries} attempts. ` +
-                    `This usually means witness receipts are not being received. ` +
-                    `Check: (1) Witnesses are running, (2) OOR holder has witnesses configured, ` +
-                    `(3) Network connectivity between services`
+                    `The interaction event (delegation anchor) may not have been ` +
+                    `witnessed yet. Check witness logs and network connectivity.`
                 );
             }
         }
@@ -141,7 +171,7 @@ async function queryKeyStateWithRetries(
 }
 
 /**
- * Verify identifier exists with enhanced diagnostics
+ * Verify identifier exists in KERIA
  */
 async function verifyIdentifierExists(
     client: SignifyClient,
@@ -150,7 +180,7 @@ async function verifyIdentifierExists(
     maxRetries: number = 15,
     retryDelayMs: number = 2000
 ): Promise<boolean> {
-    console.log(`Verifying identifier ${name} exists in KERIA...`);
+    console.log(`\nVerifying identifier ${name} exists in KERIA...`);
     console.log(`  Expected prefix: ${expectedPrefix}`);
     
     for (let i = 0; i < maxRetries; i++) {
@@ -158,8 +188,6 @@ async function verifyIdentifierExists(
             const aid = await client.identifiers().get(name);
             if (aid && aid.prefix === expectedPrefix) {
                 console.log(`✓ Identifier verified (attempt ${i + 1}/${maxRetries})`);
-                console.log(`  Prefix: ${aid.prefix}`);
-                console.log(`  State: ${JSON.stringify(aid.state)}`);
                 return true;
             }
         } catch (error: any) {
@@ -167,7 +195,6 @@ async function verifyIdentifierExists(
         }
         
         if (i < maxRetries - 1) {
-            console.log(`  Waiting ${retryDelayMs}ms before next check...`);
             await new Promise(resolve => setTimeout(resolve, retryDelayMs));
         }
     }
@@ -175,10 +202,10 @@ async function verifyIdentifierExists(
     return false;
 }
 
-/**
- * Main delegation finish function with comprehensive diagnostics
- * FIXED: Now includes OOBI resolution as Step 0
- */
+// ============================================================================
+// MAIN DELEGATION FINISH FUNCTION
+// ============================================================================
+
 async function finishAgentDelegation(
     agentClient: SignifyClient,
     oorHolderPre: string,
@@ -187,20 +214,18 @@ async function finishAgentDelegation(
     agentName: string,
     agentIcpOpName: string,
 ): Promise<any> {
-    console.log(`\n${'='.repeat(70)}`);
-    console.log(`FINISHING AGENT DELEGATION (WITH OOBI FIX)`);
-    console.log(`${'='.repeat(70)}`);
+    console.log(`\n${'═'.repeat(70)}`);
+    console.log(`FINISHING AGENT DELEGATION (v2 - WITH OOBI FIX)`);
+    console.log(`${'═'.repeat(70)}`);
     console.log(`Agent name: ${agentName}`);
     console.log(`OOR Holder name: ${oorHolderName}`);
     console.log(`OOR Holder prefix: ${oorHolderPre}`);
     console.log(`OOR Holder OOBI: ${oorHolderOobi}`);
     console.log(`Inception operation: ${agentIcpOpName}`);
-    console.log(`${'='.repeat(70)}\n`);
+    console.log(`${'═'.repeat(70)}\n`);
 
     // ═══════════════════════════════════════════════════════════════════════
-    // STEP 0: CRITICAL FIX - Resolve OOR Holder's OOBI first
-    // Without this, the agent client can't reach the OOR holder to query
-    // their key state and find the delegation anchor
+    // STEP 0: CRITICAL FIX - Resolve OOR Holder's OOBI
     // ═══════════════════════════════════════════════════════════════════════
     console.log(`[0/5] RESOLVING OOR HOLDER'S OOBI (CRITICAL)`);
     console.log(`This step is REQUIRED before querying key state.`);
@@ -222,63 +247,51 @@ async function finishAgentDelegation(
         throw error;
     }
 
-    // Step 1: Query OOR Holder key state to discover delegation anchor
+    // ═══════════════════════════════════════════════════════════════════════
+    // STEP 1: Query OOR Holder key state to discover delegation anchor
+    // ═══════════════════════════════════════════════════════════════════════
     console.log(`[1/5] Querying OOR Holder key state to find delegation anchor...`);
-    console.log(`This step retrieves the interaction event where the OOR holder`);
-    console.log(`anchored the delegation approval seal.`);
+    console.log(`This retrieves the interaction event (s='1') where the OOR holder`);
+    console.log(`anchored the delegation approval seal.\n`);
     
     try {
-        await queryKeyStateWithRetries(agentClient, oorHolderPre, 5, 3000);
+        await queryKeyStateWithRetries(agentClient, oorHolderPre, '1', 5, 3000);
         console.log(`✓ Step 1 complete: OOR Holder key state retrieved\n`);
     } catch (error: any) {
         console.error(`\n✗ CRITICAL ERROR in Step 1: ${error.message}\n`);
         throw error;
     }
 
-    // Step 2: Wait for delegation to propagate (operation query often 404s because it completes instantly)
-    console.log(`[2/5] Waiting for delegation to propagate through the network...`);
-    console.log(`Note: Delegation operations complete very quickly with witnesses (toad=1).`);
-    console.log(`The operation may already be cleared from the queue, which is normal.\n`);
+    // ═══════════════════════════════════════════════════════════════════════
+    // STEP 2: Wait for agent inception operation to complete
+    // ═══════════════════════════════════════════════════════════════════════
+    console.log(`[2/5] Waiting for agent inception operation to complete...`);
+    console.log(`This waits for KERIA to finish processing the delegation.\n`);
     
     try {
-        // Try to get the operation, but don't fail if it 404s
-        try {
-            const agentOp: any = await agentClient.operations().get(agentIcpOpName);
-            console.log(`  Operation still in queue: ${agentOp.name}`);
-            console.log(`  Operation done: ${agentOp.done}`);
-            
-            if (!agentOp.done) {
-                console.log(`  Waiting for operation to complete...`);
-                await waitOperationWithTimeout(
-                    agentClient,
-                    agentOp,
-                    60000,  // 1 minute
-                    "Agent inception operation"
-                );
-            }
-        } catch (opError: any) {
-            if (opError.message.includes('404')) {
-                console.log(`  Operation already cleared from queue (404) - this is normal`);
-                console.log(`  Proceeding with verification...`);
-            } else {
-                throw opError;
-            }
-        }
+        const agentOp: any = await agentClient.operations().get(agentIcpOpName);
+        console.log(`Inception operation status:`);
+        console.log(`  Name: ${agentOp.name}`);
+        console.log(`  Done: ${agentOp.done}`);
         
-        // Wait for propagation regardless of operation status
-        console.log(`  Waiting 5 seconds for KEL propagation...`);
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        
-        console.log(`✓ Step 2 complete: Delegation propagation wait finished\n`);
+        await waitOperationWithTimeout(
+            agentClient,
+            agentOp,
+            180000,  // 3 minutes
+            "Agent inception operation"
+        );
+        console.log(`✓ Step 2 complete: Inception operation finished\n`);
     } catch (error: any) {
         console.error(`\n✗ CRITICAL ERROR in Step 2: ${error.message}\n`);
         throw error;
     }
 
-    // Step 3: Extract and verify agent AID
+    // ═══════════════════════════════════════════════════════════════════════
+    // STEP 3: Extract and verify agent AID
+    // ═══════════════════════════════════════════════════════════════════════
     console.log(`[3/5] Extracting and verifying agent AID...`);
     const agentPre = agentIcpOpName.split('.')[1];
-    console.log(`  Extracted prefix from operation: ${agentPre}`);
+    console.log(`  Extracted prefix: ${agentPre}\n`);
 
     const kelExists = await verifyIdentifierExists(
         agentClient,
@@ -290,15 +303,17 @@ async function finishAgentDelegation(
 
     if (!kelExists) {
         throw new Error(
-            `CRITICAL: Agent KEL was not created in KERIA after 15 attempts (30 seconds). ` +
-            `The delegation may have failed. Check KERIA logs for errors.`
+            `CRITICAL: Agent KEL was not created in KERIA after 15 attempts. ` +
+            `The delegation may have failed. Check KERIA logs.`
         );
     }
     console.log(`✓ Step 3 complete: Agent KEL verified in KERIA\n`);
 
-    // Step 4: Add endpoint role
+    // ═══════════════════════════════════════════════════════════════════════
+    // STEP 4: Add endpoint role
+    // ═══════════════════════════════════════════════════════════════════════
     console.log(`[4/5] Adding endpoint role for agent...`);
-    console.log(`This makes the agent discoverable via OOBIs.`);
+    console.log(`This makes the agent discoverable via OOBIs.\n`);
     
     try {
         const endRoleOp = await agentClient.identifiers()
@@ -315,7 +330,9 @@ async function finishAgentDelegation(
         throw error;
     }
 
-    // Step 5: Get OOBI and perform final verification
+    // ═══════════════════════════════════════════════════════════════════════
+    // STEP 5: Get OOBI and final verification
+    // ═══════════════════════════════════════════════════════════════════════
     console.log(`[5/5] Getting OOBI and performing final verification...`);
     
     try {
@@ -327,12 +344,10 @@ async function finishAgentDelegation(
         console.log(`  Final agent state:`);
         console.log(`    Prefix: ${finalAid.prefix}`);
         console.log(`    Name: ${agentName}`);
-        console.log(`    State: ${JSON.stringify(finalAid.state, null, 2)}`);
         
-        console.log(`✓ Step 5 complete: Agent fully configured\n`);
-        console.log(`${'='.repeat(70)}`);
+        console.log(`\n${'═'.repeat(70)}`);
         console.log(`✓✓✓ AGENT DELEGATION SUCCESSFULLY COMPLETED ✓✓✓`);
-        console.log(`${'='.repeat(70)}\n`);
+        console.log(`${'═'.repeat(70)}\n`);
 
         return {
             aid: finalAid.prefix,
@@ -349,15 +364,19 @@ async function finishAgentDelegation(
 // MAIN EXECUTION
 // ============================================================================
 
-console.log(`\n${'='.repeat(70)}`);
-console.log(`AGENT DELEGATION FINISH SCRIPT (WITH OOBI FIX)`);
-console.log(`${'='.repeat(70)}`);
+console.log(`\n${'═'.repeat(70)}`);
+console.log(`AGENT DELEGATION FINISH SCRIPT (v2 - WITH OOBI FIX)`);
+console.log(`${'═'.repeat(70)}`);
+console.log(`Based on vLEI training documentation:`);
+console.log(`  - 101_47_Delegated_AIDs.md: Cooperative delegation process`);
+console.log(`  - 102_05_KERIA_Signify.md: OOBI resolution requirements`);
+console.log(`${'═'.repeat(70)}`);
 console.log(`Environment: ${env}`);
 console.log(`Agent name: ${agentAidName}`);
 console.log(`OOR holder info: ${oorHolderInfoPath}`);
 console.log(`Agent inception info: ${agentInceptionInfoPath}`);
 console.log(`Output path: ${agentOutputPath}`);
-console.log(`${'='.repeat(70)}\n`);
+console.log(`${'═'.repeat(70)}\n`);
 
 try {
     // Initialize agent client
@@ -391,7 +410,7 @@ try {
     // Format: /task-data/Jupiter_Chief_Sales_Officer-info.json
     const oorHolderName = oorHolderInfoPath.split('/').pop()?.replace('-info.json', '') || 'oor-holder';
 
-    // Finish delegation with OOBI resolution fix
+    // Finish delegation with enhanced diagnostics
     const agentDelegationInfo: any = await finishAgentDelegation(
         agentClient, 
         oorHolderInfo.aid,
@@ -405,37 +424,35 @@ try {
     console.log(`Writing agent info to ${agentOutputPath}...`);
     fs.writeFileSync(agentOutputPath, JSON.stringify(agentDelegationInfo, null, 2));
 
-    // Verify file was written
     if (!fs.existsSync(agentOutputPath)) {
         throw new Error(`Failed to write ${agentOutputPath}`);
     }
 
     console.log(`✓ Agent delegation data written successfully\n`);
-    console.log(`${'='.repeat(70)}`);
+    console.log(`${'═'.repeat(70)}`);
     console.log(`SUCCESS: Agent ${agentAidName} fully delegated and operational`);
-    console.log(`${'='.repeat(70)}\n`);
+    console.log(`${'═'.repeat(70)}\n`);
     
     process.exit(0);
     
 } catch (error: any) {
-    console.error(`\n${'='.repeat(70)}`);
+    console.error(`\n${'═'.repeat(70)}`);
     console.error(`CRITICAL ERROR: Agent delegation failed`);
-    console.error(`${'='.repeat(70)}`);
+    console.error(`${'═'.repeat(70)}`);
     console.error(`Error type: ${error.name}`);
     console.error(`Error message: ${error.message}`);
     if (error.stack) {
         console.error(`\nStack trace:`);
         console.error(error.stack);
     }
-    console.error(`${'='.repeat(70)}\n`);
+    console.error(`${'═'.repeat(70)}\n`);
     
-    // Provide troubleshooting guidance
-    console.error(`TROUBLESHOOTING STEPS:`);
-    console.error(`1. Check that all Docker services are running: docker compose ps`);
+    console.error(`TROUBLESHOOTING:`);
+    console.error(`1. Check Docker services: docker compose ps`);
     console.error(`2. Check witness logs: docker compose logs witness`);
     console.error(`3. Check KERIA logs: docker compose logs keria`);
-    console.error(`4. Verify OOR holder has witnesses configured properly`);
-    console.error(`5. Ensure witness receipts are being received`);
+    console.error(`4. Verify OOR holder has witnesses configured`);
+    console.error(`5. Ensure OOR holder's OOBI is reachable`);
     console.error(`6. Check network connectivity between services\n`);
     
     process.exit(1);

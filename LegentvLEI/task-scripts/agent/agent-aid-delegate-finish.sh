@@ -15,12 +15,24 @@ fi
 
 echo "Finishing delegation for agent: ${AGENT_NAME}"
 
+# CRITICAL FIX: Read the agent's unique BRAN
+# The finish script MUST use the same passcode that was used to create the agent
+BRAN_FILE="./task-data/${AGENT_NAME}-bran.txt"
+if [ ! -f "$BRAN_FILE" ]; then
+  echo "ERROR: Agent BRAN file not found: $BRAN_FILE"
+  echo "The agent must have been created with a unique BRAN first."
+  exit 1
+fi
+
+AGENT_BRAN=$(cat "$BRAN_FILE")
+echo "Using agent's unique BRAN as passcode: ${AGENT_BRAN:0:20}..."
+
 source ./task-scripts/workshop-env-vars.sh
 
 docker compose exec tsx-shell \
   /vlei/tsx-script-runner.sh agent/agent-aid-delegate-finish.ts \
     'docker' \
-    "${AGENT_SALT:-AgentPass123}" \
+    "${AGENT_BRAN}" \
     "${AGENT_NAME}" \
     "/task-data/${OOR_HOLDER_NAME}-info.json" \
     "/task-data/${AGENT_NAME}-delegate-info.json" \
