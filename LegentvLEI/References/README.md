@@ -67,7 +67,12 @@ docker compose build # rebuilds builds the gleif/wkshp-tsx-shell image
 
 ./deploy.sh 
 
-./run-all.sh
+./run-all-buyerseller-2C-with-agents.sh
+
+./test-agent-verification-DEEP.sh
+
+
+
 ```
 
 This will create all identifiers, issue all credentials, and demonstrate the complete trust chain from GEDA to Person credentials.
@@ -156,7 +161,11 @@ docker compose build # rebuilds builds the gleif/wkshp-tsx-shell image
 
 ./deploy.sh
 
-./run-all.sh
+./run-all-buyerseller-2C-with-agents.sh
+
+./test-agent-verification-DEEP.sh
+
+
 ```
 
 This will execute all scripts in sequence, demonstrating the complete vLEI credential issuance and presentation process for both OOR and ECR credential types.
