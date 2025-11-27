@@ -36,11 +36,82 @@ import {
 import { A2AExpressApp } from "@a2a-js/sdk/server/express";
 
 /**
+ * Verification type for choosing between DEEP and DEEP-EXT
+ * 'standard' = /api/verify/buyer (DEEP script)
+ * 'external' = /api/verify/ext/buyer (DEEP-EXT script) - for cross-org verification
+ */
+type VerificationType = 'standard' | 'external';
+
+/**
  * Simple Seller Agent Executor
  */
 class SellerAgentExecutor implements AgentExecutor {
   private cancelledTasks = new Set<string>();
   private keriSigner: KERISigner;
+  
+  // Verification type: 'standard' uses /api/verify/buyer, 'external' uses /api/verify/ext/buyer
+  // 'external' is for cross-organization verification (DEEP-EXT script)
+  private verificationType: VerificationType = 'standard';
+
+  // Method to set verification type - can be called before verification
+  public setVerificationType(type: VerificationType): void {
+    this.verificationType = type;
+    console.log(`[SellerAgent] Verification type set to: ${type.toUpperCase()}`);
+  }
+
+  // Method to get current verification type
+  public getVerificationType(): VerificationType {
+    return this.verificationType;
+  }
+
+  // Method to verify buyer agent (for cross-org verification)
+  public async verifyBuyerAgent(): Promise<{
+    success: boolean;
+    result?: any;
+    error?: string;
+  }> {
+    const verificationEndpoint = this.verificationType === 'external'
+      ? 'http://localhost:4000/api/verify/ext/buyer'
+      : 'http://localhost:4000/api/verify/buyer';
+    
+    console.log(`[SellerAgent] Verifying buyer agent using ${this.verificationType.toUpperCase()} verification`);
+    console.log(`[SellerAgent] Endpoint: ${verificationEndpoint}`);
+    
+    try {
+      const response = await fetch(verificationEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(120000)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Verification API returned ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      console.log(`[SellerAgent] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+      console.log(`[SellerAgent] 🔐 BUYER vLEI VALIDATION (${this.verificationType.toUpperCase()}):`);
+      console.log(`[SellerAgent] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+      console.log(`[SellerAgent] Success: ${result.success}`);
+      if (result.verificationType) {
+        console.log(`[SellerAgent] Verification Type: ${result.verificationType}`);
+        console.log(`[SellerAgent] Verification Script: ${result.verificationScript}`);
+      }
+      console.log(`[SellerAgent] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+      
+      return {
+        success: result.success,
+        result: result
+      };
+    } catch (error: any) {
+      console.error(`[SellerAgent] Buyer verification failed:`, error.message);
+      return {
+        success: false,
+        error: error.message
+      };
+    }
+  }
 
   constructor(agentName: string, agentAID: string) {
     // Initialize KERI signer with OOR holder authentication
@@ -360,6 +431,61 @@ async function main() {
     methods: ['GET', 'POST', 'OPTIONS'],
     credentials: true
   }));
+  
+  app.use(express.json());
+
+  // ============================================
+  // VERIFICATION TYPE CONTROL ENDPOINTS
+  // These allow the UI to switch between standard (DEEP) and external (DEEP-EXT) verification
+  // ============================================
+  
+  // Get current verification type
+  app.get('/api/verification-type', (req, res) => {
+    const executor = agentExecutor as SellerAgentExecutor;
+    res.json({
+      verificationType: executor.getVerificationType(),
+      agent: 'seller',
+      description: executor.getVerificationType() === 'external' 
+        ? 'Using DEEP-EXT (cross-org verification with seal/signature checks)'
+        : 'Using DEEP (standard verification)'
+    });
+  });
+  
+  // Set verification type
+  app.post('/api/verification-type', (req, res) => {
+    const { type } = req.body;
+    
+    if (type !== 'standard' && type !== 'external') {
+      return res.status(400).json({
+        error: 'Invalid verification type',
+        validTypes: ['standard', 'external']
+      });
+    }
+    
+    const executor = agentExecutor as SellerAgentExecutor;
+    executor.setVerificationType(type);
+    
+    res.json({
+      success: true,
+      verificationType: type,
+      agent: 'seller',
+      message: `Verification type set to ${type.toUpperCase()}`
+    });
+  });
+  
+  // Verify buyer agent endpoint (for cross-org verification)
+  app.post('/api/verify-buyer', async (req, res) => {
+    try {
+      const executor = agentExecutor as SellerAgentExecutor;
+      const result = await executor.verifyBuyerAgent();
+      res.json(result);
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        error: error.message
+      });
+    }
+  });
 
   const expressApp = appBuilder.setupRoutes(app);
 

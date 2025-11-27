@@ -27,10 +27,14 @@ import {
 } from "lucide-react"
 
 // ============================================
-// VERIFICATION MODE CONFIGURATION
+// API CONFIGURATION - NO MOCKS
 // ============================================
-const USE_MOCK_VERIFICATION = false  // Set to true for UI testing without backend
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+const BUYER_AGENT_URL = 'http://localhost:9090'
+const SELLER_AGENT_URL = 'http://localhost:8080'
+
+// Verification types: 'standard' uses DEEP script, 'external' uses DEEP-EXT script
+type VerificationMode = 'standard' | 'external'
 
 // Unique ID generator to prevent duplicate keys
 let messageIdCounter = 0
@@ -65,6 +69,7 @@ type AgenticStep =
   | 'seller-agent-fetched'
   | 'verifying-seller-agent'
   | 'seller-agent-verified'
+  | 'seller-verification-failed'
 
 type SellerAgenticStep =
   | 'idle'
@@ -74,19 +79,7 @@ type SellerAgenticStep =
   | 'buyer-agent-fetched'
   | 'verifying-buyer-agent'
   | 'buyer-agent-verified'
-
-const AGENT_CARDS = {
-  tommyBuyerAgent: {
-    alias: "tommy buyer agent",
-    engagementContextRole: "Buyer Agent",
-    agentType: "AI",
-  },
-  jupiterSellerAgent: {
-    alias: "jupiter seller agent",
-    engagementContextRole: "Seller Agent",
-    agentType: "AI",
-  },
-}
+  | 'buyer-verification-failed'
 
 const LEI_DATA = {
   tommy: {
@@ -119,6 +112,11 @@ export default function VerificationFlow() {
   const [sellerAgentFromBuyerData, setSellerAgentFromBuyerData] = useState<AgentCard | null>(null)
   const [sellerAgentVerified, setSellerAgentVerified] = useState(false)
 
+  // Verification mode state (standard = DEEP, external = DEEP-EXT)
+  // Default to DEEP-EXT (external) for cross-org verification
+  const [buyerVerificationMode, setBuyerVerificationMode] = useState<VerificationMode>('external')
+  const [sellerVerificationMode, setSellerVerificationMode] = useState<VerificationMode>('external')
+
   // Seller side - NEW CHAT INTERFACE states
   const [sellerChatMessages, setSellerChatMessages] = useState<ChatMessage[]>([])
   const [sellerInputMessage, setSellerInputMessage] = useState("")
@@ -147,23 +145,33 @@ export default function VerificationFlow() {
     chatEndRefSeller.current?.scrollIntoView({ behavior: "smooth" })
   }, [sellerChatMessages])
 
-  // Auto-verify after seller agent is fetched (buyer side)
+  // Auto-verify after seller agent is fetched (buyer side) - ONLY ONCE
+  // This effect triggers only when state becomes 'seller-agent-fetched'
+  // It won't re-trigger after verification fails or succeeds
   useEffect(() => {
+    console.log(`[UI] 🔄 Auto-verify useEffect triggered: agenticStep=${agenticStep}, hasData=${!!sellerAgentFromBuyerData}, verified=${sellerAgentVerified}, mode=${buyerVerificationMode}`)
+    // Only auto-verify if we just fetched the agent (not if we failed or succeeded)
     if (agenticStep === 'seller-agent-fetched' && sellerAgentFromBuyerData && !sellerAgentVerified) {
-      setTimeout(() => {
+      console.log(`[UI] ✅ Conditions met - scheduling verification in 1s`)
+      const timer = setTimeout(() => {
         verifySellerAgent()
       }, 1000)
+      return () => clearTimeout(timer)  // Cleanup to prevent multiple timers
     }
-  }, [agenticStep, sellerAgentFromBuyerData])
+  }, [agenticStep, sellerAgentFromBuyerData])  // Remove buyerVerificationMode - don't re-verify on mode change
 
-  // Auto-verify after buyer agent is fetched (seller side)
+  // Auto-verify after buyer agent is fetched (seller side) - ONLY ONCE
   useEffect(() => {
-    if (sellerAgenticStep === 'buyer-agent-fetched' && buyerAgentFromSellerData && sellerAgenticStep !== 'buyer-agent-verified') {
-      setTimeout(() => {
+    console.log(`[UI] 🔄 Seller auto-verify useEffect triggered: step=${sellerAgenticStep}, hasData=${!!buyerAgentFromSellerData}, mode=${sellerVerificationMode}`)
+    // Only auto-verify if we just fetched the agent (not if we failed or succeeded)
+    if (sellerAgenticStep === 'buyer-agent-fetched' && buyerAgentFromSellerData) {
+      console.log(`[UI] ✅ Seller conditions met - scheduling verification in 1s`)
+      const timer = setTimeout(() => {
         verifyBuyerAgentFromSeller()
       }, 1000)
+      return () => clearTimeout(timer)  // Cleanup to prevent multiple timers
     }
-  }, [sellerAgenticStep, buyerAgentFromSellerData])
+  }, [sellerAgenticStep, buyerAgentFromSellerData])  // Remove sellerVerificationMode - don't re-verify on mode change
 
   const addMessage = (text: string, type: 'user' | 'agent') => {
     const newMessage: ChatMessage = {
@@ -175,7 +183,28 @@ export default function VerificationFlow() {
     setChatMessages(prev => [...prev, newMessage])
   }
 
-  // Fetch buyer agent
+  // Debug: Log when verification modes change
+  useEffect(() => {
+    console.log(`[UI] 🔵 buyerVerificationMode changed to: ${buyerVerificationMode}`)
+  }, [buyerVerificationMode])
+
+  useEffect(() => {
+    console.log(`[UI] 🟢 sellerVerificationMode changed to: ${sellerVerificationMode}`)
+  }, [sellerVerificationMode])
+
+  // Function to set verification mode on buyer agent
+  const handleBuyerModeClick = (mode: VerificationMode) => {
+    console.log(`[UI] 🔘 BUYER MODE BUTTON CLICKED: ${mode}`)
+    setBuyerVerificationMode(mode)
+  }
+
+  // Function to set verification mode on seller agent  
+  const handleSellerModeClick = (mode: VerificationMode) => {
+    console.log(`[UI] 🔘 SELLER MODE BUTTON CLICKED: ${mode}`)
+    setSellerVerificationMode(mode)
+  }
+
+  // Fetch buyer agent - REAL API
   const fetchBuyerAgent = async () => {
     setAgenticStep('fetching-buyer-agent')
     addMessage("🔄 Fetching buyer agent...", 'agent')
@@ -183,7 +212,6 @@ export default function VerificationFlow() {
     try {
       console.log('🚀 [BUYER SELF] Fetching from: http://localhost:9090/.well-known/agent-card.json')
       
-      // Make real API call to the buyer A2A server
       const response = await fetch('http://localhost:9090/.well-known/agent-card.json')
       
       console.log('📥 [BUYER SELF RESPONSE] Status:', response.status, response.statusText)
@@ -200,14 +228,12 @@ export default function VerificationFlow() {
         oorRole: agentCardData.extensions?.gleifIdentity?.officialRole
       })
       
-      // Extract the three fields from the API response
       const agentCard: AgentCard = {
         alias: agentCardData.name || "Unknown Agent",
         engagementContextRole: agentCardData.extensions?.gleifIdentity?.engagementRole || "Unknown Role",
         agentType: "AI",
         verified: true,
         timestamp: new Date().toLocaleTimeString(),
-        // Real API fields
         name: agentCardData.name,
         agentAID: agentCardData.extensions?.keriIdentifiers?.agentAID,
         oorRole: agentCardData.extensions?.gleifIdentity?.officialRole
@@ -223,7 +249,7 @@ export default function VerificationFlow() {
     }
   }
 
-  // Fetch seller agent
+  // Fetch seller agent - REAL API
   const fetchSellerAgent = async () => {
     setAgenticStep('fetching-seller-agent')
     addMessage("🔄 Fetching seller agent...", 'agent')
@@ -231,7 +257,6 @@ export default function VerificationFlow() {
     try {
       console.log('🚀 [BUYER API CALL] Fetching seller from: http://localhost:8080/.well-known/agent-card.json')
       
-      // Make real API call to the A2A server
       const response = await fetch('http://localhost:8080/.well-known/agent-card.json')
       
       console.log('📥 [BUYER API RESPONSE] Status:', response.status, response.statusText)
@@ -248,14 +273,12 @@ export default function VerificationFlow() {
         oorRole: agentCardData.extensions?.gleifIdentity?.officialRole
       })
       
-      // Extract the three fields from the API response
       const agentCard: AgentCard = {
         alias: agentCardData.name || "Unknown Agent",
         engagementContextRole: agentCardData.extensions?.gleifIdentity?.engagementRole || "Unknown Role",
         agentType: "AI",
         verified: true,
         timestamp: new Date().toLocaleTimeString(),
-        // Real API fields
         name: agentCardData.name,
         agentAID: agentCardData.extensions?.keriIdentifiers?.agentAID,
         oorRole: agentCardData.extensions?.gleifIdentity?.officialRole
@@ -267,26 +290,25 @@ export default function VerificationFlow() {
     } catch (error: any) {
       console.error('❌ [BUYER API ERROR]:', error)
       addMessage(`❌ Failed to fetch seller agent: ${error.message}`, 'agent')
-      setAgenticStep('buyer-agent-fetched') // Go back to previous state
+      setAgenticStep('buyer-agent-fetched')
     }
   }
 
-  // Verify seller agent (automatic after fetch)
+  // Verify seller agent - REAL API
   const verifySellerAgent = async () => {
+    console.log(`[UI] 🔐 verifySellerAgent called with buyerVerificationMode: ${buyerVerificationMode}`)
     setAgenticStep('verifying-seller-agent')
-    addMessage("🔐 Automatically verifying seller agent...", 'agent')
-
-    if (USE_MOCK_VERIFICATION) {
-      setTimeout(() => {
-        setSellerAgentVerified(true)
-        setAgenticStep('seller-agent-verified')
-        addMessage("✅ Seller agent verified successfully!", 'agent')
-      }, 2500)
-      return
-    }
+    const modeLabel = buyerVerificationMode === 'external' ? 'DEEP-EXT' : 'DEEP'
+    addMessage(`🔐 Verifying seller agent using ${modeLabel}...`, 'agent')
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/verify/seller`, {
+      const endpoint = buyerVerificationMode === 'external'
+        ? `${API_BASE_URL}/api/verify/ext/seller`
+        : `${API_BASE_URL}/api/verify/seller`
+      
+      console.log(`[UI] 🚀 CALLING VERIFICATION ENDPOINT: ${endpoint}`)
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -296,12 +318,15 @@ export default function VerificationFlow() {
       if (result.success) {
         setSellerAgentVerified(true)
         setAgenticStep('seller-agent-verified')
-        addMessage("✅ Seller agent verified successfully!", 'agent')
+        const scriptInfo = result.verificationScript ? ` (${result.verificationScript})` : ''
+        addMessage(`✅ Seller agent verified successfully${scriptInfo}!`, 'agent')
       } else {
-        addMessage(`❌ Verification failed: ${result.error}`, 'agent')
+        addMessage(`❌ Verification failed: ${result.error || 'Unknown error'}`, 'agent')
+        setAgenticStep('seller-verification-failed')
       }
     } catch (error) {
       addMessage(`❌ Verification error: Cannot connect to API`, 'agent')
+      setAgenticStep('seller-verification-failed')
     }
   }
 
@@ -313,7 +338,6 @@ export default function VerificationFlow() {
     addMessage(inputMessage, 'user')
     setInputMessage("")
 
-    // Parse commands
     if (message.includes('fetch my agent') || message.includes('fetch buyer agent')) {
       fetchBuyerAgent()
     } else if (message.includes('fetch seller agent')) {
@@ -322,19 +346,28 @@ export default function VerificationFlow() {
       } else {
         addMessage("⚠️ Please fetch your buyer agent first!", 'agent')
       }
-    } else if (message.includes('verify seller')) {
+    } else if (message.includes('verify seller') || message.includes('reverify')) {
       if (sellerAgentFromBuyerData) {
+        // Reset verified state and call verification directly
+        setSellerAgentVerified(false)
         verifySellerAgent()
       } else {
         addMessage("⚠️ Please fetch the seller agent first!", 'agent')
       }
+    } else if (message.includes('reset')) {
+      // Reset all state
+      setAgenticStep('idle')
+      setBuyerAgentData(null)
+      setSellerAgentFromBuyerData(null)
+      setSellerAgentVerified(false)
+      addMessage("🔄 State reset. You can start fresh now.", 'agent')
     } else {
-      addMessage("I can help you with: 'fetch my agent', 'fetch seller agent', 'verify seller agent'", 'agent')
+      addMessage("I can help with: 'fetch my agent', 'fetch seller agent', 'verify seller', 'reverify', 'reset'", 'agent')
     }
   }
 
   // ============================================
-  // SELLER SIDE CHAT FUNCTIONS
+  // SELLER SIDE CHAT FUNCTIONS - ALL REAL APIs
   // ============================================
 
   const addSellerMessage = (text: string, type: 'user' | 'agent') => {
@@ -347,18 +380,17 @@ export default function VerificationFlow() {
     setSellerChatMessages(prev => [...prev, newMessage])
   }
 
-  // Fetch seller agent (seller side)
+  // Fetch seller agent (seller side) - REAL API
   const fetchSellerAgentChat = async () => {
     setSellerAgenticStep('fetching-seller-agent')
     addSellerMessage("🔄 Fetching my agent...", 'agent')
 
     try {
-      console.log('🚀 [API CALL] Fetching from: http://localhost:8080/.well-known/agent-card.json')
+      console.log('🚀 [SELLER SELF] Fetching from: http://localhost:8080/.well-known/agent-card.json')
       
-      // Make real API call to the A2A server
       const response = await fetch('http://localhost:8080/.well-known/agent-card.json')
       
-      console.log('📥 [API RESPONSE] Status:', response.status, response.statusText)
+      console.log('📥 [SELLER SELF RESPONSE] Status:', response.status, response.statusText)
       
       if (!response.ok) {
         throw new Error(`Failed to fetch agent card: ${response.status}`)
@@ -366,20 +398,18 @@ export default function VerificationFlow() {
 
       const agentCardData = await response.json()
       
-      console.log('✅ [API DATA] Received:', {
+      console.log('✅ [SELLER SELF DATA] Received:', {
         name: agentCardData.name,
         agentAID: agentCardData.extensions?.keriIdentifiers?.agentAID,
         oorRole: agentCardData.extensions?.gleifIdentity?.officialRole
       })
       
-      // Extract the three fields from the API response
       const agentCard: AgentCard = {
         alias: agentCardData.name || "Unknown Agent",
         engagementContextRole: agentCardData.extensions?.gleifIdentity?.engagementRole || "Unknown Role",
         agentType: "AI",
         verified: true,
         timestamp: new Date().toLocaleTimeString(),
-        // Real API fields
         name: agentCardData.name,
         agentAID: agentCardData.extensions?.keriIdentifiers?.agentAID,
         oorRole: agentCardData.extensions?.gleifIdentity?.officialRole
@@ -389,45 +419,72 @@ export default function VerificationFlow() {
       setSellerAgenticStep('seller-agent-fetched')
       addSellerMessage("✅ My agent fetched successfully from A2A server!", 'agent')
     } catch (error: any) {
-      console.error('❌ [API ERROR]:', error)
+      console.error('❌ [SELLER SELF ERROR]:', error)
       addSellerMessage(`❌ Failed to fetch agent: ${error.message}`, 'agent')
       setSellerAgenticStep('idle')
     }
   }
 
-  // Fetch buyer agent (seller side)
+  // Fetch buyer agent (seller side) - REAL API
   const fetchBuyerAgentChat = async () => {
     setSellerAgenticStep('fetching-buyer-agent')
     addSellerMessage("🔄 Fetching buyer agent...", 'agent')
 
-    setTimeout(() => {
+    try {
+      console.log('🚀 [SELLER API CALL] Fetching buyer from: http://localhost:9090/.well-known/agent-card.json')
+      
+      const response = await fetch('http://localhost:9090/.well-known/agent-card.json')
+      
+      console.log('📥 [SELLER API RESPONSE] Status:', response.status, response.statusText)
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch agent card: ${response.status}`)
+      }
+
+      const agentCardData = await response.json()
+      
+      console.log('✅ [SELLER API DATA] Received buyer agent:', {
+        name: agentCardData.name,
+        agentAID: agentCardData.extensions?.keriIdentifiers?.agentAID,
+        oorRole: agentCardData.extensions?.gleifIdentity?.officialRole
+      })
+      
       const agentCard: AgentCard = {
-        ...AGENT_CARDS.tommyBuyerAgent,
+        alias: agentCardData.name || "Unknown Agent",
+        engagementContextRole: agentCardData.extensions?.gleifIdentity?.engagementRole || "Unknown Role",
+        agentType: "AI",
         verified: true,
         timestamp: new Date().toLocaleTimeString(),
+        name: agentCardData.name,
+        agentAID: agentCardData.extensions?.keriIdentifiers?.agentAID,
+        oorRole: agentCardData.extensions?.gleifIdentity?.officialRole
       }
+      
       setBuyerAgentFromSellerData(agentCard)
       setSellerAgenticStep('buyer-agent-fetched')
-      addSellerMessage("✅ Buyer agent fetched!", 'agent')
-    }, 2000)
+      addSellerMessage("✅ Buyer agent fetched from A2A server! Click to view details.", 'agent')
+    } catch (error: any) {
+      console.error('❌ [SELLER API ERROR]:', error)
+      addSellerMessage(`❌ Failed to fetch buyer agent: ${error.message}`, 'agent')
+      setSellerAgenticStep('seller-agent-fetched')
+    }
   }
 
-  // Verify buyer agent (seller side - automatic)
+  // Verify buyer agent (seller side) - REAL API
   const verifyBuyerAgentFromSeller = async () => {
+    console.log(`[UI] 🔐 verifyBuyerAgentFromSeller called with sellerVerificationMode: ${sellerVerificationMode}`)
     setSellerAgenticStep('verifying-buyer-agent')
-    addSellerMessage("🔐 Automatically verifying buyer agent...", 'agent')
-
-    if (USE_MOCK_VERIFICATION) {
-      setTimeout(() => {
-        setBuyerAgentVerified(true)
-        setSellerAgenticStep('buyer-agent-verified')
-        addSellerMessage("✅ Buyer agent verified successfully!", 'agent')
-      }, 2500)
-      return
-    }
+    const modeLabel = sellerVerificationMode === 'external' ? 'DEEP-EXT' : 'DEEP'
+    addSellerMessage(`🔐 Verifying buyer agent using ${modeLabel}...`, 'agent')
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/verify/buyer`, {
+      const endpoint = sellerVerificationMode === 'external'
+        ? `${API_BASE_URL}/api/verify/ext/buyer`
+        : `${API_BASE_URL}/api/verify/buyer`
+      
+      console.log(`[UI] 🚀 CALLING BUYER VERIFICATION ENDPOINT: ${endpoint}`)
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -437,12 +494,15 @@ export default function VerificationFlow() {
       if (result.success) {
         setBuyerAgentVerified(true)
         setSellerAgenticStep('buyer-agent-verified')
-        addSellerMessage("✅ Buyer agent verified successfully!", 'agent')
+        const scriptInfo = result.verificationScript ? ` (${result.verificationScript})` : ''
+        addSellerMessage(`✅ Buyer agent verified successfully${scriptInfo}!`, 'agent')
       } else {
-        addSellerMessage(`❌ Verification failed: ${result.error}`, 'agent')
+        addSellerMessage(`❌ Verification failed: ${result.error || 'Unknown error'}`, 'agent')
+        setSellerAgenticStep('buyer-verification-failed')
       }
     } catch (error) {
       addSellerMessage(`❌ Verification error: Cannot connect to API`, 'agent')
+      setSellerAgenticStep('buyer-verification-failed')
     }
   }
 
@@ -454,7 +514,6 @@ export default function VerificationFlow() {
     addSellerMessage(sellerInputMessage, 'user')
     setSellerInputMessage("")
 
-    // Parse commands
     if (message.includes('fetch my agent') || message.includes('fetch seller agent')) {
       fetchSellerAgentChat()
     } else if (message.includes('fetch buyer agent')) {
@@ -463,59 +522,104 @@ export default function VerificationFlow() {
       } else {
         addSellerMessage("⚠️ Please fetch your seller agent first!", 'agent')
       }
-    } else if (message.includes('verify buyer')) {
+    } else if (message.includes('verify buyer') || message.includes('reverify')) {
       if (buyerAgentFromSellerData) {
+        // Reset verified state to allow re-verification
+        setBuyerAgentVerified(false)
         verifyBuyerAgentFromSeller()
       } else {
         addSellerMessage("⚠️ Please fetch the buyer agent first!", 'agent')
       }
+    } else if (message.includes('reset')) {
+      // Reset all state
+      setSellerAgenticStep('idle')
+      setSellerAgentData(null)
+      setBuyerAgentFromSellerData(null)
+      setBuyerAgentVerified(false)
+      addSellerMessage("🔄 State reset. You can start fresh now.", 'agent')
     } else {
-      addSellerMessage("I can help you with: 'fetch my agent', 'fetch buyer agent', 'verify buyer agent'", 'agent')
+      addSellerMessage("I can help with: 'fetch my agent', 'fetch buyer agent', 'verify buyer', 'reverify', 'reset'", 'agent')
     }
   }
 
-  // Seller side functions (unchanged)
+  // Button handlers - REAL APIs
   const handleFetchSellerAgent = async () => {
     setSellerAgentLoading(true)
-    setTimeout(() => {
+    try {
+      console.log('🚀 [BUTTON] Fetching seller from: http://localhost:8080/.well-known/agent-card.json')
+      const response = await fetch('http://localhost:8080/.well-known/agent-card.json')
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch agent card: ${response.status}`)
+      }
+
+      const agentCardData = await response.json()
+      
       const agentCard: AgentCard = {
-        ...AGENT_CARDS.jupiterSellerAgent,
+        alias: agentCardData.name || "Unknown Agent",
+        engagementContextRole: agentCardData.extensions?.gleifIdentity?.engagementRole || "Unknown Role",
+        agentType: "AI",
         verified: true,
         timestamp: new Date().toLocaleTimeString(),
+        name: agentCardData.name,
+        agentAID: agentCardData.extensions?.keriIdentifiers?.agentAID,
+        oorRole: agentCardData.extensions?.gleifIdentity?.officialRole
       }
+      
       setSellerAgentData(agentCard)
       setSellerAgentFetched(true)
+    } catch (error: any) {
+      console.error('❌ [BUTTON ERROR]:', error)
+      alert(`Failed to fetch seller agent: ${error.message}`)
+    } finally {
       setSellerAgentLoading(false)
-    }, 2000)
+    }
   }
 
   const handleFetchBuyerAgentFromSeller = async () => {
     setBuyerAgentFromSellerLoading(true)
-    setTimeout(() => {
+    try {
+      console.log('🚀 [BUTTON] Fetching buyer from: http://localhost:9090/.well-known/agent-card.json')
+      const response = await fetch('http://localhost:9090/.well-known/agent-card.json')
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch agent card: ${response.status}`)
+      }
+
+      const agentCardData = await response.json()
+      
       const agentCard: AgentCard = {
-        ...AGENT_CARDS.tommyBuyerAgent,
+        alias: agentCardData.name || "Unknown Agent",
+        engagementContextRole: agentCardData.extensions?.gleifIdentity?.engagementRole || "Unknown Role",
+        agentType: "AI",
         verified: true,
         timestamp: new Date().toLocaleTimeString(),
+        name: agentCardData.name,
+        agentAID: agentCardData.extensions?.keriIdentifiers?.agentAID,
+        oorRole: agentCardData.extensions?.gleifIdentity?.officialRole
       }
+      
       setBuyerAgentFromSellerData(agentCard)
       setBuyerAgentFromSellerFetched(true)
+    } catch (error: any) {
+      console.error('❌ [BUTTON ERROR]:', error)
+      alert(`Failed to fetch buyer agent: ${error.message}`)
+    } finally {
       setBuyerAgentFromSellerLoading(false)
-    }, 2000)
+    }
   }
 
   const handleVerifyBuyerAgent = async () => {
     setBuyerAgentVerifying(true)
 
-    if (USE_MOCK_VERIFICATION) {
-      setTimeout(() => {
-        setBuyerAgentVerified(true)
-        setBuyerAgentVerifying(false)
-      }, 2500)
-      return
-    }
-
     try {
-      const response = await fetch(`${API_BASE_URL}/api/verify/buyer`, {
+      const endpoint = sellerVerificationMode === 'external'
+        ? `${API_BASE_URL}/api/verify/ext/buyer`
+        : `${API_BASE_URL}/api/verify/buyer`
+      
+      console.log(`[UI] Verifying buyer (button) with endpoint: ${endpoint}`)
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -575,6 +679,37 @@ export default function VerificationFlow() {
                       <span className="break-words">{LEI_DATA.tommy.address}</span>
                     </p>
                   </div>
+                  {/* Verification Mode Toggle */}
+                  <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                    <p className="text-xs font-semibold text-blue-800 mb-2">🔐 Verification Mode:</p>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleBuyerModeClick('standard')}
+                        className={`px-3 py-1.5 text-xs rounded-md font-medium transition-all ${
+                          buyerVerificationMode === 'standard'
+                            ? 'bg-blue-600 text-white shadow-sm'
+                            : 'bg-white text-blue-700 border border-blue-300 hover:bg-blue-50'
+                        }`}
+                      >
+                        DEEP (Standard)
+                      </button>
+                      <button
+                        onClick={() => handleBuyerModeClick('external')}
+                        className={`px-3 py-1.5 text-xs rounded-md font-medium transition-all ${
+                          buyerVerificationMode === 'external'
+                            ? 'bg-purple-600 text-white shadow-sm'
+                            : 'bg-white text-purple-700 border border-purple-300 hover:bg-purple-50'
+                        }`}
+                      >
+                        DEEP-EXT (Cross-Org)
+                      </button>
+                    </div>
+                    <p className="text-[10px] text-slate-500 mt-2">
+                      {buyerVerificationMode === 'external' 
+                        ? '✅ Using extended verification with seal & signature checks'
+                        : '🔒 Using standard delegation verification'}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -628,7 +763,7 @@ export default function VerificationFlow() {
               )}
 
               {/* STATE 3: Agentic Flow + Two Buttons */}
-              {['fetching-seller-agent', 'seller-agent-fetched', 'verifying-seller-agent', 'seller-agent-verified'].includes(agenticStep) && (
+              {['fetching-seller-agent', 'seller-agent-fetched', 'verifying-seller-agent', 'seller-agent-verified', 'seller-verification-failed'].includes(agenticStep) && (
                 <div className="animate-fade-in space-y-6">
                   <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
                     <MessageSquare className="w-5 h-5 text-blue-600" />
@@ -641,7 +776,6 @@ export default function VerificationFlow() {
                     <>
                       <div className="animate-fade-in">
                         <div className="flex flex-col items-center gap-2">
-                          {/* Icon Container */}
                           <div className={`w-16 h-16 rounded-xl flex items-center justify-center shadow-lg transition-all ${agenticStep === 'fetching-seller-agent'
                             ? 'bg-blue-500 animate-pulse'
                             : 'bg-blue-600'
@@ -652,7 +786,6 @@ export default function VerificationFlow() {
                               <UserCheck className="w-8 h-8 text-white" />
                             )}
                           </div>
-                          {/* Text Below Icon */}
                           <div className="text-center">
                             <p className="text-xs font-bold text-blue-700 whitespace-nowrap">
                               {agenticStep === 'fetching-seller-agent' ? 'Searching...' : 'Found ✓'}
@@ -662,18 +795,16 @@ export default function VerificationFlow() {
                         </div>
                       </div>
 
-                      {/* Arrow Right */}
-                      {['seller-agent-fetched', 'verifying-seller-agent', 'seller-agent-verified'].includes(agenticStep) && (
-                        <ArrowRight className="w-5 h-5 text-blue-500 animate-pulse flex-shrink-0" />
+                      {['seller-agent-fetched', 'verifying-seller-agent', 'seller-agent-verified', 'seller-verification-failed'].includes(agenticStep) && (
+                      <ArrowRight className="w-5 h-5 text-blue-500 animate-pulse flex-shrink-0" />
                       )}
-                    </>
+                      </>
 
-                    {/* ICON 2: Fetched Seller Agent */}
-                    {['seller-agent-fetched', 'verifying-seller-agent', 'seller-agent-verified'].includes(agenticStep) && (
+                      {/* ICON 2: Fetched Seller Agent */}
+                      {['seller-agent-fetched', 'verifying-seller-agent', 'seller-agent-verified', 'seller-verification-failed'].includes(agenticStep) && (
                       <>
                         <div className="animate-fade-in">
                           <div className="flex flex-col items-center gap-2">
-                            {/* Icon Container */}
                             <div className="w-16 h-16 rounded-xl bg-purple-600 flex items-center justify-center shadow-lg relative">
                               <Bot className="w-8 h-8 text-white" />
                               {sellerAgentFromBuyerData && (
@@ -686,13 +817,11 @@ export default function VerificationFlow() {
                                 </button>
                               )}
                             </div>
-                            {/* Text Below Icon */}
                             <div className="text-center">
                               <p className="text-xs font-bold text-purple-700 whitespace-nowrap">Fetched ✓</p>
                               <p className="text-[10px] text-slate-500">Step 2</p>
                             </div>
                           </div>
-                          {/* Expandable Details Popup */}
                           {showSellerDetails && sellerAgentFromBuyerData && (
                             <div className="absolute z-10 mt-2 p-3 bg-purple-50 border-2 border-purple-300 rounded-lg shadow-xl text-xs space-y-1 animate-fade-in w-64">
                               <div className="flex justify-between items-start mb-2">
@@ -709,40 +838,46 @@ export default function VerificationFlow() {
                           )}
                         </div>
 
-                        {/* Arrow Right */}
-                        {['verifying-seller-agent', 'seller-agent-verified'].includes(agenticStep) && (
+                        {['verifying-seller-agent', 'seller-agent-verified', 'seller-verification-failed'].includes(agenticStep) && (
                           <ArrowRight className="w-5 h-5 text-purple-500 animate-pulse flex-shrink-0" />
                         )}
                       </>
                     )}
 
                     {/* ICON 3: Verifying Seller Agent */}
-                    {['verifying-seller-agent', 'seller-agent-verified'].includes(agenticStep) && (
+                    {['verifying-seller-agent', 'seller-agent-verified', 'seller-verification-failed'].includes(agenticStep) && (
                       <>
                         <div className="animate-fade-in">
                           <div className="flex flex-col items-center gap-2">
-                            {/* Icon Container */}
                             <div className={`w-16 h-16 rounded-xl flex items-center justify-center shadow-lg transition-all ${agenticStep === 'verifying-seller-agent'
                               ? 'bg-orange-500 animate-pulse'
+                              : agenticStep === 'seller-verification-failed'
+                              ? 'bg-red-600'
                               : 'bg-orange-600'
                               }`}>
                               {agenticStep === 'verifying-seller-agent' ? (
                                 <ShieldCheck className="w-8 h-8 text-white animate-spin" style={{ animationDuration: '2s' }} />
+                              ) : agenticStep === 'seller-verification-failed' ? (
+                                <XCircle className="w-8 h-8 text-white" />
                               ) : (
                                 <BadgeCheck className="w-8 h-8 text-white" />
                               )}
                             </div>
-                            {/* Text Below Icon */}
                             <div className="text-center">
-                              <p className="text-xs font-bold text-orange-700 whitespace-nowrap">
-                                {agenticStep === 'verifying-seller-agent' ? 'Verifying...' : 'Checked ✓'}
+                              <p className={`text-xs font-bold whitespace-nowrap ${
+                                agenticStep === 'verifying-seller-agent' ? 'text-orange-700' 
+                                : agenticStep === 'seller-verification-failed' ? 'text-red-700'
+                                : 'text-orange-700'
+                              }`}>
+                                {agenticStep === 'verifying-seller-agent' ? 'Verifying...' 
+                                : agenticStep === 'seller-verification-failed' ? 'Failed ❌'
+                                : 'Checked ✓'}
                               </p>
                               <p className="text-[10px] text-slate-500">Step 3</p>
                             </div>
                           </div>
                         </div>
 
-                        {/* Arrow Right */}
                         {agenticStep === 'seller-agent-verified' && (
                           <ArrowRight className="w-5 h-5 text-orange-500 animate-pulse flex-shrink-0" />
                         )}
@@ -753,11 +888,9 @@ export default function VerificationFlow() {
                     {agenticStep === 'seller-agent-verified' && (
                       <div className="animate-fade-in">
                         <div className="flex flex-col items-center gap-2">
-                          {/* Icon Container */}
                           <div className="w-16 h-16 rounded-xl bg-green-600 flex items-center justify-center shadow-lg animate-bounce" style={{ animationDuration: '2s' }}>
                             <ShieldCheck className="w-8 h-8 text-white" />
                           </div>
-                          {/* Text Below Icon */}
                           <div className="text-center">
                             <p className="text-xs font-bold text-green-700 whitespace-nowrap">Verified! ✅</p>
                             <p className="text-[10px] text-slate-500">Step 4</p>
@@ -767,6 +900,13 @@ export default function VerificationFlow() {
                     )}
 
                   </div>
+
+                  {/* Failure Message with Retry */}
+                  {agenticStep === 'seller-verification-failed' && (
+                    <div className="p-3 bg-red-50 border border-red-300 rounded-lg text-sm text-red-800 animate-fade-in">
+                      ❌ <strong>Verification failed!</strong> Type "reverify" to try again.
+                    </div>
+                  )}
 
                   {/* Success Message */}
                   {agenticStep === 'seller-agent-verified' && (
@@ -781,7 +921,6 @@ export default function VerificationFlow() {
                       <h4 className="text-base font-semibold text-slate-900">View Agent Cards</h4>
 
                       <div className="grid grid-cols-2 gap-3">
-                        {/* Buyer Agent Card Button */}
                         <button
                           onClick={() => setShowBuyerCardDetails(!showBuyerCardDetails)}
                           className="p-4 bg-blue-50 hover:bg-blue-100 border-2 border-blue-300 rounded-lg transition-all text-left"
@@ -793,7 +932,6 @@ export default function VerificationFlow() {
                           <p className="text-xs text-slate-600">Click to view details</p>
                         </button>
 
-                        {/* Seller Agent Card Button */}
                         <button
                           onClick={() => setShowSellerCardDetails(!showSellerCardDetails)}
                           className="p-4 bg-purple-50 hover:bg-purple-100 border-2 border-purple-300 rounded-lg transition-all text-left"
@@ -806,7 +944,6 @@ export default function VerificationFlow() {
                         </button>
                       </div>
 
-                      {/* Buyer Agent Card Details */}
                       {showBuyerCardDetails && buyerAgentData && (
                         <div className="p-4 bg-blue-50 border-2 border-blue-300 rounded-lg animate-fade-in">
                           <div className="flex items-start justify-between mb-3">
@@ -824,7 +961,6 @@ export default function VerificationFlow() {
                         </div>
                       )}
 
-                      {/* Seller Agent Card Details */}
                       {showSellerCardDetails && sellerAgentFromBuyerData && (
                         <div className="p-4 bg-purple-50 border-2 border-purple-300 rounded-lg animate-fade-in">
                           <div className="flex items-start justify-between mb-3">
@@ -849,7 +985,6 @@ export default function VerificationFlow() {
 
             {/* Chat Interface */}
             <div className="bg-slate-50 border-t border-slate-300">
-              {/* Chat Messages */}
               <div className="h-48 overflow-y-auto p-4 space-y-2">
                 {chatMessages.length === 0 && (
                   <div className="text-center text-sm text-slate-500 py-8">
@@ -876,7 +1011,6 @@ export default function VerificationFlow() {
                 <div ref={chatEndRef} />
               </div>
 
-              {/* Input */}
               <div className="p-4 border-t border-slate-200">
                 <div className="flex gap-2">
                   <input
@@ -898,7 +1032,7 @@ export default function VerificationFlow() {
             </div>
           </div>
 
-          {/* CONTAINER 2: VERIFICATION PROGRESS (UNCHANGED) */}
+          {/* CONTAINER 2: VERIFICATION PROGRESS */}
           <div className="border border-indigo-200 rounded-xl p-6 lg:p-10 shadow-sm bg-white xl:sticky xl:top-8 h-fit">
             <h3 className="text-base lg:text-lg font-semibold text-slate-900 mb-6 lg:mb-8 flex items-center gap-2">
               <Shield className="w-4 h-4 lg:w-5 lg:h-5 text-indigo-600" />
@@ -1096,6 +1230,37 @@ export default function VerificationFlow() {
                       <span className="break-words">{LEI_DATA.jupiter.address}</span>
                     </p>
                   </div>
+                  {/* Verification Mode Toggle */}
+                  <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                    <p className="text-xs font-semibold text-green-800 mb-2">🔐 Verification Mode:</p>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleSellerModeClick('standard')}
+                        className={`px-3 py-1.5 text-xs rounded-md font-medium transition-all ${
+                          sellerVerificationMode === 'standard'
+                            ? 'bg-green-600 text-white shadow-sm'
+                            : 'bg-white text-green-700 border border-green-300 hover:bg-green-50'
+                        }`}
+                      >
+                        DEEP (Standard)
+                      </button>
+                      <button
+                        onClick={() => handleSellerModeClick('external')}
+                        className={`px-3 py-1.5 text-xs rounded-md font-medium transition-all ${
+                          sellerVerificationMode === 'external'
+                            ? 'bg-purple-600 text-white shadow-sm'
+                            : 'bg-white text-purple-700 border border-purple-300 hover:bg-purple-50'
+                        }`}
+                      >
+                        DEEP-EXT (Cross-Org)
+                      </button>
+                    </div>
+                    <p className="text-[10px] text-slate-500 mt-2">
+                      {sellerVerificationMode === 'external' 
+                        ? '✅ Using extended verification with seal & signature checks'
+                        : '🔒 Using standard delegation verification'}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1149,7 +1314,7 @@ export default function VerificationFlow() {
               )}
 
               {/* STATE 3: Agentic Flow + Two Buttons */}
-              {['fetching-buyer-agent', 'buyer-agent-fetched', 'verifying-buyer-agent', 'buyer-agent-verified'].includes(sellerAgenticStep) && (
+              {['fetching-buyer-agent', 'buyer-agent-fetched', 'verifying-buyer-agent', 'buyer-agent-verified', 'buyer-verification-failed'].includes(sellerAgenticStep) && (
                 <div className="animate-fade-in space-y-6">
                   <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
                     <MessageSquare className="w-5 h-5 text-green-600" />
@@ -1181,13 +1346,13 @@ export default function VerificationFlow() {
                         </div>
                       </div>
 
-                      {['buyer-agent-fetched', 'verifying-buyer-agent', 'buyer-agent-verified'].includes(sellerAgenticStep) && (
+                      {['buyer-agent-fetched', 'verifying-buyer-agent', 'buyer-agent-verified', 'buyer-verification-failed'].includes(sellerAgenticStep) && (
                         <ArrowRight className="w-5 h-5 text-green-500 animate-pulse flex-shrink-0" />
                       )}
                     </>
 
                     {/* ICON 2: Fetched Buyer Agent */}
-                    {['buyer-agent-fetched', 'verifying-buyer-agent', 'buyer-agent-verified'].includes(sellerAgenticStep) && (
+                    {['buyer-agent-fetched', 'verifying-buyer-agent', 'buyer-agent-verified', 'buyer-verification-failed'].includes(sellerAgenticStep) && (
                       <>
                         <div className="animate-fade-in">
                           <div className="flex flex-col items-center gap-2">
@@ -1201,30 +1366,40 @@ export default function VerificationFlow() {
                           </div>
                         </div>
 
-                        {['verifying-buyer-agent', 'buyer-agent-verified'].includes(sellerAgenticStep) && (
+                        {['verifying-buyer-agent', 'buyer-agent-verified', 'buyer-verification-failed'].includes(sellerAgenticStep) && (
                           <ArrowRight className="w-5 h-5 text-blue-500 animate-pulse flex-shrink-0" />
                         )}
                       </>
                     )}
 
                     {/* ICON 3: Verifying Buyer Agent */}
-                    {['verifying-buyer-agent', 'buyer-agent-verified'].includes(sellerAgenticStep) && (
+                    {['verifying-buyer-agent', 'buyer-agent-verified', 'buyer-verification-failed'].includes(sellerAgenticStep) && (
                       <>
                         <div className="animate-fade-in">
                           <div className="flex flex-col items-center gap-2">
                             <div className={`w-16 h-16 rounded-xl flex items-center justify-center shadow-lg transition-all ${sellerAgenticStep === 'verifying-buyer-agent'
                               ? 'bg-orange-500 animate-pulse'
+                              : sellerAgenticStep === 'buyer-verification-failed'
+                              ? 'bg-red-600'
                               : 'bg-orange-600'
                               }`}>
                               {sellerAgenticStep === 'verifying-buyer-agent' ? (
                                 <ShieldCheck className="w-8 h-8 text-white animate-spin" style={{ animationDuration: '2s' }} />
+                              ) : sellerAgenticStep === 'buyer-verification-failed' ? (
+                                <XCircle className="w-8 h-8 text-white" />
                               ) : (
                                 <BadgeCheck className="w-8 h-8 text-white" />
                               )}
                             </div>
                             <div className="text-center">
-                              <p className="text-xs font-bold text-orange-700 whitespace-nowrap">
-                                {sellerAgenticStep === 'verifying-buyer-agent' ? 'Verifying...' : 'Checked ✓'}
+                              <p className={`text-xs font-bold whitespace-nowrap ${
+                                sellerAgenticStep === 'verifying-buyer-agent' ? 'text-orange-700' 
+                                : sellerAgenticStep === 'buyer-verification-failed' ? 'text-red-700'
+                                : 'text-orange-700'
+                              }`}>
+                                {sellerAgenticStep === 'verifying-buyer-agent' ? 'Verifying...' 
+                                : sellerAgenticStep === 'buyer-verification-failed' ? 'Failed ❌'
+                                : 'Checked ✓'}
                               </p>
                               <p className="text-[10px] text-slate-500">Step 3</p>
                             </div>
@@ -1253,6 +1428,13 @@ export default function VerificationFlow() {
                     )}
                   </div>
 
+                  {/* Failure Message with Retry */}
+                  {sellerAgenticStep === 'buyer-verification-failed' && (
+                    <div className="p-3 bg-red-50 border border-red-300 rounded-lg text-sm text-red-800 animate-fade-in">
+                      ❌ <strong>Verification failed!</strong> Type "reverify" to try again.
+                    </div>
+                  )}
+
                   {/* Success Message */}
                   {sellerAgenticStep === 'buyer-agent-verified' && (
                     <div className="p-3 bg-green-50 border border-green-300 rounded-lg text-sm text-green-800 animate-fade-in">
@@ -1266,7 +1448,6 @@ export default function VerificationFlow() {
                       <h4 className="text-base font-semibold text-slate-900">View Agent Cards</h4>
 
                       <div className="grid grid-cols-2 gap-3">
-                        {/* Seller Agent Card Button */}
                         <button
                           onClick={() => setShowSellerAgentCardDetails(!showSellerAgentCardDetails)}
                           className="p-4 bg-green-50 hover:bg-green-100 border-2 border-green-300 rounded-lg transition-all text-left"
@@ -1278,7 +1459,6 @@ export default function VerificationFlow() {
                           <p className="text-xs text-slate-600">Click to view details</p>
                         </button>
 
-                        {/* Buyer Agent Card Button */}
                         <button
                           onClick={() => setShowBuyerAgentCardDetails(!showBuyerAgentCardDetails)}
                           className="p-4 bg-blue-50 hover:bg-blue-100 border-2 border-blue-300 rounded-lg transition-all text-left"
@@ -1291,7 +1471,6 @@ export default function VerificationFlow() {
                         </button>
                       </div>
 
-                      {/* Seller Agent Card Details */}
                       {showSellerAgentCardDetails && sellerAgentData && (
                         <div className="p-4 bg-green-50 border-2 border-green-300 rounded-lg animate-fade-in">
                           <div className="flex items-start justify-between mb-3">
@@ -1309,7 +1488,6 @@ export default function VerificationFlow() {
                         </div>
                       )}
 
-                      {/* Buyer Agent Card Details */}
                       {showBuyerAgentCardDetails && buyerAgentFromSellerData && (
                         <div className="p-4 bg-blue-50 border-2 border-blue-300 rounded-lg animate-fade-in">
                           <div className="flex items-start justify-between mb-3">
@@ -1319,9 +1497,9 @@ export default function VerificationFlow() {
                             </button>
                           </div>
                           <div className="space-y-2 text-xs text-slate-700">
-                            <p><strong>Alias:</strong> {buyerAgentFromSellerData.alias}</p>
-                            <p><strong>Role:</strong> {buyerAgentFromSellerData.engagementContextRole}</p>
-                            <p><strong>Type:</strong> {buyerAgentFromSellerData.agentType}</p>
+                            <p><strong>Name:</strong> {buyerAgentFromSellerData.name || buyerAgentFromSellerData.alias}</p>
+                            <p><strong>Agent AID:</strong> <span className="break-all">{buyerAgentFromSellerData.agentAID || 'N/A'}</span></p>
+                            <p><strong>OOR Role:</strong> {buyerAgentFromSellerData.oorRole || buyerAgentFromSellerData.engagementContextRole}</p>
                             <p><strong>Time:</strong> {buyerAgentFromSellerData.timestamp}</p>
                           </div>
                         </div>
@@ -1334,7 +1512,6 @@ export default function VerificationFlow() {
 
             {/* CHAT INTERFACE */}
             <div className="bg-slate-50 border-t border-slate-300">
-              {/* Chat Messages */}
               <div className="h-48 overflow-y-auto p-4 space-y-2">
                 {sellerChatMessages.length === 0 && (
                   <div className="text-center text-sm text-slate-500 py-8">
@@ -1361,7 +1538,6 @@ export default function VerificationFlow() {
                 <div ref={chatEndRefSeller} />
               </div>
 
-              {/* Input */}
               <div className="p-4 border-t border-slate-200">
                 <div className="flex gap-2">
                   <input
